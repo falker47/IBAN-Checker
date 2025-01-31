@@ -1,10 +1,14 @@
 /* style.css */
 
+/* ----- Base (vale per desktop) ----- */
+
 html, body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: #f0f2f5;
+  /* Evita scroll orizzontale di default */
+  overflow-x: hidden; 
 }
 
 .container {
@@ -17,12 +21,14 @@ html, body {
   box-sizing: border-box;
 }
 
+/* Titolo (desktop) */
 h1 {
   margin-top: 0;
   font-size: 1.5rem;
   color: #333;
 }
 
+/* Sottotitolo (desktop) */
 .subtitle {
   font-size: 0.95rem;
   margin-bottom: 1em;
@@ -36,7 +42,7 @@ h1 {
   color: #333;
 }
 
-/* wrapper per input e pulsante incolla, su desktop fianco a fianco */
+/* input e pulsante incolla fianco a fianco */
 .input-wrapper {
   display: flex;
   flex-direction: row;
@@ -44,7 +50,7 @@ h1 {
   margin-bottom: 1em;
 }
 
-/* input IBAN */
+/* Campo IBAN (desktop) */
 .input-iban {
   width: 100%;
   max-width: 400px;
@@ -56,6 +62,7 @@ h1 {
   box-sizing: border-box;
 }
 
+/* Pulsante incolla (desktop) */
 .btn-paste {
   background: #999;
   color: #fff;
@@ -76,7 +83,7 @@ h1 {
   stroke: currentColor;
 }
 
-/* pulsante Verifica */
+/* Pulsante Verifica IBAN (desktop) */
 .btn-verify {
   padding: 0.5em 1em;
   font-size: 0.9rem;
@@ -92,7 +99,7 @@ h1 {
   background: #0056b3;
 }
 
-/* box dei risultati */
+/* Finestra di output (desktop) */
 .result-box {
   white-space: pre-wrap;
   margin-top: 1em;
@@ -106,7 +113,7 @@ h1 {
   box-sizing: border-box;
 }
 
-/* testo aggiuntivo, se vuoi distinguerlo */
+/* Testo informativo a fondo pagina (desktop) */
 .info-text {
   margin-top: 1em;
   font-size: 0.85rem;
@@ -114,49 +121,66 @@ h1 {
   line-height: 1.4;
 }
 
-/* responsive su max 480px */
+
+/* ----- Media Query per smartphone (max 480px) ----- */
 @media (max-width: 480px) {
+
+  /* Riduciamo un pochino il titolo */
+  h1 {
+    font-size: 1.2rem; 
+  }
+
+  /* Riduciamo un po' il sottotitolo */
+  .subtitle {
+    font-size: 0.85rem;
+  }
+
+  /* Riduciamo di più il testo informativo in fondo */
+  .info-text {
+    font-size: 0.75rem;
+  }
+
+  /* La card diventa più stretta e con padding inferiore */
   .container {
     width: 90%;
     margin: 20px auto;
     padding: 15px;
     border-radius: 4px;
   }
-  h1 {
-    font-size: 1.3rem; 
-  }
-  .subtitle {
-    font-size: 0.9rem;
-    margin-bottom: 0.8em;
-  }
-  .label {
-    font-size: 0.9rem;
-  }
-  .input-iban {
-    font-size: 1rem;
-    border-radius: 4px; 
-    margin-bottom: 0.5em;
-    border-right: 1px solid #ccc;
-  }
+
+  /* Stacchiamo input e pulsante Incolla (layout colonna) */
   .input-wrapper {
     flex-direction: column;
     align-items: stretch;
   }
+
+  /* Ingrandiamo un po' il campo IBAN (font e dimensioni) */
+  .input-iban {
+    font-size: 1.2rem; 
+    border-radius: 4px; 
+    border-right: 1px solid #ccc;
+    margin-bottom: 0.5em;
+  }
+
+  /* Ingrandiamo un po' il pulsante incolla */
   .btn-paste {
+    font-size: 1.1rem;
     border-radius: 4px;
     margin-left: 0;
     width: 100%;
     justify-content: center;
+    padding: 0.6em 0.8em;
   }
+
+  /* Ingrandiamo il pulsante "Verifica" */
   .btn-verify {
-    font-size: 1rem;
-    padding: 0.6em 1.2em;
+    font-size: 1.1rem;
+    padding: 0.8em 1.2em;
   }
+
+  /* Ingrandiamo la finestra di output */
   .result-box {
-    font-size: 1rem;
-    min-height: 60px;
-  }
-  .info-text {
-    font-size: 0.9rem;
+    font-size: 1.1rem;
+    min-height: 70px;
   }
 }
