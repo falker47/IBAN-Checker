@@ -36,15 +36,15 @@ h1 {
   color: #333;
 }
 
-/* Mettiamo input e pulsante Incolla uno accanto all'altro */
+/* wrapper per input e pulsante incolla, su desktop fianco a fianco */
 .input-wrapper {
   display: flex;
-  flex-direction: row; 
+  flex-direction: row;
   align-items: center;
   margin-bottom: 1em;
 }
 
-/* Input IBAN */
+/* input IBAN */
 .input-iban {
   width: 100%;
   max-width: 400px;
@@ -56,11 +56,10 @@ h1 {
   box-sizing: border-box;
 }
 
-/* Pulsante "Incolla" */
 .btn-paste {
   background: #999;
   color: #fff;
-  border: 1px solid #999; 
+  border: 1px solid #999;
   padding: 0.5em 0.8em;
   cursor: pointer;
   font-size: 0.9rem;
@@ -77,7 +76,7 @@ h1 {
   stroke: currentColor;
 }
 
-/* Pulsante "Verifica IBAN" */
+/* pulsante Verifica */
 .btn-verify {
   padding: 0.5em 1em;
   font-size: 0.9rem;
@@ -93,6 +92,7 @@ h1 {
   background: #0056b3;
 }
 
+/* box dei risultati */
 .result-box {
   white-space: pre-wrap;
   margin-top: 1em;
@@ -106,7 +106,15 @@ h1 {
   box-sizing: border-box;
 }
 
-/* Responsive per smartphone */
+/* testo aggiuntivo, se vuoi distinguerlo */
+.info-text {
+  margin-top: 1em;
+  font-size: 0.85rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* responsive su max 480px */
 @media (max-width: 480px) {
   .container {
     width: 90%;
@@ -114,47 +122,41 @@ h1 {
     padding: 15px;
     border-radius: 4px;
   }
-
   h1 {
     font-size: 1.3rem; 
   }
-
   .subtitle {
     font-size: 0.9rem;
     margin-bottom: 0.8em;
   }
-
   .label {
     font-size: 0.9rem;
   }
-
   .input-iban {
     font-size: 1rem;
     border-radius: 4px; 
-    border-right: 1px solid #ccc;
     margin-bottom: 0.5em;
+    border-right: 1px solid #ccc;
   }
-
   .input-wrapper {
     flex-direction: column;
     align-items: stretch;
   }
-
   .btn-paste {
-    margin-top: 0;
     border-radius: 4px;
     margin-left: 0;
     width: 100%;
     justify-content: center;
   }
-
   .btn-verify {
     font-size: 1rem;
     padding: 0.6em 1.2em;
   }
-
   .result-box {
     font-size: 1rem;
     min-height: 60px;
+  }
+  .info-text {
+    font-size: 0.9rem;
   }
 }
