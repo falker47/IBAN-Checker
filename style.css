@@ -14,6 +14,7 @@ html, body {
   background: #ffffff;
   border: 1px solid #ddd;
   border-radius: 6px;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -35,6 +36,16 @@ h1 {
   color: #333;
 }
 
+/* Gruppo input + pulsante incolla affiancati */
+.input-group {
+  margin-bottom: 1em;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: center;
+}
+
 .input-iban {
   display: block;
   width: 100%;
@@ -42,11 +53,32 @@ h1 {
   padding: 0.5em;
   font-size: 0.9rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 1em;
+  border-radius: 4px 0 0 4px; /* lato sinistro più rotondato, unito al pulsante */
   box-sizing: border-box;
 }
 
+.btn-paste {
+  background: #999;
+  color: #fff;
+  border: none;
+  padding: 0.5em 0.8em;
+  cursor: pointer;
+  font-size: 0.9rem;
+  border-radius: 0 4px 4px 0;
+  margin-left: -1px; /* evita doppio bordo */
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+.btn-paste:hover {
+  background: #666;
+}
+.btn-paste svg {
+  display: block;
+  stroke: currentColor;
+}
+
+/* Pulsante "Verifica" */
 .btn-verify {
   padding: 0.5em 1em;
   font-size: 0.9rem;
@@ -58,13 +90,13 @@ h1 {
   margin-bottom: 1em;
   transition: background 0.2s;
 }
-
 .btn-verify:hover {
   background: #0056b3;
 }
 
+/* Box risultati */
 .result-box {
-  white-space: pre-wrap; /* per visualizzare \n su più righe */
+  white-space: pre-wrap; 
   margin-top: 1em;
   padding: 1em;
   border: 1px solid #ccc;
@@ -73,4 +105,72 @@ h1 {
   color: #333;
   font-size: 0.9rem;
   line-height: 1.4;
+  box-sizing: border-box;
+}
+
+/* Responsive su smartphone max 480px */
+@media (max-width: 480px) {
+
+  .container {
+    width: 90%;
+    margin: 20px auto;
+    padding: 15px;
+    border-radius: 4px;
+  }
+
+  h1 {
+    font-size: 1.3rem; 
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    margin-bottom: 0.8em;
+  }
+
+  .label {
+    font-size: 0.9rem;
+  }
+
+  .input-iban {
+    max-width: 100%;
+    font-size: 1rem;
+    border-radius: 4px; 
+    margin-bottom: 0.5em;
+  }
+
+  .input-wrapper {
+    flex-direction: column; 
+    align-items: stretch;
+  }
+
+  .btn-paste {
+    border-radius: 4px;
+    margin-left: 0;
+    margin-bottom: 0.5em;
+    width: auto;
+    align-self: flex-start;
+  }
+
+  .btn-verify {
+    font-size: 1rem;
+    padding: 0.6em 1.2em;
+  }
+
+  .result-box {
+    font-size: 1rem;
+    min-height: 60px;
+  }
+}
+
+/* Tablet 481-768px */
+@media (max-width: 768px) and (min-width: 481px) {
+  .container {
+    width: 90%;
+    margin: 30px auto;
+    padding: 20px;
+  }
+
+  .btn-verify {
+    font-size: 0.95rem;
+  }
 }
