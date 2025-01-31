@@ -2,30 +2,47 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>IBAN Checker - Singolo Carattere / Swap</title>
+  <title>IBAN Checker (1 Char / Swap)</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>IBAN Checker (1 Char / Swap)</h1>
     <p class="subtitle">
-      Inserisci l'IBAN, oppure clicca la <strong>icona</strong> per incollarlo dagli Appunti.<br/>
+      Inserisci l'IBAN, oppure clicca l' <strong>icona</strong> per incollarlo dagli Appunti.<br/>
       Poi premi il pulsante per verificare.
     </p>
 
-    <div class="input-group">
-      <label for="ibanInput" class="label">IBAN:</label>
-      <div class="input-wrapper">
-        <input type="text" id="ibanInput" class="input-iban" placeholder="es. IT60X0542811101000000123456" />
-        <button class="btn-paste" onclick="pasteIban()" title="Incolla IBAN dagli Appunti">
-          <!-- Icona (clipboard) in formato SVG inline -->
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-               stroke-linecap="round" stroke-linejoin="round">
-            <path d="M16 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/>
-            <rect x="9" y="2" width="6" height="4" rx="1" ry="1"/>
-          </svg>
-        </button>
-      </div>
+    <label for="ibanInput" class="label">IBAN:</label>
+    <div class="input-wrapper">
+      <input
+        type="text"
+        id="ibanInput"
+        class="input-iban"
+        placeholder="es. IT60X0542811101000000123456"
+      />
+      <button
+        class="btn-paste"
+        onclick="pasteIban()"
+        title="Incolla IBAN dagli Appunti"
+      >
+        <!-- icona clipboard SVG -->
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M16 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"
+          />
+          <rect x="9" y="2" width="6" height="4" rx="1" ry="1" />
+        </svg>
+      </button>
     </div>
 
     <button class="btn-verify" onclick="checkIBAN()">Verifica IBAN</button>
@@ -35,16 +52,13 @@
 
 <script>
 /****************************************************
- * Funzione che incolla il testo dagli Appunti
+ * Incolla dagli Appunti
  ****************************************************/
 function pasteIban() {
-  // Verifichiamo che il browser supporti la Clipboard API
   if (!navigator.clipboard || !navigator.clipboard.readText) {
     alert("La funzionalità di incolla non è supportata dal tuo browser o non è sicura.");
     return;
   }
-
-  // Legge il testo dagli appunti
   navigator.clipboard.readText()
     .then(text => {
       document.getElementById("ibanInput").value = text;
@@ -56,192 +70,31 @@ function pasteIban() {
 }
 
 /****************************************************
- * 1) isIbanValid(iban): modulo 97
+ * Resto del codice: isIbanValid, isItalianIbanStructure...
+ * (lo puoi copiare identico a prima)
  ****************************************************/
+
 function isIbanValid(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
-  let rearranged = iban.slice(4) + iban.slice(0, 4);
-
-  let expanded = "";
-  for (let i = 0; i < rearranged.length; i++) {
-    let c = rearranged[i];
-    if (c >= "A" && c <= "Z") {
-      expanded += (c.charCodeAt(0) - 55).toString();
-    } else {
-      expanded += c;
-    }
-  }
-
-  let remainder = 0;
-  let blockSize = 9;
-  let pos = 0;
-  remainder = parseInt(expanded.substr(pos, blockSize), 10) % 97;
-  pos += blockSize;
-
-  while (pos < expanded.length) {
-    let size = Math.min(7, expanded.length - pos);
-    let part = remainder.toString() + expanded.substr(pos, size);
-    remainder = parseInt(part, 10) % 97;
-    pos += size;
-  }
-
-  return (remainder === 1);
+  // ... (come prima)
 }
-
-/****************************************************
- * 2) isItalianIbanStructure(iban)
- * Controlla che abbia 27 char, inizi con IT,
- * check digit 2 cifre, CIN 1 lettera, ABI e CAB 5 cifre,
- * 12 alfanumerici finali.
- ****************************************************/
 function isItalianIbanStructure(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
-  if (iban.length !== 27) return false;
-  if (!iban.startsWith("IT")) return false;
-  // check digit = 2 cifre
-  if (!/^\d{2}$/.test(iban.substring(2,4))) return false;
-  // CIN = 1 lettera
-  if (!/^[A-Z]$/.test(iban.substring(4,5))) return false;
-  // ABI = 5 cifre
-  if (!/^\d{5}$/.test(iban.substring(5,10))) return false;
-  // CAB = 5 cifre
-  if (!/^\d{5}$/.test(iban.substring(10,15))) return false;
-  // conto = 12 alfanumerici
-  if (!/^[A-Z0-9]{12}$/.test(iban.substring(15))) return false;
-  return true;
+  // ... (come prima)
 }
-
-/****************************************************
- * 3) formatIbanItalian(iban) - aggiunge spazi per leggibilità
- ****************************************************/
 function formatIbanItalian(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
-  if (iban.length !== 27) return iban; // se non è 27 char
-  return (
-    iban.substring(0,2) + " " +
-    iban.substring(2,4) + " " +
-    iban.substring(4,5) + " " +
-    iban.substring(5,10) + " " +
-    iban.substring(10,15) + " " +
-    iban.substring(15)
-  );
+  // ... (come prima)
 }
-
-/****************************************************
- * 4) findSingleCharCorrectionsItalian
- * Cambia 1 carattere in tutte le posizioni (0..9 A-Z)
- ****************************************************/
 function findSingleCharCorrectionsItalian(ibanOrig) {
-  const validChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let results = new Set();
-
-  ibanOrig = ibanOrig.toUpperCase().replace(/\s+/g, "");
-
-  for (let i = 0; i < ibanOrig.length; i++) {
-    for (let c of validChars) {
-      if (c === ibanOrig[i]) continue;
-      let newIban = ibanOrig.slice(0, i) + c + ibanOrig.slice(i+1);
-
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban)) {
-        results.add(newIban);
-      }
-    }
-  }
-  return Array.from(results);
+  // ... (come prima)
 }
-
-/****************************************************
- * 5) findSwapCorrectionsItalian
- * Scambia i caratteri tra 2 posizioni diverse
- ****************************************************/
 function findSwapCorrectionsItalian(ibanOrig) {
-  let results = new Set();
-  ibanOrig = ibanOrig.toUpperCase().replace(/\s+/g, "");
-  
-  let arr = ibanOrig.split("");
-  let n = arr.length;
-
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = i + 1; j < n; j++) {
-      // scambio
-      let tmp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = tmp;
-
-      let newIban = arr.join("");
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban)) {
-        results.add(newIban);
-      }
-
-      // ripristino
-      arr[j] = arr[i];
-      arr[i] = tmp;
-    }
-  }
-  return Array.from(results);
+  // ... (come prima)
 }
-
-/****************************************************
- * 6) findAllCorrectionsItalian
- * Unisce le correzioni a 1 char e a 2 char (swap)
- ****************************************************/
 function findAllCorrectionsItalian(ibanOrig) {
-  let singleCharList = findSingleCharCorrectionsItalian(ibanOrig);
-  let swapList = findSwapCorrectionsItalian(ibanOrig);
-  
-  let allSet = new Set([...singleCharList, ...swapList]);
-  return Array.from(allSet);
+  // ... (come prima)
 }
 
-/****************************************************
- * 7) checkIBAN()
- *  La funzione che si attiva col pulsante "Verifica IBAN"
- ****************************************************/
 function checkIBAN() {
-  let input = document.getElementById("ibanInput").value;
-  input = input.toUpperCase().replace(/\s+/g, "");
-
-  let resultDiv = document.getElementById("result");
-  
-  // Caso 1: se vuoto (lunghezza 0)
-  if (!input) {
-    resultDiv.textContent = 
-      "Se l'IBAN inserito non risulta valido, questo tool trova tutti\n" +
-      "gli IBAN validi ipotizzando che l'utente:\n" +
-      "• abbia sbagliato un solo carattere\n" +
-      "• abbia invertito due caratteri";
-    return;
-  }
-  
-  // Verifica lunghezza
-  if (input.length > 27) {
-    resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri";
-    return;
-  }
-  if (input.length < 27) {
-    resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri";
-    return;
-  }
-  
-  // Se 27
-  // Controlla se valido e struttura
-  if (isIbanValid(input) && isItalianIbanStructure(input)) {
-    resultDiv.textContent = "IBAN già valido: " + formatIbanItalian(input);
-    return;
-  }
-
-  // Altrimenti cerchiamo correzioni
-  let allCorrections = findAllCorrectionsItalian(input);
-
-  if (allCorrections.length === 0) {
-    resultDiv.textContent = 
-      "Nessuna correzione valida trovata (1 char o swap).";
-  } else {
-    let msg = "Trovate " + allCorrections.length + " correzioni:\n";
-    let lines = allCorrections.map(x => formatIbanItalian(x));
-    msg += lines.join("\n");
-    resultDiv.textContent = msg;
-  }
+  // ... (stessa logica di prima: controlli lunghezza, correzioni, output in #result)
 }
 </script>
 </body>
