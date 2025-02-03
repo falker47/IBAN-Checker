@@ -2,6 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IBAN Checker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -43,9 +44,7 @@
           stroke-linecap="round"
           stroke-linejoin="round"
         >
-          <path
-            d="M16 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"
-          />
+          <path d="M16 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
           <rect x="9" y="2" width="6" height="4" rx="1" ry="1" />
         </svg>
       </button>
@@ -57,7 +56,7 @@
     <!-- Output -->
     <div id="result" class="result-box"></div>
 
-    <!-- Testo aggiuntivo SOTTO la finestra output -->
+    <!-- Testo aggiuntivo sotto l'area di output -->
     <p class="info-text">
       Se l'IBAN è errato viene analizzato da un algoritmo che cerca l'IBAN corretto 
       considerando le principali cause di errore, come aver scritto male un carattere 
@@ -69,200 +68,163 @@
     </p>
   </div>
 
-<script>
-/****************************************************
- * 1) pasteIban(): Incolla dagli Appunti
- ****************************************************/
-function pasteIban() {
-  if (!navigator.clipboard || !navigator.clipboard.readText) {
-    alert("La funzionalità di incolla non è supportata dal tuo browser o non è sicura.");
-    return;
-  }
-  navigator.clipboard.readText()
-    .then(text => {
-      document.getElementById("ibanInput").value = text;
-    })
-    .catch(err => {
-      console.error("Errore lettura appunti:", err);
-      alert("Impossibile incollare: manca il permesso o il browser non è compatibile.");
-    });
-}
-
-/****************************************************
- * 2) Funzioni di controllo IBAN (uguali a prima)
- *    - isIbanValid, isItalianIbanStructure, formatIbanItalian,
- *      findSingleCharCorrectionsItalian, findSwapCorrectionsItalian,
- *      findAllCorrectionsItalian
- ****************************************************/
-
-function isIbanValid(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
-  let rearranged = iban.slice(4) + iban.slice(0, 4);
-
-  let expanded = "";
-  for (let i = 0; i < rearranged.length; i++) {
-    let c = rearranged[i];
-    if (c >= "A" && c <= "Z") {
-      expanded += (c.charCodeAt(0) - 55).toString();
-    } else {
-      expanded += c;
+  <script>
+    /****************************************************
+     * 1) pasteIban(): Incolla dagli Appunti
+     ****************************************************/
+    function pasteIban() {
+      if (!navigator.clipboard || !navigator.clipboard.readText) {
+        alert("La funzionalità di incolla non è supportata dal tuo browser o non è sicura.");
+        return;
+      }
+      navigator.clipboard.readText()
+        .then(text => {
+          document.getElementById("ibanInput").value = text;
+        })
+        .catch(err => {
+          console.error("Errore lettura appunti:", err);
+          alert("Impossibile incollare: manca il permesso o il browser non è compatibile.");
+        });
     }
-  }
 
-  let remainder = 0;
-  let blockSize = 9;
-  let pos = 0;
-  remainder = parseInt(expanded.substr(pos, blockSize), 10) % 97;
-  pos += blockSize;
+    /****************************************************
+     * 2) Funzioni di controllo IBAN (uguali a prima)
+     ****************************************************/
+    function isIbanValid(iban) {
+      iban = iban.toUpperCase().replace(/\s+/g, "");
+      let rearranged = iban.slice(4) + iban.slice(0, 4);
+      let expanded = "";
+      for (let i = 0; i < rearranged.length; i++) {
+        let c = rearranged[i];
+        if (c >= "A" && c <= "Z") {
+          expanded += (c.charCodeAt(0) - 55).toString();
+        } else {
+          expanded += c;
+        }
+      }
+      let remainder = 0;
+      let blockSize = 9;
+      let pos = 0;
+      remainder = parseInt(expanded.substr(pos, blockSize), 10) % 97;
+      pos += blockSize;
+      while (pos < expanded.length) {
+        let size = Math.min(7, expanded.length - pos);
+        let part = remainder.toString() + expanded.substr(pos, size);
+        remainder = parseInt(part, 10) % 97;
+        pos += size;
+      }
+      return remainder === 1;
+    }
 
-  while (pos < expanded.length) {
-    let size = Math.min(7, expanded.length - pos);
-    let part = remainder.toString() + expanded.substr(pos, size);
-    remainder = parseInt(part, 10) % 97;
-    pos += size;
-  }
+    function isItalianIbanStructure(iban) {
+      iban = iban.toUpperCase().replace(/\s+/g, "");
+      if (iban.length !== 27) return false;
+      if (!iban.startsWith("IT")) return false;
+      let checkDigits = iban.substring(2,4);
+      if (!/^\d{2}$/.test(checkDigits)) return false;
+      let cin = iban.substring(4,5);
+      if (!/^[A-Z]$/.test(cin)) return false;
+      let abi = iban.substring(5,10);
+      if (!/^[01]\d{4}$/.test(abi)) return false;
+      let cab = iban.substring(10,15);
+      if (!/^\d{5}$/.test(cab)) return false;
+      let conto = iban.substring(15);
+      if (!/^[0-9X]{12}$/.test(conto)) return false;
+      return true;
+    }
 
-  return remainder === 1;
-}
+    function formatIbanItalian(iban) {
+      iban = iban.toUpperCase().replace(/\s+/g, "");
+      if (iban.length !== 27) return iban;
+      return (
+        iban.substring(0,2) + " " +
+        iban.substring(2,4) + " " +
+        iban.substring(4,5) + " " +
+        iban.substring(5,10) + " " +
+        iban.substring(10,15) + " " +
+        iban.substring(15)
+      );
+    }
 
-function isItalianIbanStructure(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
-  if (iban.length !== 27) return false;
-  if (!iban.startsWith("IT")) return false;
+    function findSingleCharCorrectionsItalian(ibanOrig) {
+      const validChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      let results = new Set();
+      ibanOrig = ibanOrig.toUpperCase().replace(/\s+/g, "");
+      for (let i = 0; i < ibanOrig.length; i++) {
+        for (let c of validChars) {
+          if (c === ibanOrig[i]) continue;
+          let newIban = ibanOrig.slice(0, i) + c + ibanOrig.slice(i+1);
+          if (isIbanValid(newIban) && isItalianIbanStructure(newIban)) {
+            results.add(newIban);
+          }
+        }
+      }
+      return Array.from(results);
+    }
 
-  // check digit (2 cifre)
-  let checkDigits = iban.substring(2,4);
-  if (!/^\d{2}$/.test(checkDigits)) return false;
+    function findSwapCorrectionsItalian(ibanOrig) {
+      let results = new Set();
+      ibanOrig = ibanOrig.toUpperCase().replace(/\s+/g, "");
+      let arr = ibanOrig.split("");
+      let n = arr.length;
+      for (let i = 0; i < n - 1; i++) {
+        for (let j = i + 1; j < n; j++) {
+          let tmp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = tmp;
+          let newIban = arr.join("");
+          if (isIbanValid(newIban) && isItalianIbanStructure(newIban)) {
+            results.add(newIban);
+          }
+          // ripristino
+          arr[j] = arr[i];
+          arr[i] = tmp;
+        }
+      }
+      return Array.from(results);
+    }
 
-  // CIN (1 lettera)
-  let cin = iban.substring(4,5);
-  if (!/^[A-Z]$/.test(cin)) return false;
+    function findAllCorrectionsItalian(ibanOrig) {
+      let singleCharList = findSingleCharCorrectionsItalian(ibanOrig);
+      let swapList = findSwapCorrectionsItalian(ibanOrig);
+      let allSet = new Set([...singleCharList, ...swapList]);
+      return Array.from(allSet);
+    }
 
-  // ABI: 5 cifre, prima obbligatoriamente 0 o 1
-  let abi = iban.substring(5,10);
-  if (!/^[01]\d{4}$/.test(abi)) {
-    return false;
-  }
-
-  // CAB: 5 cifre
-  let cab = iban.substring(10,15);
-  if (!/^\d{5}$/.test(cab)) return false;
-
-  // Numero Conto: solo cifre e X
-  let conto = iban.substring(15);
-  if (!/^[0-9X]{12}$/.test(conto)) {
-    return false;
-  }
-
-  return true;
-}
-
-
-function formatIbanItalian(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
-  if (iban.length !== 27) return iban;
-  return (
-    iban.substring(0,2) + " " +
-    iban.substring(2,4) + " " +
-    iban.substring(4,5) + " " +
-    iban.substring(5,10) + " " +
-    iban.substring(10,15) + " " +
-    iban.substring(15)
-  );
-}
-
-function findSingleCharCorrectionsItalian(ibanOrig) {
-  const validChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let results = new Set();
-  ibanOrig = ibanOrig.toUpperCase().replace(/\s+/g, "");
-
-  for (let i = 0; i < ibanOrig.length; i++) {
-    for (let c of validChars) {
-      if (c === ibanOrig[i]) continue;
-      let newIban = ibanOrig.slice(0, i) + c + ibanOrig.slice(i+1);
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban)) {
-        results.add(newIban);
+    /****************************************************
+     * 3) checkIBAN(): esegue verifica e mostra output
+     ****************************************************/
+    function checkIBAN() {
+      let input = document.getElementById("ibanInput").value;
+      input = input.toUpperCase().replace(/\s+/g, "");
+      let resultDiv = document.getElementById("result");
+      if (!input) {
+        resultDiv.textContent =
+          "Campo vuoto: incolla o inserisci un IBAN prima di verificare.";
+        return;
+      }
+      if (input.length > 27) {
+        resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.";
+        return;
+      }
+      if (input.length < 27) {
+        resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.";
+        return;
+      }
+      if (isIbanValid(input) && isItalianIbanStructure(input)) {
+        resultDiv.textContent = "IBAN già valido: " + formatIbanItalian(input);
+        return;
+      }
+      let allCorrections = findAllCorrectionsItalian(input);
+      if (allCorrections.length === 0) {
+        resultDiv.textContent = "Nessuna correzione valida trovata (1 char o swap).";
+      } else {
+        let msg = "Trovate " + allCorrections.length + " correzioni:\n";
+        let lines = allCorrections.map(x => formatIbanItalian(x));
+        msg += lines.join("\n");
+        resultDiv.textContent = msg;
       }
     }
-  }
-  return Array.from(results);
-}
-
-function findSwapCorrectionsItalian(ibanOrig) {
-  let results = new Set();
-  ibanOrig = ibanOrig.toUpperCase().replace(/\s+/g, "");
-  let arr = ibanOrig.split("");
-  let n = arr.length;
-
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = i + 1; j < n; j++) {
-      let tmp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = tmp;
-
-      let newIban = arr.join("");
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban)) {
-        results.add(newIban);
-      }
-
-      // ripristino
-      arr[j] = arr[i];
-      arr[i] = tmp;
-    }
-  }
-  return Array.from(results);
-}
-
-function findAllCorrectionsItalian(ibanOrig) {
-  let singleCharList = findSingleCharCorrectionsItalian(ibanOrig);
-  let swapList = findSwapCorrectionsItalian(ibanOrig);
-  let allSet = new Set([...singleCharList, ...swapList]);
-  return Array.from(allSet);
-}
-
-/****************************************************
- * 3) checkIBAN(): esegue verifica e mostra output
- ****************************************************/
-function checkIBAN() {
-  let input = document.getElementById("ibanInput").value;
-  input = input.toUpperCase().replace(/\s+/g, "");
-
-  let resultDiv = document.getElementById("result");
-
-  // Se vuoto
-  if (!input) {
-    resultDiv.textContent =
-      "Campo vuoto: incolla o inserisci un IBAN prima di verificare.";
-    return;
-  }
-
-  // Controllo lunghezza
-  if (input.length > 27) {
-    resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.";
-    return;
-  }
-  if (input.length < 27) {
-    resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.";
-    return;
-  }
-
-  // Se 27
-  if (isIbanValid(input) && isItalianIbanStructure(input)) {
-    resultDiv.textContent = "IBAN già valido: " + formatIbanItalian(input);
-    return;
-  }
-
-  // Altrimenti cerchiamo correzioni
-  let allCorrections = findAllCorrectionsItalian(input);
-  if (allCorrections.length === 0) {
-    resultDiv.textContent = "Nessuna correzione valida trovata (1 char o swap).";
-  } else {
-    let msg = "Trovate " + allCorrections.length + " correzioni:\n";
-    let lines = allCorrections.map(x => formatIbanItalian(x));
-    msg += lines.join("\n");
-    resultDiv.textContent = msg;
-  }
-}
-</script>
+  </script>
 </body>
 </html>
