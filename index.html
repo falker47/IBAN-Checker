@@ -129,18 +129,34 @@ function isItalianIbanStructure(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
   if (iban.length !== 27) return false;
   if (!iban.startsWith("IT")) return false;
-  // check digit = 2 cifre
-  if (!/^\d{2}$/.test(iban.substring(2,4))) return false;
-  // CIN = 1 lettera
-  if (!/^[A-Z]$/.test(iban.substring(4,5))) return false;
-  // ABI = 5 cifre
-  if (!/^\d{5}$/.test(iban.substring(5,10))) return false;
-  // CAB = 5 cifre
-  if (!/^\d{5}$/.test(iban.substring(10,15))) return false;
-  // conto = 12 alfanumerici
-  if (!/^[A-Z0-9]{12}$/.test(iban.substring(15))) return false;
+
+  // check digit (2 cifre)
+  let checkDigits = iban.substring(2,4);
+  if (!/^\d{2}$/.test(checkDigits)) return false;
+
+  // CIN (1 lettera)
+  let cin = iban.substring(4,5);
+  if (!/^[A-Z]$/.test(cin)) return false;
+
+  // ABI: 5 cifre, prima obbligatoriamente 0 o 1
+  let abi = iban.substring(5,10);
+  if (!/^[01]\d{4}$/.test(abi)) {
+    return false;
+  }
+
+  // CAB: 5 cifre
+  let cab = iban.substring(10,15);
+  if (!/^\d{5}$/.test(cab)) return false;
+
+  // Numero Conto: solo cifre e X
+  let conto = iban.substring(15);
+  if (!/^[0-9X]{12}$/.test(conto)) {
+    return false;
+  }
+
   return true;
 }
+
 
 function formatIbanItalian(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
