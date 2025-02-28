@@ -1,3 +1,16 @@
+// Variabile globale per memorizzare le combinazioni valide
+let validBranches = [];
+
+// Carica il file JSON all'avvio
+fetch('validBranches.json')
+  .then(response => response.json())
+  .then(data => {
+    validBranches = data;
+    console.log("Valid Branches caricate:", validBranches);
+  })
+  .catch(err => console.error("Errore nel caricamento di validBranches.json:", err));
+
+
 /****************************************************
  * 1) pasteIban(): Incolla dagli Appunti
  ****************************************************/
@@ -81,23 +94,20 @@ function isItalianIbanStructure(iban) {
  ****************************************************/
 function isValidBankBranch(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
-  // Verifica lunghezza minima per estrarre ABI e CAB
   if (iban.length < 15) return false;
   let abi = iban.substring(5, 10);
   let cab = iban.substring(10, 15);
   
-  // Array di combinazioni valide in formato "ABI_CAB"
-  const validBranches = [
-    "07092_41220",
-    "07092_41221",
-    "07092_41222",
-    "03069_11101"
-    // Aggiungi qui le combinazioni ufficiali
-  ];
-  
   let key = abi + "_" + cab;
+  // Assicurati che validBranches sia stato caricato (lunghezza > 0)
+  if (!validBranches || validBranches.length === 0) {
+    console.warn("validBranches non ancora caricato.");
+    return false;
+  }
+  
   return validBranches.includes(key);
 }
+
 
 /****************************************************
  * 5) Funzione per formattare l'IBAN italiano con spazi
