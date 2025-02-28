@@ -1,14 +1,15 @@
-// Variabile globale per memorizzare le combinazioni valide
-let validBranches = [];
+// Variabile globale per memorizzare i codici ABI validi
+let validABIs = [];
 
 // Carica il file JSON all'avvio
-fetch('validBranches.json')
+fetch('validABIs.json')
   .then(response => response.json())
   .then(data => {
-    validBranches = data;
-    console.log("Valid Branches caricate:", validBranches);
+    validABIs = data;
+    console.log("Valid ABIs caricate:", validABIs);
   })
-  .catch(err => console.error("Errore nel caricamento di validBranches.json:", err));
+  .catch(err => console.error("Errore nel caricamento di validABIs.json:", err));
+
 
 
 /****************************************************
@@ -90,23 +91,22 @@ function isItalianIbanStructure(iban) {
 }
 
 /****************************************************
- * 4) Funzione per validare ABI/CAB tramite un array di combinazioni valide
+ * 4) Funzione per validare ABI tramite un array di combinazioni valide
  ****************************************************/
-function isValidBankBranch(iban) {
+function isValidABI(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
-  if (iban.length < 15) return false;
+  // Assicuriamoci che l'IBAN abbia almeno 10 caratteri per estrarre l'ABI
+  if (iban.length < 10) return false;
+  // Estrae l'ABI: i caratteri dalla posizione 5 alla 10 (ricorda: posizione 5 inclusa, posizione 10 esclusa)
   let abi = iban.substring(5, 10);
-  let cab = iban.substring(10, 15);
-  
-  let key = abi + "_" + cab;
-  // Assicurati che validBranches sia stato caricato (lunghezza > 0)
-  if (!validBranches || validBranches.length === 0) {
-    console.warn("validBranches non ancora caricato.");
+  // Se l'array validABIs non è ancora caricato, emetti un avviso
+  if (!validABIs || validABIs.length === 0) {
+    console.warn("validABIs non ancora caricato.");
     return false;
   }
-  
-  return validBranches.includes(key);
+  return validABIs.includes(abi);
 }
+
 
 
 /****************************************************
@@ -137,7 +137,7 @@ function findSingleCharCorrectionsItalian(ibanOrig) {
     for (let c of validChars) {
       if (c === ibanOrig[i]) continue;
       let newIban = ibanOrig.slice(0, i) + c + ibanOrig.slice(i+1);
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban) && isValidBankBranch(newIban)) {
+      if (isIbanValid(newIban) && isItalianIbanStructure(newIban) && isValidABI(newIban)) {
         results.add(newIban);
       }
     }
@@ -160,7 +160,7 @@ function findSwapCorrectionsItalian(ibanOrig) {
       arr[i] = arr[j];
       arr[j] = tmp;
       let newIban = arr.join("");
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban) && isValidBankBranch(newIban)) {
+      if (isIbanValid(newIban) && isItalianIbanStructure(newIban) && isValidABI(newIban)) {
         results.add(newIban);
       }
       // Ripristina lo scambio
@@ -203,7 +203,8 @@ function checkIBAN() {
     resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.";
     return;
   }
-  if (isIbanValid(input) && isItalianIbanStructure(input) && isValidBankBranch(input)) {
+  // Ora controlla anche solo l'ABI
+  if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input)) {
     resultDiv.textContent = "IBAN già valido: " + formatIbanItalian(input);
     return;
   }
@@ -217,3 +218,4 @@ function checkIBAN() {
     resultDiv.textContent = msg;
   }
 }
+
