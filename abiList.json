@@ -240,16 +240,40 @@
     "Denominazione": "PARTNER BANK AG"
   },
   {
+    "ABI": "03038",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03039",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03040",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03041",
     "Denominazione": "UBS EUROPE SE"
+  },
+  {
+    "ABI": "03042",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03043",
     "Denominazione": "BANCA INVESTIS S.P.A."
   },
   {
+    "ABI": "03044",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03045",
     "Denominazione": "BANCA AKROS S.P.A."
+  },
+  {
+    "ABI": "03046",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03047",
@@ -260,36 +284,136 @@
     "Denominazione": "BANCA DEL PIEMONTE S.P.A."
   },
   {
+    "ABI": "03049",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03051",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03052",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03053",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03054",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03055",
     "Denominazione": "BAYERISCHE LANDESBANK"
+  },
+  {
+    "ABI": "03056",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03057",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03058",
     "Denominazione": "MEDIOBANCA PREMIER S.P.A."
   },
   {
+    "ABI": "03059",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03060",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03061",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03062",
     "Denominazione": "BANCA MEDIOLANUM S.P.A."
+  },
+  {
+    "ABI": "03063",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03064",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03065",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03067",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03069",
     "Denominazione": "INTESA SANPAOLO S.P.A."
   },
   {
+    "ABI": "03070",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03071",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03072",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03073",
     "Denominazione": "BHW BAUSPARKASSE AG"
+  },
+  {
+    "ABI": "03074",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03075",
     "Denominazione": "BANCA GENERALI - SOCIETA' PER AZIONI (IN FORMA ABBREVIATA GENERBANCA)"
   },
   {
+    "ABI": "03076",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03077",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03078",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03081",
     "Denominazione": "UNICREDIT BANK GMBH"
   },
   {
+    "ABI": "03082",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03083",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03084",
     "Denominazione": "BANCA CESARE PONTI S.P.A."
+  },
+  {
+    "ABI": "03085",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03086",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03087",
@@ -300,16 +424,48 @@
     "Denominazione": "CREDIT SUISSE (ITALY) S.P.A."
   },
   {
+    "ABI": "03090",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03091",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03093",
     "Denominazione": "BANK OF CHINA LIMITED - FILIALE DI MILANO"
+  },
+  {
+    "ABI": "03094",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03095",
     "Denominazione": "COMMERZBANK AG"
   },
   {
+    "ABI": "03096",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03097",
     "Denominazione": "AAREAL BANK AG"
+  },
+  {
+    "ABI": "03098",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03099",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03100",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03101",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03102",
@@ -328,12 +484,64 @@
     "Denominazione": "VOLKSWAGEN BANK GMBH"
   },
   {
+    "ABI": "03107",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03108",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03109",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03110",
     "Denominazione": "BANCA CREDIFARMA S.P.A."
   },
   {
+    "ABI": "03111",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03112",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03113",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03114",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03115",
     "Denominazione": "FINDOMESTIC BANCA SPA"
+  },
+  {
+    "ABI": "03116",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03117",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03119",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03120",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03121",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03122",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03123",
@@ -344,8 +552,44 @@
     "Denominazione": "BANCA DEL FUCINO S.P.A."
   },
   {
+    "ABI": "03125",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03126",
     "Denominazione": "CA INDOSUEZ WEALTH (EUROPE) S.A."
+  },
+  {
+    "ABI": "03127",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03130",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03131",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03132",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03134",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03135",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03136",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03137",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03138",
@@ -356,12 +600,52 @@
     "Denominazione": "BANCA PER LO SVILUPPO DELLA COOPERAZIONE DI CREDITO S.P.A."
   },
   {
+    "ABI": "03140",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03141",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03142",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03143",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03144",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03147",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03148",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03149",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03150",
     "Denominazione": "DEUTSCHE BANK MUTUI S.P.A."
   },
   {
     "ABI": "03151",
     "Denominazione": "HYPO TIROL BANK AG"
+  },
+  {
+    "ABI": "03154",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03157",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03158",
@@ -372,52 +656,360 @@
     "Denominazione": "FININT PRIVATE BANK S.P.A. (FPB S.P.A.)"
   },
   {
+    "ABI": "03161",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03162",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03163",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03164",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03165",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03166",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03168",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03169",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03170",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03171",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03172",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03173",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03174",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03175",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03176",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03177",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03178",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03179",
     "Denominazione": "BNP PARIBAS LEASE GROUP"
+  },
+  {
+    "ABI": "03181",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03183",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03184",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03185",
     "Denominazione": "BANCA IFIGEST - S.P.A."
   },
   {
+    "ABI": "03186",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03187",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03189",
     "Denominazione": "NATIXIS S.A."
+  },
+  {
+    "ABI": "03190",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03191",
     "Denominazione": "SANTANDER CONSUMER BANK S.P.A."
   },
   {
+    "ABI": "03192",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03193",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03194",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03195",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03196",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03197",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03198",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03199",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03200",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03201",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03202",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03203",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03204",
+    "Denominazione": "BANCA DI LEGNANO S.P.A."
+  },
+  {
     "ABI": "03205",
     "Denominazione": "BANCA IFIS S.P.A."
+  },
+  {
+    "ABI": "03206",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03207",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03208",
+    "Denominazione": "BANCA DI LUCANIA"
+  },
+  {
+    "ABI": "03209",
+    "Denominazione": "BANCA BSI ITALIA S.P.A."
+  },
+  {
+    "ABI": "03210",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03211",
     "Denominazione": "BANCA PATRIMONI SELLA & C. S.P.A. (BPS S.P.A.)"
   },
   {
+    "ABI": "03213",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03214",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03215",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03216",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03217",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03218",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03219",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03220",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03221",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03222",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03223",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03224",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03225",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03226",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03227",
     "Denominazione": "CNH INDUSTRIAL CAPITAL EUROPE"
+  },
+  {
+    "ABI": "03229",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03230",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03231",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03232",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03233",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03234",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03235",
     "Denominazione": "BANCA DI SCONTO S.P.A."
   },
   {
+    "ABI": "03237",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03238",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03239",
     "Denominazione": "INTESA SANPAOLO PRIVATE BANKING S.P.A."
+  },
+  {
+    "ABI": "03240",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03241",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03242",
     "Denominazione": "BANCO DI LUCCA E DEL TIRRENO S.P.A."
   },
   {
+    "ABI": "03243",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03244",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03245",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03246",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03247",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03248",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03249",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03250",
     "Denominazione": "CREDEM EUROMOBILIARE PRIVATE BANKING S.P.A."
   },
   {
+    "ABI": "03251",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03253",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03257",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03258",
     "Denominazione": "ERSEL BANCA PRIVATA S.P.A. IN FORMA ABBREVIATA ERSEL S.P.A."
+  },
+  {
+    "ABI": "03259",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03262",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03263",
@@ -436,28 +1028,164 @@
     "Denominazione": "BANCA GALILEO S.P.A."
   },
   {
+    "ABI": "03267",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03268",
     "Denominazione": "BANCA SELLA - S.P.A."
+  },
+  {
+    "ABI": "03268",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03269",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03270",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03271",
     "Denominazione": "ALLFUNDS BANK S.A."
   },
   {
+    "ABI": "03271",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03272",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03273",
     "Denominazione": "SOLUTION BANK S.P.A."
+  },
+  {
+    "ABI": "03273",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03274",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03275",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03277",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03278",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03279",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03280",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03281",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03282",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03283",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03284",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03285",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03287",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03288",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03289",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03290",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03291",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03292",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03293",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03294",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03295",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03296",
     "Denominazione": "FIDEURAM - INTESA SANPAOLO PRIVATE BANKING S.P.A."
   },
   {
+    "ABI": "03296",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03298",
     "Denominazione": "DEUTSCHE BANK AG"
   },
   {
+    "ABI": "03299",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03300",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03301",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03302",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03303",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03305",
     "Denominazione": "BPCE LEASE S.A."
+  },
+  {
+    "ABI": "03305",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03306",
@@ -468,40 +1196,180 @@
     "Denominazione": "SOCIETE' GENERALE SECURITIES SERVICES S.P.A. (IN FORMA ABBREVIATA SGSS S.P.A.)"
   },
   {
+    "ABI": "03309",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03310",
+    "Denominazione": "ETICREDITO - BANCA ETICA ADRIATICA S.P.A."
+  },
+  {
     "ABI": "03311",
     "Denominazione": "BANCA SELLA HOLDING S.P.A."
+  },
+  {
+    "ABI": "03312",
+    "Denominazione": "BANCA MERCANTILE ITALIANA - FIRENZE"
+  },
+  {
+    "ABI": "03313",
+    "Denominazione": "BANCA IMPRESA LAZIO SPA"
+  },
+  {
+    "ABI": "03314",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03315",
+    "Denominazione": "DEUTSCHE PFANDBRIEFBANK AG"
+  },
+  {
+    "ABI": "03316",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03317",
     "Denominazione": "BANCA MACERATA S.P.A. (IN FORMA ABBREVIATA BPRM S.P.A.)"
   },
   {
+    "ABI": "03318",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03319",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03321",
     "Denominazione": "CACEIS INVESTOR SERVICES BANK S.A."
+  },
+  {
+    "ABI": "03323",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03325",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03327",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03328",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03329",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03330",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03331",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03332",
     "Denominazione": "BANCA PASSADORE & C. S.P.A."
   },
   {
+    "ABI": "03333",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03334",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03336",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03337",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03338",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03339",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03343",
     "Denominazione": "BANK PICTET & CIE (EUROPE) AG"
+  },
+  {
+    "ABI": "03344",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03345",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03346",
     "Denominazione": "MIZUHO BANK LIMITED"
   },
   {
+    "ABI": "03347",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03348",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03349",
     "Denominazione": "IC FINANCIAL SERVICES S.A."
+  },
+  {
+    "ABI": "03350",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03351",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03353",
     "Denominazione": "SMART BANK SOCIETÀ PER AZIONI IN AMMINISTRAZIONE STRAORDINARIA"
   },
   {
+    "ABI": "03354",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03355",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03356",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03357",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03358",
     "Denominazione": "CLAAS FINANCIAL SERVICES"
+  },
+  {
+    "ABI": "03359",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03360",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03361",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03362",
@@ -512,12 +1380,44 @@
     "Denominazione": "CHERRY BANK S.P.A. (CON ACRONIMO CHERRY BANK O CHERRY)"
   },
   {
+    "ABI": "03366",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03367",
     "Denominazione": "BANCA SANTA GIULIA S.P.A."
   },
   {
+    "ABI": "03368",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03372",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03376",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03377",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03379",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03380",
+    "Denominazione": "NON CENSITA"
+  },
+  {
     "ABI": "03381",
     "Denominazione": "BANK SEPAH"
+  },
+  {
+    "ABI": "03384",
+    "Denominazione": "NON CENSITA"
   },
   {
     "ABI": "03386",
@@ -536,6 +1436,18 @@
     "Denominazione": "BANCO SANTANDER S.A."
   },
   {
+    "ABI": "03390",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03391",
+    "Denominazione": "NON CENSITA"
+  },
+  {
+    "ABI": "03392",
+    "Denominazione": "BANCA TIBURTINA DI CREDITO E SERVIZI - TIVOLI (ROMA)"
+  },
+  {
     "ABI": "03394",
     "Denominazione": "STIFEL EUROPE BANK AG"
   },
@@ -548,6 +1460,10 @@
     "Denominazione": "EXTRABANCA S.P.A."
   },
   {
+    "ABI": "03400",
+    "Denominazione": "BANCA TOSCANA S.P.A."
+  },
+  {
     "ABI": "03403",
     "Denominazione": "IMPREBANCA S.P.A."
   },
@@ -556,8 +1472,24 @@
     "Denominazione": "EDMOND DE ROTHSCHILD (FRANCE)"
   },
   {
+    "ABI": "03409",
+    "Denominazione": "BANCA VENTURI"
+  },
+  {
+    "ABI": "03410",
+    "Denominazione": "BANCA VINCENZO TAMBORINO"
+  },
+  {
     "ABI": "03411",
     "Denominazione": "INDUSTRIAL AND COMMERCIAL BANK OF CHINA (EUROPE) S.A. IN FORMA ABBREVIATA ICBC (EUROPE) S.A."
+  },
+  {
+    "ABI": "03413",
+    "Denominazione": "BANCA ZANONE"
+  },
+  {
+    "ABI": "03414",
+    "Denominazione": "BANKERS TRUST COMPANY"
   },
   {
     "ABI": "03415",
@@ -566,6 +1498,14 @@
   {
     "ABI": "03417",
     "Denominazione": "BANCA PRIVATA LEASING S.P.A."
+  },
+  {
+    "ABI": "03418",
+    "Denominazione": "BANKERS TRUST INTERNATIONAL PLC"
+  },
+  {
+    "ABI": "03424",
+    "Denominazione": "BANCO DI CHIAVARI E DELLA RIVIERA LIGURE"
   },
   {
     "ABI": "03425",
@@ -578,6 +1518,10 @@
   {
     "ABI": "03427",
     "Denominazione": "UNION BANCAIRE PRIVEE (EUROPE) S.A."
+  },
+  {
+    "ABI": "03428",
+    "Denominazione": "BANCO DI CREDITO SICILIANO"
   },
   {
     "ABI": "03430",
@@ -618,6 +1562,10 @@
   {
     "ABI": "03445",
     "Denominazione": "CRÉDIT AGRICOLE AUTO BANK S.P.A."
+  },
+  {
+    "ABI": "03448",
+    "Denominazione": "BANCO DI PERUGIA"
   },
   {
     "ABI": "03475",
@@ -1818,449 +2766,5 @@
   {
     "ABI": 23237,
     "Denominazione": "ICG EUROPE SARL"
-  },
-  {
-    "ABI": "03038",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03039",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03040",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03042",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03044",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03046",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03049",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03051",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03052",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03053",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03054",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03056",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03057",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03059",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03060",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03061",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03063",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03064",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03065",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03067",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03070",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03071",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03072",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03074",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03076",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03077",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03078",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03082",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03083",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03085",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03086",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03090",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03091",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03094",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03096",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03098",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03099",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03100",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03101",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03107",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03108",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03109",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03111",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03112",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03113",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03114",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03116",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03117",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03119",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03120",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03121",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03122",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03125",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03127",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03130",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03131",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03132",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03134",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03135",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03136",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03137",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03140",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03141",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03142",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03143",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03144",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03147",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03148",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03149",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03154",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03157",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03161",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03162",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03163",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03164",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03165",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03166",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03168",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03169",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03170",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03171",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03172",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03173",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03174",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03175",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03176",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03177",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03178",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03181",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03183",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03184",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03186",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03187",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03190",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03192",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03193",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03194",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03195",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03196",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03197",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03198",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03199",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03200",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03201",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03202",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03203",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03204",
-    "Denominazione": "BANCA DI LEGNANO S.P.A."
-  },
-  {
-    "ABI": "03206",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03207",
-    "Denominazione": "NON CENSITA"
-  },
-  {
-    "ABI": "03208",
-    "Denominazione": "BANCA DI LUCANIA"
-  },
-  {
-    "ABI": "03209",
-    "Denominazione": "NON CENSITA"
   }
 ]
