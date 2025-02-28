@@ -63,38 +63,7 @@ function isIbanValid(iban) {
 }
 
 /****************************************************
- * 3) Funzione per controllare la struttura IBAN italiano (27 caratteri)
- ****************************************************/
-function isItalianIbanStructure(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
-  if (iban.length !== 27) return false;
-  if (!iban.startsWith("IT")) return false;
-  
-  // Check digit (2 cifre)
-  let checkDigits = iban.substring(2, 4);
-  if (!/^\d{2}$/.test(checkDigits)) return false;
-  
-  // CIN (1 lettera)
-  let cin = iban.substring(4, 5);
-  if (!/^[A-Z]$/.test(cin)) return false;
-  
-  // ABI (5 cifre) - la prima deve essere 0 o 1
-  let abi = iban.substring(5, 10);
-  if (!/^[01]\d{4}$/.test(abi)) return false;
-  
-  // CAB (5 cifre)
-  let cab = iban.substring(10, 15);
-  if (!/^\d{5}$/.test(cab)) return false;
-  
-  // Numero conto (12 caratteri): accetta [0-9X]{12}, oppure C[0-9X]{11} oppure CC[0-9X]{10}
-  let conto = iban.substring(15);
-  if (!/^(?:[0-9X]{12}|C[0-9X]{11}|CC[0-9X]{10})$/.test(conto)) return false;
-  
-  return true;
-}
-
-/****************************************************
- * 4) Funzione per validare ABI tramite un array di combinazioni valide
+ * 3) Funzione per validare ABI tramite un array di combinazioni valide
  ****************************************************/
 function isValidABI(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
@@ -111,7 +80,7 @@ function isValidABI(iban) {
 }
 
 /****************************************************
- * 4a) Funzione per recuperare il nome banca
+ * 4) Funzione per recuperare il nome banca
  ****************************************************/
 function getBankName(iban) {
   let abi = iban.substring(5, 10);
@@ -119,7 +88,7 @@ function getBankName(iban) {
 }
 
 /****************************************************
- * 4c) Funzione che esclude CAB invalidi
+ * 5) Funzione che esclude CAB invalidi
  ****************************************************/
 
 function isValidCAB(iban) {
@@ -142,7 +111,59 @@ function isValidCAB(iban) {
 }
 
 /****************************************************
- * 5) Funzione per formattare l'IBAN italiano con spazi
+ * 6) Funzione per verificare il numero di conto
+ ****************************************************/
+function isValidAccountNumber(iban) {
+  // Rimuove spazi e converte in maiuscolo
+  iban = iban.toUpperCase().replace(/\s+/g, "");
+  if (iban.length !== 27) return false; // Assicurati che l'IBAN sia completo
+  // Estrae il numero di conto: caratteri 16-27 (substring inizia da indice 15, lunghezza 12)
+  let account = iban.substring(15);
+  // La regex:
+  // ^                -> inizio stringa
+  // [10X]           -> 1° carattere: 1, 0 o X
+  // [0X]            -> 2° carattere: 0 o X
+  // 0{3}            -> 3°-5° carattere: tre 0 consecutivi
+  // \d{4}           -> 6°-9° carattere: quattro cifre
+  // [X0-9]          -> 10° carattere: X oppure una cifra (0-9)
+  // \d{2}           -> 11°-12° carattere: due cifre
+  // $                -> fine stringa
+  const regex = /^[10X][0X]0{3}\d{4}[X0-9]\d{2}$/;
+  return regex.test(account);
+}
+
+/****************************************************
+ * 7) Funzione per controllare la struttura IBAN italiano (27 caratteri)
+ ****************************************************/
+function isItalianIbanStructure(iban) {
+  iban = iban.toUpperCase().replace(/\s+/g, "");
+  if (iban.length !== 27) return false;
+  if (!iban.startsWith("IT")) return false;
+  
+  // Check digit (2 cifre)
+  let checkDigits = iban.substring(2, 4);
+  if (!/^\d{2}$/.test(checkDigits)) return false;
+  
+  // CIN (1 lettera)
+  let cin = iban.substring(4, 5);
+  if (!/^[A-Z]$/.test(cin)) return false;
+  
+  // ABI (5 cifre) - la prima deve essere 0 o 1
+  let abi = iban.substring(5, 10);
+  if (!/^[01]\d{4}$/.test(abi)) return false;
+  
+  // CAB (5 cifre)
+  let cab = iban.substring(10, 15);
+  if (!/^\d{5}$/.test(cab)) return false;
+  
+  // Numero conto: 12 caratteri con il nuovo controllo
+  if (!isValidAccountNumber(iban)) return false;
+  
+  return true;
+}
+
+/****************************************************
+ * 8) Funzione per formattare l'IBAN italiano con spazi
  ****************************************************/
 function formatIbanItalian(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
