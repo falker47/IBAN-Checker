@@ -118,6 +118,28 @@ function getBankName(iban) {
   return abiDictionary[abi] || "Banca Sconosciuta";
 }
 
+/****************************************************
+ * 4c) Funzione che esclude CAB invalidi
+ ****************************************************/
+
+function isValidCAB(iban) {
+  // Rimuove spazi e rende tutto maiuscolo
+  iban = iban.toUpperCase().replace(/\s+/g, "");
+  // Controlla che l'IBAN sia sufficientemente lungo per estrarre ABI e CAB
+  if (iban.length < 15) return false;
+  
+  // Estrae ABI e CAB
+  let abi = iban.substring(5, 10);
+  let cab = iban.substring(10, 15);
+  
+  // Regola matematica: il CAB, interpretato come numero, deve essere compreso tra 10 e 89999
+  let numericCAB = parseInt(cab, 10);
+  if (numericCAB < 10 || numericCAB > 89999) {
+    return false;
+  }
+  
+  return true;
+}
 
 /****************************************************
  * 5) Funzione per formattare l'IBAN italiano con spazi
@@ -214,7 +236,7 @@ function checkIBAN() {
     return;
   }
   // Ora controlla anche solo l'ABI
-  if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input)) {
+  if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input) && isValidCAB(input)) {
   let bankName = getBankName(input);
   resultDiv.textContent = "IBAN già valido: " + formatIbanItalian(input) +
                          "\nBanca: " + bankName;
