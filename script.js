@@ -114,21 +114,21 @@ function isValidCAB(iban) {
  * 6) Funzione per verificare il numero di conto
  ****************************************************/
 function isValidAccountNumber(iban) {
-  // Rimuove spazi e converte in maiuscolo
+  // Rimuove spazi e rende l'IBAN tutto maiuscolo
   iban = iban.toUpperCase().replace(/\s+/g, "");
-  if (iban.length !== 27) return false; // Assicurati che l'IBAN sia completo
-  // Estrae il numero di conto: caratteri 16-27 (substring inizia da indice 15, lunghezza 12)
+  // L'IBAN italiano deve essere lungo 27 caratteri
+  if (iban.length !== 27) return false;
+  // Estrae il numero di conto (ultimi 12 caratteri)
   let account = iban.substring(15);
-  // La regex:
+  // La regex applica le seguenti regole:
   // ^                -> inizio stringa
-  // [10X]           -> 1° carattere: 1, 0 o X
-  // [0X]            -> 2° carattere: 0 o X
-  // 0{3}            -> 3°-5° carattere: tre 0 consecutivi
-  // \d{4}           -> 6°-9° carattere: quattro cifre
-  // [X0-9]          -> 10° carattere: X oppure una cifra (0-9)
-  // \d{2}           -> 11°-12° carattere: due cifre
+  // [01X]{2}         -> prima e seconda cifra: 0, 1 o X (due caratteri)
+  // 00               -> terza e quarta cifra devono essere 0
+  // \d{5}            -> quinta, sesta, settima, ottava e nona cifra: cinque cifre (0-9)
+  // [0-9X]           -> decima cifra: un numero oppure X
+  // \d{2}            -> undicesima e dodicesima cifra: due cifre (0-9)
   // $                -> fine stringa
-  const regex = /^[10X][0X]0{3}\d{4}[X0-9]\d{2}$/;
+  const regex = /^[01X]{2}00\d{5}[0-9X]\d{2}$/;
   return regex.test(account);
 }
 
