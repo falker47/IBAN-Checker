@@ -1,16 +1,19 @@
 // Variabile globale per memorizzare i codici ABI validi
-let validABIs = [];
+// Dizionario per ABI -> NomeBanca
+let abiDictionary = {};
 
-// Carica il file JSON all'avvio
-fetch('validABIs.json')
+// Carica il JSON all'avvio
+fetch('abiList.json')
   .then(response => response.json())
   .then(data => {
-    validABIs = data;
-    console.log("Valid ABIs caricate:", validABIs);
+    // data è un array di oggetti [{ABI: "01005", Denominazione: "BANCA DI ESEMPIO SPA"}, ...]
+    data.forEach(item => {
+      // item.ABI è il codice, item.Denominazione è il nome
+      abiDictionary[item.ABI] = item.Denominazione;
+    });
+    console.log("Dizionario ABI caricato:", abiDictionary);
   })
-  .catch(err => console.error("Errore nel caricamento di validABIs.json:", err));
-
-
+  .catch(err => console.error("Errore nel caricamento di abiList.json:", err));
 
 /****************************************************
  * 1) pasteIban(): Incolla dagli Appunti
@@ -95,18 +98,25 @@ function isItalianIbanStructure(iban) {
  ****************************************************/
 function isValidABI(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
-  // Assicuriamoci che l'IBAN abbia almeno 10 caratteri per estrarre l'ABI
   if (iban.length < 10) return false;
-  // Estrae l'ABI: i caratteri dalla posizione 5 alla 10 (ricorda: posizione 5 inclusa, posizione 10 esclusa)
   let abi = iban.substring(5, 10);
-  // Se l'array validABIs non è ancora caricato, emetti un avviso
-  if (!validABIs || validABIs.length === 0) {
-    console.warn("validABIs non ancora caricato.");
+  
+  // Se il dizionario non è ancora stato caricato, potrebbe essere vuoto
+  if (!abiDictionary || Object.keys(abiDictionary).length === 0) {
+    console.warn("Dizionario ABI non ancora caricato o vuoto.");
     return false;
   }
-  return validABIs.includes(abi);
+  
+  return abiDictionary.hasOwnProperty(abi);
 }
 
+/****************************************************
+ * 4a) Funzione per recuperare il nome banca
+ ****************************************************/
+function getBankName(iban) {
+  let abi = iban.substring(5, 10);
+  return abiDictionary[abi] || "Banca Sconosciuta";
+}
 
 
 /****************************************************
@@ -205,8 +215,10 @@ function checkIBAN() {
   }
   // Ora controlla anche solo l'ABI
   if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input)) {
-    resultDiv.textContent = "IBAN già valido: " + formatIbanItalian(input);
-    return;
+  let bankName = getBankName(input);
+  resultDiv.textContent = "IBAN già valido: " + formatIbanItalian(input) +
+                         "\nBanca: " + bankName;
+  return;
   }
   let allCorrections = findAllCorrectionsItalian(input);
   if (allCorrections.length === 0) {
