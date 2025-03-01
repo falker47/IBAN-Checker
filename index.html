@@ -1,50 +1,36 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>IBAN Checker</title>
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/rmCxjswj/main-falker-logo-gecko-transparent-minimal.png" />
+  <link rel="icon" type="image/png"
+    href="https://i.postimg.cc/rmCxjswj/main-falker-logo-gecko-transparent-minimal.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
   <div class="container">
     <!-- Titolo -->
     <h1>IBAN Checker</h1>
-    
+
     <!-- Descrizione iniziale -->
     <p class="subtitle">
-      Inserisci l'IBAN, oppure clicca l'icona per incollarlo dagli Appunti.<br/>
+      Inserisci l'IBAN, oppure clicca l'icona per incollarlo dagli Appunti.<br />
       Poi premi il pulsante per verificare.
     </p>
 
     <!-- Etichetta "IBAN" -->
     <label for="ibanInput" class="label">IBAN:</label>
-    
+
     <!-- Wrapper per input e pulsante incolla -->
     <div class="input-wrapper">
-      <input
-        type="text"
-        id="ibanInput"
-        class="input-iban"
-        placeholder="es. IT47X0123456789000000123456"
-      />
-      <button
-        class="btn-paste"
-        onclick="pasteIban()"
-        title="Incolla IBAN dagli Appunti"
-      >
+      <input type="text" id="ibanInput" class="input-iban" placeholder="es. IT47X0123456789000000123456" />
+      <button class="btn-paste" onclick="pasteIban()" title="Incolla IBAN dagli Appunti">
         <!-- icona clipboard -->
-        <svg
-          width="18"
-          height="18"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
           <path d="M16 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
           <rect x="9" y="2" width="6" height="4" rx="1" ry="1" />
         </svg>
@@ -59,22 +45,24 @@
 
     <!-- Testo aggiuntivo sotto l'area di output -->
     <p class="info-text">
-      Questo tool verifica la validità di un IBAN italiano e restituisce anche la banca associata.<br/>
-      Se l'IBAN è errato viene analizzato da un algoritmo che cerca l'IBAN corretto 
-      considerando le principali cause di errore, come aver scritto male un carattere 
-      o aver invertito due caratteri. <br/><br/>
-      La lista che presenta i potenziali IBAN corretti è ottimizzata per scremare IBAN 
-      matematicamente corretti (rispettano lo standard del modulo 97) ma che non presentano 
+      Questo tool verifica la validità di un IBAN italiano e restituisce anche la banca associata.<br />
+      Se l'IBAN è errato viene analizzato da un algoritmo che cerca l'IBAN corretto
+      considerando le principali cause di errore, come aver scritto male un carattere
+      o aver invertito due caratteri. <br /><br />
+      La lista che presenta i potenziali IBAN corretti è ottimizzata per scremare IBAN
+      matematicamente corretti (rispettano lo standard del modulo 97) ma che non presentano
       CIN, ABI, CAB, numero di conto e Codice di Controllo validi.
     </p>
+
   </div>
 
-<div id="credits">
-            <div class="credits-title">CREATED BY</div>
-            <div class="credits-author">falker47 &ndash; Maurizio Falconi</div>
-        </div>
+  <div id="credits">
+    <div class="credits-title">CREATED BY</div>
+    <div class="credits-author">falker47 &ndash; Maurizio Falconi</div>
+  </div>
 
   <!-- Includi il file JavaScript esterno -->
   <script src="script.js"></script>
 </body>
+
 </html>

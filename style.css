@@ -120,30 +120,26 @@ h1 {
   line-height: 1.4;
 }
 
-v#credits {
-    margin-top: 20px;
-    padding: 10px;
-    border-radius: 6px;
-    text-align: center;
-    max-width: 300px; /* per limitare la larghezza */
-    margin-left: auto; /* per centrare */
-    margin-right: auto; /* per centrare */
-  }
-  
-  .credits-title {
-    color: #333;
-    font-size: 14px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin-bottom: 5px;
-  }
-  
-  .credits-author {
-    font-weight: bold;
-    font-size: 16px;
-    color: #666;
-    font-style: italic; /* effetto “firma” */
-  }
+#credits {
+  margin-top: 2em;           /* Spazio prima della sezione */
+  text-align: center;        /* Centra il testo */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;               /* Colore del testo */
+}
+
+.credits-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;   /* Leggera spaziatura tra le lettere */
+  margin-bottom: 0.3em;
+  text-transform: uppercase; /* Testo maiuscolo */
+}
+
+.credits-author {
+  font-size: 1rem;
+  color: #555;
+}
+
 
 /* ----- Media Query per smartphone (max-width: 480px) ----- */
 @media (max-width: 480px) {
