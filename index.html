@@ -59,15 +59,20 @@
 
     <!-- Testo aggiuntivo sotto l'area di output -->
     <p class="info-text">
+      Questo tool verifica la validità di un IBAN italiano e restituisce anche la banca associata.<br/>
       Se l'IBAN è errato viene analizzato da un algoritmo che cerca l'IBAN corretto 
       considerando le principali cause di errore, come aver scritto male un carattere 
       o aver invertito due caratteri. <br/><br/>
-      La lista che presenta i potenziali IBAN corretti contiene sicuramente l'IBAN corretto 
-      (se l'errore è uno di quelli già citati) e la lista è ottimizzata per scremare IBAN 
-      matematicamente validi (rispettano lo standard del modulo 97) ma che non presentano 
-      CIN, ABI, CAB, numero di conto e Codice di Controllo esistenti.
+      La lista che presenta i potenziali IBAN corretti è ottimizzata per scremare IBAN 
+      matematicamente corretti (rispettano lo standard del modulo 97) ma che non presentano 
+      CIN, ABI, CAB, numero di conto e Codice di Controllo validi.
     </p>
   </div>
+
+<div id="credits">
+            <div class="credits-title">CREATED BY</div>
+            <div class="credits-author">falker47 &ndash; Maurizio Falconi</div>
+        </div>
 
   <!-- Includi il file JavaScript esterno -->
   <script src="script.js"></script>
