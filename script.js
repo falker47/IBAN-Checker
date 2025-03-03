@@ -103,7 +103,7 @@ function isValidCAB(iban) {
   
   // Regola matematica: il CAB, interpretato come numero, deve essere compreso tra 10 e 89999
   let numericCAB = parseInt(cab, 10);
-  if (numericCAB < 10 || numericCAB > 89999) {
+  if (numericCAB < 10 || (numericCAB > 89999 && numericCAB !== 99999)) {
     return false;
   }
   
