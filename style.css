@@ -1,47 +1,71 @@
-/* ----- Base globale ----- */
+/* ----- Palette Ispirata all'Immagine ----- */
+/* 
+   - body-bg:  colore di sfondo principale (teal chiaro)
+   - container-bg: colore di sfondo per il contenitore (bianco con un leggero tocco di teal)
+   - primary-text: colore principale del testo (un teal scuro)
+   - accent-gold: colore dorato per i pulsanti principali
+   - accent-teal: teal più scuro per i pulsanti secondari
+*/
+:root {
+  --body-bg: #b9cdc9;         /* Teal chiaro (sfondo pagina) */
+  --container-bg: #f2f7f6;    /* Bianco sporco con leggero teal */
+  --primary-text: #1c2a2a;    /* Testo teal scuro */
+  --accent-gold: #d9ab4b;     /* Oro per pulsanti "Verifica" */
+  --accent-gold-hover: #c49941;
+  --accent-teal: #7a9f9c;     /* Teal più scuro per "Incolla" */
+  --accent-teal-hover: #6a8c8a;
+  --border-color: #9eb2af;    /* Bordo e linee */
+}
+
+/* ----- Base Globale ----- */
 html, body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f2f5;
+  background: var(--body-bg);
   overflow-x: hidden; /* niente scroll orizzontale */
+  color: var(--primary-text);
 }
 
-/* Contenitore principale */
+/* Contenitore Principale */
 .container {
   max-width: 800px;
   margin: 40px auto;
   padding: 20px;
-  background: #ffffff;
-  border: 1px solid #ddd;
+  background: var(--container-bg);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 /* Titolo */
 h1 {
   margin-top: 0;
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 1.8rem;
+  color: var(--primary-text);
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 /* Sottotitolo */
 .subtitle {
-  font-size: 0.9rem;
+  font-size: 1rem;
   margin-bottom: 1em;
-  color: #555;
+  color: #2e3e3e;
+  text-align: center;
 }
 
 /* Label */
 .label {
   display: block;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5em;
   font-weight: 600;
-  font-size: 0.8rem;
-  color: #333;
+  font-size: 0.9rem;
+  color: var(--primary-text);
 }
 
-/* Input wrapper (campo IBAN + pulsante incolla) */
+/* Input Wrapper (campo IBAN + pulsante incolla) */
 .input-wrapper {
   display: flex;
   flex-direction: row;
@@ -49,23 +73,25 @@ h1 {
   margin-bottom: 1em;
 }
 
-/* Campo IBAN (desktop) */
+/* Campo IBAN */
 .input-iban {
   width: 100%;
   max-width: 500px;
   padding: 0.6em;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-right: none;
   border-radius: 4px 0 0 4px;
   box-sizing: border-box;
+  background: #fff;
+  color: var(--primary-text);
 }
 
-/* Pulsante incolla (desktop) */
+/* Pulsante incolla */
 .btn-paste {
-  background: #999;
+  background: var(--accent-teal);
   color: #fff;
-  border: 1px solid #999;
+  border: 1px solid var(--accent-teal);
   padding: 0.6em 0.9em;
   cursor: pointer;
   font-size: 1rem;
@@ -75,75 +101,77 @@ h1 {
   transition: background 0.2s;
 }
 .btn-paste:hover {
-  background: #666;
+  background: var(--accent-teal-hover);
 }
 .btn-paste svg {
   display: block;
   stroke: currentColor;
 }
 
-/* Pulsante "Verifica IBAN" (desktop) */
+/* Pulsante "Verifica IBAN" */
 .btn-verify {
-  padding: 0.6em 1em;
+  display: inline-block;
+  width: 100%;
+  padding: 0.7em 1em;
   font-size: 1rem;
-  background: #007BFF;
+  background: var(--accent-gold);
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 1em;
   transition: background 0.2s;
+  font-weight: 600;
 }
 .btn-verify:hover {
-  background: #0056b3;
+  background: var(--accent-gold-hover);
 }
 
-/* Area di output (desktop) */
+/* Area di output */
 .result-box {
   white-space: pre-wrap;
   margin-top: 1em;
   padding: 1.2em;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
+  border: 1px solid var(--border-color);
+  background: #fff;
   min-height: 120px;
-  color: #333;
+  color: var(--primary-text);
   font-size: 1rem;
   line-height: 1.4;
   box-sizing: border-box;
 }
 
-/* Testo informativo in fondo (desktop) */
+/* Testo informativo in fondo */
 .info-text {
   margin-top: 1em;
-  font-size: 0.8rem;
-  color: #666;
+  font-size: 0.9rem;
+  color: #3c4e4e;
   line-height: 1.4;
 }
 
+/* Sezione Crediti */
 #credits {
-  margin-top: 2em;           /* Spazio prima della sezione */
-  text-align: center;        /* Centra il testo */
+  margin-top: 2em;
+  text-align: center;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;               /* Colore del testo */
+  color: var(--primary-text);
+  padding: 1em 0;
 }
-
 .credits-title {
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-weight: 600;
-  letter-spacing: 0.05rem;   /* Leggera spaziatura tra le lettere */
+  letter-spacing: 0.05rem;
   margin-bottom: 0.3em;
-  text-transform: uppercase; /* Testo maiuscolo */
+  text-transform: uppercase;
+  color: #3c4e4e;
 }
-
 .credits-author {
   font-size: 1rem;
-  color: #555;
+  color: #4e5f5f;
 }
-
 
 /* ----- Media Query per smartphone (max-width: 480px) ----- */
 @media (max-width: 480px) {
-  /* Container a larghezza quasi piena */
   .container {
     width: 95%;
     margin: 20px auto;
@@ -151,22 +179,19 @@ h1 {
     border-radius: 4px;
   }
   
-  /* Incolonna input e pulsante */
   .input-wrapper {
     flex-direction: column;
     align-items: stretch;
   }
   
-  /* Campo IBAN: dimensioni e padding leggermente aumentati */
   .input-iban {
     font-size: 1.1rem;
     padding: 0.75em;
     border-radius: 4px;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid var(--border-color);
     margin-bottom: 0.5em;
   }
   
-  /* Pulsante incolla: dimensioni equilibrate e larghezza 100% */
   .btn-paste {
     font-size: 1.1rem;
     padding: 0.75em;
@@ -176,26 +201,36 @@ h1 {
     margin-bottom: 1em;
   }
   
-  /* Pulsante verifica: a larghezza piena */
-  .btn-verify {
-    font-size: 1.1rem;
-    padding: 0.75em;
-    width: 100%;
-    margin-bottom: 1em;
-  }
+  /* Pulsante "Verifica IBAN" aggiornato con tonalità più vivace */
+.btn-verify {
+  display: inline-block;
+  width: 100%;
+  padding: 0.7em 1em;
+  font-size: 1rem;
+  background: #FFC107; /* Tonalità giallo-arancio brillante */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 1em;
+  transition: background 0.3s ease;
+  font-weight: 600;
+}
+.btn-verify:hover {
+  background: #e0a800; /* Leggermente più scuro per l'effetto hover */
+}
+
   
-  /* Area output: font leggermente maggiore e altezza minima aumentata */
   .result-box {
     font-size: 1.1rem;
     min-height: 130px;
     padding: 1em;
   }
   
-  /* Sottotitolo e testo informativo: leggibilità mantenuta */
   .subtitle {
     font-size: 0.9rem;
   }
   .info-text {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 }
