@@ -1,3 +1,7 @@
+// variabile year del footer
+document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+
 // Variabile globale per memorizzare i codici ABI validi
 // Dizionario per ABI -> NomeBanca
 let abiDictionary = {};
@@ -272,4 +276,5 @@ function checkIBAN() {
     resultDiv.textContent = msg;
   }
 }
+
 
