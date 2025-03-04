@@ -178,11 +178,11 @@ footer {
   text-align: center;
   color: #bbb;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: 2em;
+  margin-top: 1em;
 }
 footer p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 1.1rem;
 }
 footer a {
   color: #fff;
