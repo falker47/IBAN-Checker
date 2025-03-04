@@ -109,23 +109,35 @@ h1 {
 }
 
 /* Pulsante "Verifica IBAN" */
+/* Pulsante "Verifica IBAN" (default per mobile) */
 .btn-verify {
   display: inline-block;
   width: 100%;
-  padding: 0.7em 1em;
+  padding: 0.4em 1em; /* Ridotto verticalmente del 40% rispetto a 0.7em */
   font-size: 1rem;
-  background: var(--accent-gold);
+  background: #FFB347; /* Arancio pastello */
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 1em;
-  transition: background 0.2s;
-  font-weight: 600;
+  transition: background 0.3s ease;
+  font-weight: 500;
 }
 .btn-verify:hover {
-  background: var(--accent-gold-hover);
+  background: #FFA500; /* Hover: arancio più scuro */
 }
+
+/* Desktop: riduci la larghezza al 30% e centra il pulsante */
+@media (min-width: 768px) {
+  .btn-verify {
+    width: 30%;
+    margin: 0 auto;
+    padding: 0.42em 1.5em; /* Manteniamo il padding verticale ridotto */
+    font-size: 1rem;
+  }
+}
+
 
 /* Area di output */
 .result-box {
@@ -201,24 +213,18 @@ h1 {
     margin-bottom: 1em;
   }
   
-  /* Pulsante "Verifica IBAN" aggiornato con tonalità più vivace */
+/* Pulsante "Verifica IBAN" per dispositivi mobile */
 .btn-verify {
   display: inline-block;
   width: 100%;
   padding: 0.7em 1em;
-  font-size: 1rem;
-  background: #FFC107; /* Tonalità giallo-arancio brillante */
-  color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   margin-bottom: 1em;
   transition: background 0.3s ease;
-  font-weight: 600;
 }
-.btn-verify:hover {
-  background: #e0a800; /* Leggermente più scuro per l'effetto hover */
-}
+
 
   
   .result-box {
@@ -233,4 +239,29 @@ h1 {
   .info-text {
     font-size: 0.85rem;
   }
+}
+
+/* Footer standardizzato */
+footer {
+  background: #222;            /* Sfondo scuro */
+  padding: 20px 0;
+  text-align: center;
+  color: #bbb;                 /* Testo in grigio chiaro */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 2em;
+}
+
+footer p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #FFF;           
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #FFA500;              /* Hover: arancio più scuro */
 }
