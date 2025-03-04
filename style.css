@@ -1,20 +1,24 @@
 /* ----- Palette Ispirata all'Immagine ----- */
 /* 
-   - body-bg:  colore di sfondo principale (teal chiaro)
-   - container-bg: colore di sfondo per il contenitore (bianco con un leggero tocco di teal)
-   - primary-text: colore principale del testo (un teal scuro)
-   - accent-gold: colore dorato per i pulsanti principali
-   - accent-teal: teal più scuro per i pulsanti secondari
+   Impostiamo una palette ispirata ai toni della tua immagine webp:
+   - --body-bg: Teal chiaro per lo sfondo
+   - --container-bg: Bianco sporco con un leggero tocco di teal
+   - --primary-text: Teal scuro per il testo principale
+   - --accent-orange: Arancione pastello per il pulsante "Verifica IBAN"
+   - --accent-orange-hover: Arancione leggermente più scuro per l'hover
+   - --accent-teal: Teal più scuro per il pulsante "Incolla"
+   - --accent-teal-hover: Versione leggermente più scura
+   - --border-color: Colore per i bordi e linee
 */
 :root {
-  --body-bg: #b9cdc9;         /* Teal chiaro (sfondo pagina) */
-  --container-bg: #f2f7f6;    /* Bianco sporco con leggero teal */
-  --primary-text: #1c2a2a;    /* Testo teal scuro */
-  --accent-gold: #d9ab4b;     /* Oro per pulsanti "Verifica" */
-  --accent-gold-hover: #c49941;
-  --accent-teal: #7a9f9c;     /* Teal più scuro per "Incolla" */
+  --body-bg: #b9cdc9;
+  --container-bg: #f2f7f6;
+  --primary-text: #1c2a2a;
+  --accent-orange: #FFB347;
+  --accent-orange-hover: #FFA500;
+  --accent-teal: #7a9f9c;
   --accent-teal-hover: #6a8c8a;
-  --border-color: #9eb2af;    /* Bordo e linee */
+  --border-color: #9eb2af;
 }
 
 /* ----- Base Globale ----- */
@@ -23,12 +27,19 @@ html, body {
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--body-bg);
-  overflow-x: hidden; /* niente scroll orizzontale */
+  overflow-x: hidden;
   color: var(--primary-text);
+  height: 100%;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Contenitore Principale */
 .container {
+  flex: 1;
   max-width: 800px;
   margin: 40px auto;
   padding: 20px;
@@ -65,7 +76,7 @@ h1 {
   color: var(--primary-text);
 }
 
-/* Input Wrapper (campo IBAN + pulsante incolla) */
+/* Input Wrapper */
 .input-wrapper {
   display: flex;
   flex-direction: row;
@@ -87,7 +98,7 @@ h1 {
   color: var(--primary-text);
 }
 
-/* Pulsante incolla */
+/* Pulsante Incolla */
 .btn-paste {
   background: var(--accent-teal);
   color: #fff;
@@ -109,13 +120,13 @@ h1 {
 }
 
 /* Pulsante "Verifica IBAN" */
-/* Pulsante "Verifica IBAN" (default per mobile) */
+/* Default per dispositivi mobile */
 .btn-verify {
   display: inline-block;
   width: 100%;
-  padding: 0.4em 1em; /* Ridotto verticalmente del 40% rispetto a 0.7em */
-  font-size: 1rem;
-  background: #FFB347; /* Arancio pastello */
+  padding: 0.5em 1em;
+  font-size: 0.9rem;
+  background: var(--accent-orange);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -125,7 +136,7 @@ h1 {
   font-weight: 500;
 }
 .btn-verify:hover {
-  background: #FFA500; /* Hover: arancio più scuro */
+  background: var(--accent-orange-hover);
 }
 
 /* Desktop: riduci la larghezza al 30% e centra il pulsante */
@@ -133,13 +144,12 @@ h1 {
   .btn-verify {
     width: 30%;
     margin: 0 auto;
-    padding: 0.42em 1.5em; /* Manteniamo il padding verticale ridotto */
-    font-size: 1rem;
+    padding: 0.5em 1.5em;
+    font-size: 0.9rem;
   }
 }
 
-
-/* Area di output */
+/* Area di Output */
 .result-box {
   white-space: pre-wrap;
   margin-top: 1em;
@@ -153,7 +163,7 @@ h1 {
   box-sizing: border-box;
 }
 
-/* Testo informativo in fondo */
+/* Testo Informativo */
 .info-text {
   margin-top: 1em;
   font-size: 0.9rem;
@@ -161,28 +171,29 @@ h1 {
   line-height: 1.4;
 }
 
-/* Sezione Crediti */
-#credits {
-  margin-top: 2em;
+/* Footer */
+footer {
+  background: #222;
+  padding: 20px 0;
   text-align: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--primary-text);
-  padding: 1em 0;
+  color: #bbb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 2em;
 }
-.credits-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.05rem;
-  margin-bottom: 0.3em;
-  text-transform: uppercase;
-  color: #3c4e4e;
+footer p {
+  margin: 0;
+  font-size: 0.9rem;
 }
-.credits-author {
-  font-size: 1rem;
-  color: #4e5f5f;
+footer a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+footer a:hover {
+  color: var(--accent-orange-hover);
 }
 
-/* ----- Media Query per smartphone (max-width: 480px) ----- */
+/* Media Query per smartphone */
 @media (max-width: 480px) {
   .container {
     width: 95%;
@@ -190,12 +201,10 @@ h1 {
     padding: 15px;
     border-radius: 4px;
   }
-  
   .input-wrapper {
     flex-direction: column;
     align-items: stretch;
   }
-  
   .input-iban {
     font-size: 1.1rem;
     padding: 0.75em;
@@ -203,7 +212,6 @@ h1 {
     border-right: 1px solid var(--border-color);
     margin-bottom: 0.5em;
   }
-  
   .btn-paste {
     font-size: 1.1rem;
     padding: 0.75em;
@@ -212,56 +220,32 @@ h1 {
     justify-content: center;
     margin-bottom: 1em;
   }
-  
-/* Pulsante "Verifica IBAN" per dispositivi mobile */
-.btn-verify {
-  display: inline-block;
-  width: 100%;
-  padding: 0.7em 1em;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-bottom: 1em;
-  transition: background 0.3s ease;
-}
-
-
-  
+  /* Pulsante "Verifica IBAN" per dispositivi mobile mantiene width 100% */
+  .btn-verify {
+    width: 100%;
+    padding: 0.5em 1em;
+    font-size: 0.9rem;
+    background: var(--accent-orange);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 1em;
+    transition: background 0.3s ease;
+    font-weight: 500;
+  }
+  .btn-verify:hover {
+    background: var(--accent-orange-hover);
+  }
   .result-box {
     font-size: 1.1rem;
     min-height: 130px;
     padding: 1em;
   }
-  
   .subtitle {
     font-size: 0.9rem;
   }
   .info-text {
     font-size: 0.85rem;
   }
-}
-
-/* Footer standardizzato */
-footer {
-  background: #222;            /* Sfondo scuro */
-  padding: 20px 0;
-  text-align: center;
-  color: #bbb;                 /* Testo in grigio chiaro */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: 2em;
-}
-
-footer p {
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-footer a {
-  color: #FFF;           
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-footer a:hover {
-  color: #FFA500;              /* Hover: arancio più scuro */
 }
