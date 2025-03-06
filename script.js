@@ -124,15 +124,16 @@ function isValidAccountNumber(iban) {
   if (iban.length !== 27) return false;
   // Estrae il numero di conto (ultimi 12 caratteri)
   let account = iban.substring(15);
-  // La regex applica le seguenti regole:
-  // ^                -> inizio stringa
-  // [01X]{2}         -> prima e seconda cifra: 0, 1 o X (due caratteri)
-  // 00               -> terza e quarta cifra devono essere 0
-  // \d{5}            -> quinta, sesta, settima, ottava e nona cifra: cinque cifre (0-9)
-  // [0-9X]           -> decima cifra: un numero oppure X
-  // \d{2}            -> undicesima e dodicesima cifra: due cifre (0-9)
-  // $                -> fine stringa
-  const regex = /^[01X]{2}00\d{5}[0-9X]\d{2}$/;
+  // La regex:
+  // ^                       -> inizio stringa
+  // (?:[01X]{2}|CC)         -> le prime due cifre: oppure due cifre appartenenti a [0,1,X] oppure "CC"
+  // [0]                     -> la terza cifra deve essere 0
+  // [01]                    -> la quarta cifra: 0 o 1
+  // \d{5}                   -> dalla quinta alla nona cifra: cinque cifre (0-9)
+  // [0-9X]                  -> la decima cifra: un numero oppure X
+  // \d{2}                   -> l'undicesima e dodicesima: due cifre (0-9)
+  // $                       -> fine stringa
+  const regex = /^(?:[01X]{2}|CC)[0][01]\d{5}[0-9X]\d{2}$/;
   return regex.test(account);
 }
 
