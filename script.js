@@ -107,7 +107,7 @@ function isValidCAB(iban) {
   
   // Regola matematica: il CAB, interpretato come numero, deve essere compreso tra 10 e 89999
   let numericCAB = parseInt(cab, 10);
-  if (numericCAB < 10 || (numericCAB > 89999 && numericCAB !== 99999)) {
+  if (numericCAB == 0 || (numericCAB > 89999 && numericCAB !== 99999)) {
     return false;
   }
   
@@ -127,13 +127,13 @@ function isValidAccountNumber(iban) {
   // La regex:
   // ^                       -> inizio stringa
   // (?:[01X]{2}|CC)         -> le prime due cifre: oppure due cifre appartenenti a [0,1,X] oppure "CC"
-  // [0]                     -> la terza cifra deve essere 0
-  // [01]                    -> la quarta cifra: 0 o 1
+  // [012]                   -> la terza cifra deve essere 0 o 1 o 2
+  // [012]                   -> la quarta cifra: 0 o 1 o 2
   // \d{5}                   -> dalla quinta alla nona cifra: cinque cifre (0-9)
   // [0-9X]                  -> la decima cifra: un numero oppure X
   // \d{2}                   -> l'undicesima e dodicesima: due cifre (0-9)
   // $                       -> fine stringa
-  const regex = /^(?:[01X]{2}|CC)[0][01]\d{5}[0-9X]\d{2}$/;
+  const regex = /^(?:[01X]{2}|CC)[012][012]\d{5}[0-9X]\d{2}$/;
   return regex.test(account);
 }
 
