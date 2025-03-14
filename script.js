@@ -128,11 +128,11 @@ function isValidAccountNumber(iban) {
   // ^                       -> inizio stringa
   // (?:[01X]{2}|CC)         -> le prime due cifre: oppure due cifre appartenenti a [0,1,X] oppure "CC"
   // [012]                   -> la terza cifra deve essere 0 o 1 o 2
-  // \d{5}                   -> dalla quarta alla nona cifra: cinque cifre (0-9)
+  // \d{6}                   -> dalla quarta alla nona cifra: sei cifre (0-9)
   // [0-9X]                  -> la decima cifra: un numero oppure X
   // \d{2}                   -> l'undicesima e dodicesima: due cifre (0-9)
   // $                       -> fine stringa
-  const regex = /^(?:[01X]{2}|CC)[012]\d{6}[0-9X]\d{2}$/;
+  const regex = /^(?:[01X]{2}|CC)[0-2]\d{6}[0-9X]\d{2}$/;
   return regex.test(account);
 }
 
