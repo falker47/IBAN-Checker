@@ -253,11 +253,11 @@ function checkIBAN() {
     return;
   }
   if (input.length > 27) {
-    resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.";
+    resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
     return;
   }
   if (input.length < 27) {
-    resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.";
+    resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
     return;
   }
   // Ora controlla anche solo l'ABI
@@ -268,9 +268,9 @@ function checkIBAN() {
   }
   let allCorrections = findAllCorrectionsItalian(input);
   if (allCorrections.length === 0) {
-    resultDiv.textContent = "Nessuna correzione valida trovata (1 char o swap).";
+    resultDiv.textContent = "IBAN non valido.\n\nNessuna correzione valida trovata (1 char o swap).";
   } else {
-    let msg = "Trovate " + allCorrections.length + " correzioni:\n";
+    let msg = "IBAN non valido.\nSono state trovate " + allCorrections.length + " correzioni:\n";
     let lines = allCorrections.map(x => formatIbanItalian(x));
     msg += lines.join("\n");
     resultDiv.textContent = msg;
