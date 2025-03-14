@@ -57,7 +57,7 @@
   },
   {
     "ABI": "01020",
-    "Denominazione": "BANCO DI SICILIA SPA"
+    "Denominazione": "BANCO DI SICILIA S.P.A."
   },
   {
     "ABI": "01025",
@@ -746,10 +746,6 @@
   {
     "ABI": "03190",
     "Denominazione": "EBT EUROBANCA DEL TRENTINO"
-  },
-  {
-    "ABI": "03191",
-    "Denominazione": "SANTANDER CONSUMER BANK S.P.A."
   },
   {
     "ABI": "03191",
@@ -4501,7 +4497,7 @@
   },
   {
     "ABI": "08309",
-    "Denominazione": "BANCA DI ROMANO E S. CATERINA CREDITO COOPERATIVO (VI) SOC. COOP."
+    "Denominazione": "BASSANO BANCA - CREDITO COOPERATIVO"
   },
   {
     "ABI": "08310",
@@ -4944,6 +4940,10 @@
     "Denominazione": "CREDITO PADANO BANCA DI CREDITO COOPERATIVO - S.C."
   },
   {
+    "ABI": "08455",
+    "Denominazione": "CASSA RURALE ED ARTIGIANA DI CASALMORO (MANTOVA)"
+  },
+  {
     "ABI": "08456",
     "Denominazione": "BANCA DEI SIBILLINI-CREDITO COOPERATIVO DI CASAVECCHIA-S.C."
   },
@@ -5050,6 +5050,10 @@
   {
     "ABI": "08491",
     "Denominazione": "BANCO MARCHIGIANO CREDITO COOPERATIVO"
+  },
+  {
+    "ABI": "08492",
+    "Denominazione": "BANCA DI CREDITO COOPERATIVO DI CITTANOVA - SOC.COOP. A RESP. ILL."
   },
   {
     "ABI": "08494",
@@ -6108,6 +6112,10 @@
     "Denominazione": "CASSA RURALE ED ARTIGIANA DI SELCI (RIETI)"
   },
   {
+    "ABI": "08864",
+    "Denominazione": "CASSA RURALE ED ARTIGIANA DI SERRE ( SALERNO )"
+  },
+  {
     "ABI": "08865",
     "Denominazione": "BANCA DI CREDITO COOPERATIVO DI SESTO SAN GIOVANNI"
   },
@@ -6340,6 +6348,10 @@
     "Denominazione": "CASSA RURALE ED ARTIGIANA \"SAN PAOLO\" (TRAPANI)"
   },
   {
+    "ABI": "08944",
+    "Denominazione": "CASSA RURALE ED ARTIGIANA FEDE E LAVORO-MAZARA DEL VALLO"
+  },
+  {
     "ABI": "08945",
     "Denominazione": "C.R.A. S. REGINA DI OLEVANO SUL TUSCIANO - B.C.C. - S.C.R.L."
   },
@@ -6506,6 +6518,46 @@
   {
     "ABI": "08998",
     "Denominazione": "CASSA RAIFFEISEN DELLA VAL PASSIRIA S.C. (  RAIFFEISENKASSE PASSEIER GENOSSENSHAFT)"
+  },
+  {
+    "ABI": "09500",
+    "Denominazione": "MOONEY S.P.A. (PER MONETICA)"
+  },
+  {
+    "ABI": "09501",
+    "Denominazione": "MONEYNET (PER MONETICA)"
+  },
+  {
+    "ABI": "09502",
+    "Denominazione": "MOONEY S.P.A. (PER MONETICA)"
+  },
+  {
+    "ABI": "09504",
+    "Denominazione": "IPAGOO LLP (PER MONETICA)"
+  },
+  {
+    "ABI": "09505",
+    "Denominazione": "PAYMOVE S.P.A. (PER MONETICA)"
+  },
+  {
+    "ABI": "09506",
+    "Denominazione": "A-TONO PAYMENT INSTITUTE S.P.A. (PER MONETICA)"
+  },
+  {
+    "ABI": "09509",
+    "Denominazione": "POSTEPAY S.P.A. (PER MONETICA)"
+  },
+  {
+    "ABI": "09512",
+    "Denominazione": "SIAPAY S.R.L. (PER MONETICA)"
+  },
+  {
+    "ABI": "09515",
+    "Denominazione": "BCC PAY S.P.A. (X MONETICA)"
+  },
+  {
+    "ABI": "09518",
+    "Denominazione": "LIS PAY S.P.A. (PER MONETICA)"
   },
   {
     "ABI": 10001,
@@ -6964,6 +7016,22 @@
     "Denominazione": "BANCA AGRICOLA POPOLARE DI RAGUSA"
   },
   {
+    "ABI": 18147,
+    "Denominazione": "ITAS PAY S.P.A."
+  },
+  {
+    "ABI": 18164,
+    "Denominazione": "XOLDY S.P.A."
+  },
+  {
+    "ABI": 18175,
+    "Denominazione": "ZPAY S.R.L."
+  },
+  {
+    "ABI": 18301,
+    "Denominazione": "BKN301 S.P.A."
+  },
+  {
     "ABI": 19275,
     "Denominazione": "COMPASS BANCA SPA"
   },
@@ -7052,6 +7120,30 @@
     "Denominazione": "INTESA SEC SPA"
   },
   {
+    "ABI": 32447,
+    "Denominazione": "ITALFONDIARIO SPA"
+  },
+  {
+    "ABI": 32532,
+    "Denominazione": "MOONEY S.P.A."
+  },
+  {
+    "ABI": 32698,
+    "Denominazione": "LIS ISTITUTO DI PAGAMENTO SPA"
+  },
+  {
+    "ABI": 32875,
+    "Denominazione": "NEXI PAYMENTS S.P.A."
+  },
+  {
+    "ABI": 33500,
+    "Denominazione": "SISAL GROUP S.P.A."
+  },
+  {
+    "ABI": 33604,
+    "Denominazione": "SIAPAY S.R.L."
+  },
+  {
     "ABI": 36000,
     "Denominazione": "CARTALIS IMEL SPA (ENTE CREDITIZIO)"
   },
@@ -7064,8 +7156,136 @@
     "Denominazione": "ISTITUTO DI MONETA ELETTRONICA EUROPEO SPA (ENTE CREDITIZIO)"
   },
   {
+    "ABI": 36003,
+    "Denominazione": "FLOWE S.P.A. - SOCIETA' BENEFIT"
+  },
+  {
+    "ABI": 36014,
+    "Denominazione": "C-CARD S.P.A."
+  },
+  {
+    "ABI": 36017,
+    "Denominazione": "MOONEY S.P.A."
+  },
+  {
+    "ABI": 36018,
+    "Denominazione": "CABEL IP S.P.A."
+  },
+  {
+    "ABI": 36019,
+    "Denominazione": "AMERICAN EXPRESS PAYMENTS EUROPE S.L."
+  },
+  {
+    "ABI": 36024,
+    "Denominazione": "MOONEY S.P.A."
+  },
+  {
+    "ABI": 36033,
+    "Denominazione": "MONEYNET S.P.A."
+  },
+  {
+    "ABI": 36039,
+    "Denominazione": "CCN SERVIZI DI PAGAMENTO S.P.A."
+  },
+  {
+    "ABI": 36040,
+    "Denominazione": "INTERCARD FINANCE AD"
+  },
+  {
+    "ABI": 36041,
+    "Denominazione": "SOCIETA' SERVIZI DI PAGAMENTO - SOCIETA' PER AZIONI"
+  },
+  {
+    "ABI": 36042,
+    "Denominazione": "ICONTO SRL"
+  },
+  {
+    "ABI": 36044,
+    "Denominazione": "BMCE EUROSERVICE S.A."
+  },
+  {
+    "ABI": 36047,
+    "Denominazione": "SOGEFIN S.P.A."
+  },
+  {
+    "ABI": 36049,
+    "Denominazione": "IPAGOO LLP"
+  },
+  {
+    "ABI": 36050,
+    "Denominazione": "PAYMOVE S.P.A."
+  },
+  {
+    "ABI": 36051,
+    "Denominazione": "2PAY ISTITUTO DI MONETICA ELETTRONICA S.R.L."
+  },
+  {
+    "ABI": 36063,
+    "Denominazione": "BUFFETTI FINANCE S.P.A."
+  },
+  {
+    "ABI": 36064,
+    "Denominazione": "A-TONO PAYMENT INSTITUTE S.P.A."
+  },
+  {
+    "ABI": 36068,
+    "Denominazione": "TELEPASS PAY SPA (IMEL)"
+  },
+  {
+    "ABI": 36071,
+    "Denominazione": "AFONE PAIEMENT"
+  },
+  {
+    "ABI": 36072,
+    "Denominazione": "MACCORP FINANCIAL SERVICES S.R.L."
+  },
+  {
+    "ABI": 36080,
+    "Denominazione": "ADMIRAL PAY IP S.R.L."
+  },
+  {
+    "ABI": 36081,
+    "Denominazione": "POSTEPAY S.P.A."
+  },
+  {
+    "ABI": 36085,
+    "Denominazione": "MOONEY S.P.A."
+  },
+  {
+    "ABI": 36087,
+    "Denominazione": "VIVA PAYMENT SERVICES S.A."
+  },
+  {
     "ABI": 36092,
     "Denominazione": "QONTO OLINDA SAS"
+  },
+  {
+    "ABI": 36330,
+    "Denominazione": "UNIFIEDPOST PAYMENTS SA"
+  },
+  {
+    "ABI": 36593,
+    "Denominazione": "TREEZOR SAS"
+  },
+  {
+    "ABI": 36772,
+    "Denominazione": "HYPE S.P.A."
+  },
+  {
+    "ABI": 36928,
+    "Denominazione": "TPPAY S.R.L."
+  },
+  {
+    "ABI": 36935,
+    "Denominazione": "AXERVE S.P.A."
+  },
+  {
+    "ABI": 36960,
+    "Denominazione": "UNIPOLPAY S.P.A."
+  },
+  {
+    "ABI": 36964,
+    "Denominazione": "BCC PAY S.P.A."
   },
   {
     "ABI": 76020,
