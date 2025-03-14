@@ -152,13 +152,15 @@ function isItalianIbanStructure(iban) {
   let cin = iban.substring(4, 5);
   if (!/^[A-Z]$/.test(cin)) return false;
   
-  // ABI (5 cifre) - la prima deve essere 0 o 1
-  let abi = iban.substring(5, 10);
-  if (!/^[01]\d{4}$/.test(abi)) return false;
-  
-  // CAB (5 cifre)
-  let cab = iban.substring(10, 15);
-  if (!/^\d{5}$/.test(cab)) return false;
+  // 5) ABI: invece di un controllo regex, usa isValidABI
+  if (!isValidABI(iban)) {
+    return false;
+  }
+
+  // 6) CAB: invece di un controllo regex, usa isValidCAB
+  if (!isValidCAB(iban)) {
+    return false;
+  }
   
   // Numero conto: 12 caratteri con il nuovo controllo
   if (!isValidAccountNumber(iban)) return false;
