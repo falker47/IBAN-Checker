@@ -45,7 +45,7 @@
   },
   {
     "ABI": "01005",
-    "Denominazione": "BANCA NAZIONALE DEL LAVORO S.P.A. (IN FORMA CONTRATTA BNL S.P.A.)"
+    "Denominazione": "BANCA NAZIONALE DEL LAVORO S.P.A. (BNL)"
   },
   {
     "ABI": "01010",
@@ -3009,7 +3009,7 @@
   },
   {
     "ABI": "07006",
-    "Denominazione": "CASSA RURALE ED ARTIGIANA DI VITTORITO -L'AQUILA SC"
+    "Denominazione": "CASSA RURALE ED ARTIGIANA DI VITTORITO - L'AQUILA SC"
   },
   {
     "ABI": "07007",
@@ -7064,8 +7064,12 @@
     "Denominazione": "ISTITUTO DI MONETA ELETTRONICA EUROPEO SPA (ENTE CREDITIZIO)"
   },
   {
+    "ABI": 36092,
+    "Denominazione": "QONTO OLINDA SAS"
+  },
+  {
     "ABI": 76020,
-    "Denominazione": "CABOTO-SIM DIVISIONE INTESA TRADE"
+    "Denominazione": "CABOTO - SIM DIVISIONE INTESA TRADE"
   },
   {
     "ABI": 76200,
