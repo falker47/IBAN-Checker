@@ -260,7 +260,7 @@ function updateIndicators(iban) {
   indicatorsContainer.innerHTML = "";
   
   // Definisci i nomi dei controlli
-  const checkNames = ["Format", "Mod. 97", "ABI", "CAB", "CC"];
+  const checkNames = ["Format", "Mod.97", "ABI", "CAB", "CC"];
   
   // Se l'IBAN è vuoto, mostra lo stato "in attesa" per tutti i controlli
   if (iban.trim() === "") {
@@ -273,12 +273,13 @@ function updateIndicators(iban) {
   } else {
     // Se c'è un input, esegui i controlli e mostra i risultati:
     const checks = [
-      { name: "Formattazione", passed: (iban.replace(/\s+/g, "").length === 27) },
-      { name: "Mod. 97", passed: isIbanValid(iban) },
+      { name: "Format", passed: (iban.replace(/\s+/g, "").length === 27) },
+      { name: "Mod.97", passed: isIbanValid(iban) },
       { name: "ABI", passed: isValidABI(iban) },
       { name: "CAB", passed: isValidCAB(iban) },
       { name: "CC", passed: isValidAccountNumber(iban) }
     ];
+    
   
     checks.forEach(check => {
       const chip = document.createElement("div");

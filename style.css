@@ -144,7 +144,7 @@ h1 {
 /* Area di Output */
 .result-box {
   white-space: pre-wrap;
-  margin-top: 0.8em;
+  margin-top: 0.86em;
   /* Spazio leggermente ridotto */
   padding: 1em;
   border: 1px solid var(--border-color);
@@ -248,7 +248,7 @@ footer a:hover {
   margin-top: 20px;
   /* spacing verticale aggiunto */
   margin-bottom: 1em;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 /* Stato "pending": sfondo grigio tenue */
