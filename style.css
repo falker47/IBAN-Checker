@@ -199,23 +199,7 @@ footer a:hover {
     border-radius: 4px;
   }
   .input-wrapper {
-    flex-direction: column;
     align-items: stretch;
-  }
-  .input-iban {
-    font-size: 1.1rem;
-    padding: 0.75em;
-    border-radius: 4px;
-    border-right: 1px solid var(--border-color);
-    margin-bottom: 0.5em;
-  }
-  .btn-paste {
-    font-size: 1.1rem;
-    padding: 0.75em;
-    border-radius: 4px;
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 0.8em;
   }
 
   /* Pulsante "Verifica IBAN" per dispositivi mobile: dimensioni uguali al pulsante incolla */
@@ -236,7 +220,7 @@ footer a:hover {
   }
 
   .info-text {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
   }
 }
 
