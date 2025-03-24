@@ -1,30 +1,10 @@
-/* ----- Palette Ispirata all'Immagine ----- */
-:root {
-  --body-bg: #b9cdc9;
-  --container-bg: #f2f7f6;
-  --primary-text: #1c2a2a;
-  --accent-orange: #FFB347;
-  --accent-teal: #7a9f9c;
-  --accent-teal-hover: #74c4bf;
-  --border-color: #9eb2af;
-}
-
-/* ----- Base Globale ----- */
-html,
-body {
+/* ----- Base globale ----- */
+html, body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: var(--body-bg);
-  overflow-x: hidden;
-  color: var(--primary-text);
-  height: 100%;
-}
-
-body {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  background: #f0f2f5;
+  overflow-x: hidden; /* niente scroll orizzontale */
 }
 
 /* Contenitore Principale */
@@ -37,7 +17,6 @@ body {
   border: 1px solid var(--border-color);
   border-radius: 6px;
   box-sizing: border-box;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Titolo */
@@ -111,45 +90,30 @@ h1 {
   stroke: currentColor;
 }
 
-/* Pulsante "Verifica IBAN" per dispositivi mobile: dimensioni uguali al pulsante incolla */
+/* Pulsante "Verifica IBAN" (desktop) */
 .btn-verify {
-  display: inline-block;
-  width: 100%;
-  padding: 0.6em 0.9em;
+  padding: 0.6em 1em;
   font-size: 1rem;
-  background: var(--accent-teal);
-  /* usa la tonalità teal invece dell'arancione */
+  background: #007BFF;
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 0.8em;
-  transition: background 0.3s ease;
-  font-weight: 500;
+  margin-bottom: 1em;
+  transition: background 0.2s;
 }
 
 .btn-verify:hover {
-  background: var(--accent-teal-hover);
-  /* colore di hover in linea con il nuovo tema */
-}
-
-/* Desktop: riduci la larghezza al 30% e centra il pulsante "Verifica IBAN" */
-@media (min-width: 768px) {
-  .btn-verify {
-    width: 30%;
-    margin: 0 auto;
-    /* Manteniamo padding e font-size invariati per coerenza */
-  }
+  background: #0056b3;
 }
 
 /* Area di Output */
 .result-box {
   white-space: pre-wrap;
-  margin-top: 0.8em;
-  /* Spazio leggermente ridotto */
-  padding: 1em;
-  border: 1px solid var(--border-color);
-  background: #fff;
+  margin-top: 1em;
+  padding: 1.2em;
+  border: 1px solid #ccc;
+  background: #f9f9f9;
   min-height: 120px;
   color: var(--primary-text);
   font-size: 1rem;
@@ -165,30 +129,24 @@ h1 {
   line-height: 1.4;
 }
 
-/* Footer */
-footer {
-  background: #222;
-  padding: 20px 0;
-  text-align: center;
-  color: #bbb;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  margin-top: 0.5em;
-  /* Spazio ridotto tra contenuto e footer */
+#credits {
+  margin-top: 2em;           /* Spazio prima della sezione */
+  text-align: center;        /* Centra il testo */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;               /* Colore del testo */
 }
 
-footer p {
-  margin: 0;
-  font-size: 1.1rem;
+.credits-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05rem;   /* Leggera spaziatura tra le lettere */
+  margin-bottom: 0.3em;
+  text-transform: uppercase; /* Testo maiuscolo */
 }
 
-footer a {
-  color: #fff;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-footer a:hover {
-  color: var(--accent-teal-hover);
+.credits-author {
+  font-size: 1rem;
+  color: #555;
 }
 
 /* Media Query per dispositivi smartphone */
@@ -199,12 +157,14 @@ footer a:hover {
     padding: 15px;
     border-radius: 4px;
   }
-
+  
+  /* Incolonna input e pulsante */
   .input-wrapper {
     flex-direction: column;
     align-items: stretch;
   }
-
+  
+  /* Campo IBAN: dimensioni e padding leggermente aumentati */
   .input-iban {
     font-size: 1.1rem;
     padding: 0.75em;
@@ -212,7 +172,8 @@ footer a:hover {
     border-right: 1px solid var(--border-color);
     margin-bottom: 0.5em;
   }
-
+  
+  /* Pulsante incolla: dimensioni equilibrate e larghezza 100% */
   .btn-paste {
     font-size: 1.1rem;
     padding: 0.75em;
@@ -221,21 +182,23 @@ footer a:hover {
     justify-content: center;
     margin-bottom: 0.8em;
   }
-
-  /* Pulsante "Verifica IBAN" per dispositivi mobile: dimensioni uguali al pulsante incolla */
+  
+  /* Pulsante verifica: a larghezza piena */
   .btn-verify {
-    display: inline-block;
+    font-size: 1.1rem;
+    padding: 0.75em;
     width: 100%;
-    padding: 0.6em 0.9em;
-    font-size: 1rem;
+    margin-bottom: 1em;
   }
-
+  
+  /* Area output: font leggermente maggiore e altezza minima aumentata */
   .result-box {
     font-size: 1.1rem;
     min-height: 130px;
     padding: 1em;
   }
-
+  
+  /* Sottotitolo e testo informativo: leggibilità mantenuta */
   .subtitle {
     font-size: 0.9rem;
   }
