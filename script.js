@@ -96,23 +96,29 @@ function getBankName(iban) {
  ****************************************************/
 
 function isValidCAB(iban) {
-  // Rimuove spazi e rende tutto maiuscolo
+  // Normalizzazione
   iban = iban.toUpperCase().replace(/\s+/g, "");
-  // Controlla che l'IBAN sia sufficientemente lungo per estrarre ABI e CAB
   if (iban.length < 15) return false;
   
-  // Estrae ABI e CAB
-  let abi = iban.substring(5, 10);
+  // Estrae i 5 caratteri del CAB
   let cab = iban.substring(10, 15);
-  
-  // Regola matematica: il CAB, interpretato come numero, deve essere compreso tra 10 e 89999
+
+  // 1) Verifica che siano esattamente 5 cifre
+  if (!/^\d{5}$/.test(cab)) {
+    return false;
+  }
+
+  // 2) Converte in numero per altri controlli
   let numericCAB = parseInt(cab, 10);
-  if (numericCAB == 0 || (numericCAB > 89999 && numericCAB !== 99999)) {
+
+  // Se numericCAB = 0 o > 89999 (eccetto 99999), escludi
+  if (numericCAB === 0 || (numericCAB > 89999 && numericCAB !== 99999)) {
     return false;
   }
   
   return true;
 }
+
 
 /****************************************************
  * 6) Funzione per verificare il numero di conto
