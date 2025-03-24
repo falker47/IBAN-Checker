@@ -8,11 +8,15 @@
   <link href="https://i.postimg.cc/rmCxjswj/main-falker-logo-gecko-transparent-minimal.png" rel="icon">
   <link href="https://i.postimg.cc/rmCxjswj/main-falker-logo-gecko-transparent-minimal.png" rel="apple-touch-icon">
 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <!-- Anteprima Immagine -->
-  <meta property="og:image" content="https://i.postimg.cc/KY9JyDdC/main-falker-logo-gecko-circle-night-blue-2.png">
-  <meta name="twitter:image" content="https://i.postimg.cc/KY9JyDdC/main-falker-logo-gecko-circle-night-blue-2.png">
+  <meta property="og:image" content="iban-checker.webp">
+  <meta name="twitter:image" content="iban-checker.webp">
+
   <title>IBAN Checker</title>
-  
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -23,8 +27,7 @@
 
     <!-- Descrizione iniziale -->
     <p class="subtitle">
-      Inserisci l'IBAN, oppure clicca l'icona per incollarlo dagli Appunti.<br />
-      Poi premi il pulsante per verificare.
+      Inserisci l'IBAN, oppure clicca l'icona per incollarlo dagli Appunti. Poi premi il pulsante per verificare.
     </p>
 
     <!-- Etichetta "IBAN" -->
@@ -46,6 +49,9 @@
     <!-- Bottone verifica -->
     <button class="btn-verify" onclick="checkIBAN()">Verifica IBAN</button>
 
+    <!-- Indicatori di controllo -->
+    <div id="indicators" class="indicators-container"></div>
+
     <!-- Output -->
     <div id="result" class="result-box"></div>
 
@@ -62,10 +68,11 @@
 
   </div>
 
-  <div id="credits">
-    <div class="credits-title">CREATED BY</div>
-    <div class="credits-author">falker47 &ndash; Maurizio Falconi</div>
-  </div>
+  <footer>
+    <p> <a href="https://falker47.github.io/Nexus-portfolio/" target="_blank">&copy; <span id="currentYear"></span>
+        Maurizio Falconi - falker47</a></p>
+  </footer>
+
 
   <!-- Includi il file JavaScript esterno -->
   <script src="script.js"></script>

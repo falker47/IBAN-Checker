@@ -1,3 +1,13 @@
+// variabile year del footer
+document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+document.addEventListener("DOMContentLoaded", function() {
+  // Mostra gli indicatori in stato "pending" al caricamento
+  updateIndicators("");
+});
+
+
+
 // Variabile globale per memorizzare i codici ABI validi
 // Dizionario per ABI -> NomeBanca
 let abiDictionary = {};
@@ -92,23 +102,29 @@ function getBankName(iban) {
  ****************************************************/
 
 function isValidCAB(iban) {
-  // Rimuove spazi e rende tutto maiuscolo
+  // Normalizzazione
   iban = iban.toUpperCase().replace(/\s+/g, "");
-  // Controlla che l'IBAN sia sufficientemente lungo per estrarre ABI e CAB
   if (iban.length < 15) return false;
   
-  // Estrae ABI e CAB
-  let abi = iban.substring(5, 10);
+  // Estrae i 5 caratteri del CAB
   let cab = iban.substring(10, 15);
-  
-  // Regola matematica: il CAB, interpretato come numero, deve essere compreso tra 10 e 89999
+
+  // 1) Verifica che siano esattamente 5 cifre
+  if (!/^\d{5}$/.test(cab)) {
+    return false;
+  }
+
+  // 2) Converte in numero per altri controlli
   let numericCAB = parseInt(cab, 10);
-  if (numericCAB < 10 || numericCAB > 89999) {
+
+  // Se numericCAB = 0 o > 89999 (eccetto 99999), escludi
+  if (numericCAB === 0 || (numericCAB > 89999 && numericCAB !== 99999)) {
     return false;
   }
   
   return true;
 }
+
 
 /****************************************************
  * 6) Funzione per verificare il numero di conto
@@ -121,16 +137,16 @@ function isValidAccountNumber(iban) {
   // Estrae il numero di conto (ultimi 12 caratteri)
   let account = iban.substring(15);
   // La regex applica le seguenti regole:
-  // ^                -> inizio stringa
-  // [01X]{2}         -> prima e seconda cifra: 0, 1 o X (due caratteri)
-  // 00               -> terza e quarta cifra devono essere 0
-  // \d{5}            -> quinta, sesta, settima, ottava e nona cifra: cinque cifre (0-9)
-  // [0-9X]           -> decima cifra: un numero oppure X
-  // \d{2}            -> undicesima e dodicesima cifra: due cifre (0-9)
-  // $                -> fine stringa
-  const regex = /^[01X]{2}00\d{5}[0-9X]\d{2}$/;
+  // - ^(?:\d{2}|CC)   : le prime due cifre devono essere due cifre (0-9) oppure "CC"
+  // - [0-2]           : la terza cifra deve essere 0, 1 o 2
+  // - \d{6}           : dalla quarta alla nona cifra: sei cifre (0-9)
+  // - [0-9X]          : la decima cifra può essere un numero o la lettera X
+  // - \d{2}           : l'undicesima e la dodicesima cifra devono essere numeri
+  // - $              : fine stringa
+  const regex = /^(?:\d{2}|CC)[0-2]\d{6}[0-9X]\d{2}$/;
   return regex.test(account);
 }
+
 
 /****************************************************
  * 7) Funzione per controllare la struttura IBAN italiano (27 caratteri)
@@ -148,13 +164,15 @@ function isItalianIbanStructure(iban) {
   let cin = iban.substring(4, 5);
   if (!/^[A-Z]$/.test(cin)) return false;
   
-  // ABI (5 cifre) - la prima deve essere 0 o 1
-  let abi = iban.substring(5, 10);
-  if (!/^[01]\d{4}$/.test(abi)) return false;
-  
-  // CAB (5 cifre)
-  let cab = iban.substring(10, 15);
-  if (!/^\d{5}$/.test(cab)) return false;
+  // 5) ABI: invece di un controllo regex, usa isValidABI
+  if (!isValidABI(iban)) {
+    return false;
+  }
+
+  // 6) CAB: invece di un controllo regex, usa isValidCAB
+  if (!isValidCAB(iban)) {
+    return false;
+  }
   
   // Numero conto: 12 caratteri con il nuovo controllo
   if (!isValidAccountNumber(iban)) return false;
@@ -235,12 +253,56 @@ function findAllCorrectionsItalian(ibanOrig) {
   return Array.from(allSet);
 }
 
+// Funzione per aggiornare gli indicatori dei controlli
+function updateIndicators(iban) {
+  const indicatorsContainer = document.getElementById("indicators");
+  // Svuota il contenuto precedente
+  indicatorsContainer.innerHTML = "";
+  
+  // Definisci i nomi dei controlli
+  const checkNames = ["Format", "Mod. 97", "ABI", "CAB", "CC"];
+  
+  // Se l'IBAN è vuoto, mostra lo stato "in attesa" per tutti i controlli
+  if (iban.trim() === "") {
+    checkNames.forEach(name => {
+      const chip = document.createElement("div");
+      chip.className = "indicator pending"; // classe "pending" per lo stato iniziale
+      chip.innerHTML = `${name} <i class="fa-solid fa-clock"></i>`;
+      indicatorsContainer.appendChild(chip);
+    });
+  } else {
+    // Se c'è un input, esegui i controlli e mostra i risultati:
+    const checks = [
+      { name: "Formattazione", passed: (iban.replace(/\s+/g, "").length === 27) },
+      { name: "Mod. 97", passed: isIbanValid(iban) },
+      { name: "ABI", passed: isValidABI(iban) },
+      { name: "CAB", passed: isValidCAB(iban) },
+      { name: "CC", passed: isValidAccountNumber(iban) }
+    ];
+  
+    checks.forEach(check => {
+      const chip = document.createElement("div");
+      // Se il controllo è superato, assegna classe "success" (verde pastello),
+      // altrimenti "error" (rosso pastello)
+      chip.className = "indicator " + (check.passed ? "success" : "error");
+      chip.innerHTML = `${check.name} ${check.passed ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'}`;
+      indicatorsContainer.appendChild(chip);
+    });
+  }
+}
+
+
 /****************************************************
  * 9) checkIBAN():
  * Esegue la verifica e mostra il risultato (e le correzioni se necessarie)
  ****************************************************/
 function checkIBAN() {
+  const iban = document.getElementById("ibanInput").value;
+  // Aggiorna gli indicatori con i controlli
+  updateIndicators(iban);
+
   let input = document.getElementById("ibanInput").value;
+  
   input = input.toUpperCase().replace(/\s+/g, "");
   let resultDiv = document.getElementById("result");
   if (!input) {
@@ -249,24 +311,24 @@ function checkIBAN() {
     return;
   }
   if (input.length > 27) {
-    resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.";
+    resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
     return;
   }
   if (input.length < 27) {
-    resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.";
+    resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
     return;
   }
   // Ora controlla anche solo l'ABI
   if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input) && isValidCAB(input)) {
   let bankName = getBankName(input);
-  resultDiv.textContent = "IBAN già valido:\n" + formatIbanItalian(input) + "\n\n" + bankName;
+  resultDiv.textContent = "IBAN VALIDO!\n\n" + formatIbanItalian(input) + "\n" + bankName;
   return;
   }
   let allCorrections = findAllCorrectionsItalian(input);
   if (allCorrections.length === 0) {
-    resultDiv.textContent = "Nessuna correzione valida trovata (1 char o swap).";
+    resultDiv.textContent = "IBAN non valido.\n\nNessuna correzione valida trovata (1 char o swap).";
   } else {
-    let msg = "Trovate " + allCorrections.length + " correzioni:\n";
+    let msg = "IBAN non valido.\nCorrezioni trovate: " + allCorrections.length + "\n";
     let lines = allCorrections.map(x => formatIbanItalian(x));
     msg += lines.join("\n");
     resultDiv.textContent = msg;

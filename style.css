@@ -1,47 +1,72 @@
-/* ----- Base globale ----- */
-html, body {
+/* ----- Palette Ispirata all'Immagine ----- */
+:root {
+  --body-bg: #b9cdc9;
+  --container-bg: #f2f7f6;
+  --primary-text: #1c2a2a;
+  --accent-orange: #FFB347;
+  --accent-teal: #7a9f9c;
+  --accent-teal-hover: #74c4bf;
+  --border-color: #9eb2af;
+}
+
+/* ----- Base Globale ----- */
+html,
+body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f2f5;
-  overflow-x: hidden; /* niente scroll orizzontale */
+  background: var(--body-bg);
+  overflow-x: hidden;
+  color: var(--primary-text);
+  height: 100%;
 }
 
-/* Contenitore principale */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Contenitore Principale */
 .container {
+  flex: 1;
   max-width: 800px;
   margin: 40px auto;
   padding: 20px;
-  background: #ffffff;
-  border: 1px solid #ddd;
+  background: var(--container-bg);
+  border: 1px solid var(--border-color);
   border-radius: 6px;
   box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Titolo */
 h1 {
   margin-top: 0;
-  font-size: 1.5rem;
-  color: #333;
+  font-size: 1.8rem;
+  color: var(--primary-text);
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 /* Sottotitolo */
 .subtitle {
-  font-size: 0.9rem;
+  font-size: 1rem;
   margin-bottom: 1em;
-  color: #555;
+  color: #2e3e3e;
+  text-align: center;
 }
 
 /* Label */
 .label {
   display: block;
-  margin-bottom: 0.3em;
+  margin-bottom: 0.5em;
   font-weight: 600;
-  font-size: 0.8rem;
-  color: #333;
+  font-size: 0.9rem;
+  color: var(--primary-text);
 }
 
-/* Input wrapper (campo IBAN + pulsante incolla) */
+/* Input Wrapper */
 .input-wrapper {
   display: flex;
   flex-direction: row;
@@ -49,23 +74,25 @@ h1 {
   margin-bottom: 1em;
 }
 
-/* Campo IBAN (desktop) */
+/* Campo IBAN */
 .input-iban {
   width: 100%;
   max-width: 500px;
   padding: 0.6em;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-right: none;
   border-radius: 4px 0 0 4px;
   box-sizing: border-box;
+  background: #fff;
+  color: var(--primary-text);
 }
 
-/* Pulsante incolla (desktop) */
+/* Pulsante Incolla */
 .btn-paste {
-  background: #999;
+  background: var(--accent-teal);
   color: #fff;
-  border: 1px solid #999;
+  border: 1px solid var(--accent-teal);
   padding: 0.6em 0.9em;
   cursor: pointer;
   font-size: 1rem;
@@ -74,128 +101,191 @@ h1 {
   align-items: center;
   transition: background 0.2s;
 }
+
 .btn-paste:hover {
-  background: #666;
+  background: var(--accent-teal-hover);
 }
+
 .btn-paste svg {
   display: block;
   stroke: currentColor;
 }
 
-/* Pulsante "Verifica IBAN" (desktop) */
+/* Pulsante "Verifica IBAN" per dispositivi mobile: dimensioni uguali al pulsante incolla */
 .btn-verify {
-  padding: 0.6em 1em;
+  display: inline-block;
+  width: 100%;
+  padding: 0.6em 0.9em;
   font-size: 1rem;
-  background: #007BFF;
+  background: var(--accent-teal);
+  /* usa la tonalità teal invece dell'arancione */
   color: #fff;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  margin-bottom: 1em;
-  transition: background 0.2s;
-}
-.btn-verify:hover {
-  background: #0056b3;
+  margin-bottom: 0.8em;
+  transition: background 0.3s ease;
+  font-weight: 500;
 }
 
-/* Area di output (desktop) */
+.btn-verify:hover {
+  background: var(--accent-teal-hover);
+  /* colore di hover in linea con il nuovo tema */
+}
+
+/* Desktop: riduci la larghezza al 30% e centra il pulsante "Verifica IBAN" */
+@media (min-width: 768px) {
+  .btn-verify {
+    width: 30%;
+    margin: 0 auto;
+    /* Manteniamo padding e font-size invariati per coerenza */
+  }
+}
+
+/* Area di Output */
 .result-box {
   white-space: pre-wrap;
-  margin-top: 1em;
-  padding: 1.2em;
-  border: 1px solid #ccc;
-  background: #f9f9f9;
+  margin-top: 0.8em;
+  /* Spazio leggermente ridotto */
+  padding: 1em;
+  border: 1px solid var(--border-color);
+  background: #fff;
   min-height: 120px;
-  color: #333;
+  color: var(--primary-text);
   font-size: 1rem;
   line-height: 1.4;
   box-sizing: border-box;
 }
 
-/* Testo informativo in fondo (desktop) */
+/* Testo Informativo */
 .info-text {
   margin-top: 1em;
-  font-size: 0.8rem;
-  color: #666;
+  font-size: 0.9rem;
+  color: #3c4e4e;
   line-height: 1.4;
 }
 
-#credits {
-  margin-top: 2em;           /* Spazio prima della sezione */
-  text-align: center;        /* Centra il testo */
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;               /* Colore del testo */
+/* Footer */
+footer {
+  background: #222;
+  padding: 20px 0;
+  text-align: center;
+  color: #bbb;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-top: 0.5em;
+  /* Spazio ridotto tra contenuto e footer */
 }
 
-.credits-title {
-  font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.05rem;   /* Leggera spaziatura tra le lettere */
-  margin-bottom: 0.3em;
-  text-transform: uppercase; /* Testo maiuscolo */
+footer p {
+  margin: 0;
+  font-size: 1.1rem;
 }
 
-.credits-author {
-  font-size: 1rem;
-  color: #555;
+footer a {
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
+footer a:hover {
+  color: var(--accent-teal-hover);
+}
 
-/* ----- Media Query per smartphone (max-width: 480px) ----- */
-@media (max-width: 480px) {
-  /* Container a larghezza quasi piena */
+/* Media Query per dispositivi smartphone */
+@media (max-width: 767px) {
   .container {
     width: 95%;
     margin: 20px auto;
     padding: 15px;
     border-radius: 4px;
   }
-  
-  /* Incolonna input e pulsante */
+
   .input-wrapper {
     flex-direction: column;
     align-items: stretch;
   }
-  
-  /* Campo IBAN: dimensioni e padding leggermente aumentati */
+
   .input-iban {
     font-size: 1.1rem;
     padding: 0.75em;
     border-radius: 4px;
-    border-right: 1px solid #ccc;
+    border-right: 1px solid var(--border-color);
     margin-bottom: 0.5em;
   }
-  
-  /* Pulsante incolla: dimensioni equilibrate e larghezza 100% */
+
   .btn-paste {
     font-size: 1.1rem;
     padding: 0.75em;
     border-radius: 4px;
     width: 100%;
     justify-content: center;
-    margin-bottom: 1em;
+    margin-bottom: 0.8em;
   }
-  
-  /* Pulsante verifica: a larghezza piena */
+
+  /* Pulsante "Verifica IBAN" per dispositivi mobile: dimensioni uguali al pulsante incolla */
   .btn-verify {
-    font-size: 1.1rem;
-    padding: 0.75em;
+    display: inline-block;
     width: 100%;
-    margin-bottom: 1em;
+    padding: 0.6em 0.9em;
+    font-size: 1rem;
   }
-  
-  /* Area output: font leggermente maggiore e altezza minima aumentata */
+
   .result-box {
     font-size: 1.1rem;
     min-height: 130px;
     padding: 1em;
   }
-  
-  /* Sottotitolo e testo informativo: leggibilità mantenuta */
+
   .subtitle {
     font-size: 0.9rem;
   }
+
   .info-text {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
+}
+
+/* Container degli indicatori: aggiungi un margine superiore per lo spacing verticale */
+.indicators-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  /* spacing verticale aggiunto */
+  margin-bottom: 1em;
+  flex-wrap: wrap;
+}
+
+/* Stato "pending": sfondo grigio tenue */
+.indicator.pending {
+  background-color: #f0f0f0;
+}
+
+/* Gli stili per "success" ed "error" rimangono invariati */
+.indicator.success {
+  background-color: #d4edda;
+  /* verde pastello */
+}
+
+.indicator.error {
+  background-color: #f8d7da;
+  /* rosso pastello */
+}
+
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 120px;
+  padding: 5px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--primary-text);
+  border: 1px solid #000;
+  /* bordo sottile nero */
+}
+
+.indicator i {
+  margin-left: 5px;
 }
