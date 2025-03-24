@@ -103,20 +103,11 @@ function getBankName(iban) {
 
 function isValidCAB(iban) {
   // Normalizzazione
-  // Normalizzazione
   iban = iban.toUpperCase().replace(/\s+/g, "");
   if (iban.length < 15) return false;
   
   // Estrae i 5 caratteri del CAB
-  // Estrae i 5 caratteri del CAB
   let cab = iban.substring(10, 15);
-
-  // 1) Verifica che siano esattamente 5 cifre
-  if (!/^\d{5}$/.test(cab)) {
-    return false;
-  }
-
-  // 2) Converte in numero per altri controlli
 
   // 1) Verifica che siano esattamente 5 cifre
   if (!/^\d{5}$/.test(cab)) {
@@ -128,15 +119,11 @@ function isValidCAB(iban) {
 
   // Se numericCAB = 0 o > 89999 (eccetto 99999), escludi
   if (numericCAB === 0 || (numericCAB > 89999 && numericCAB !== 99999)) {
-
-  // Se numericCAB = 0 o > 89999 (eccetto 99999), escludi
-  if (numericCAB === 0 || (numericCAB > 89999 && numericCAB !== 99999)) {
     return false;
   }
   
   return true;
 }
-
 
 
 /****************************************************
@@ -157,16 +144,8 @@ function isValidAccountNumber(iban) {
   // - \d{2}           : l'undicesima e la dodicesima cifra devono essere numeri
   // - $              : fine stringa
   const regex = /^(?:\d{2}|CC)[0-2]\d{6}[0-9X]\d{2}$/;
-  // - ^(?:\d{2}|CC)   : le prime due cifre devono essere due cifre (0-9) oppure "CC"
-  // - [0-2]           : la terza cifra deve essere 0, 1 o 2
-  // - \d{6}           : dalla quarta alla nona cifra: sei cifre (0-9)
-  // - [0-9X]          : la decima cifra può essere un numero o la lettera X
-  // - \d{2}           : l'undicesima e la dodicesima cifra devono essere numeri
-  // - $              : fine stringa
-  const regex = /^(?:\d{2}|CC)[0-2]\d{6}[0-9X]\d{2}$/;
   return regex.test(account);
 }
-
 
 
 /****************************************************
@@ -185,15 +164,6 @@ function isItalianIbanStructure(iban) {
   let cin = iban.substring(4, 5);
   if (!/^[A-Z]$/.test(cin)) return false;
   
-  // 5) ABI: invece di un controllo regex, usa isValidABI
-  if (!isValidABI(iban)) {
-    return false;
-  }
-
-  // 6) CAB: invece di un controllo regex, usa isValidCAB
-  if (!isValidCAB(iban)) {
-    return false;
-  }
   // 5) ABI: invece di un controllo regex, usa isValidABI
   if (!isValidABI(iban)) {
     return false;
@@ -342,11 +312,9 @@ function checkIBAN() {
   }
   if (input.length > 27) {
     resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
-    resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
     return;
   }
   if (input.length < 27) {
-    resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
     resultDiv.textContent = "IBAN troppo corto, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
     return;
   }
@@ -354,12 +322,10 @@ function checkIBAN() {
   if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input) && isValidCAB(input)) {
   let bankName = getBankName(input);
   resultDiv.textContent = "IBAN VALIDO!\n\n" + formatIbanItalian(input) + "\n" + bankName;
-  resultDiv.textContent = "IBAN VALIDO!\n\n" + formatIbanItalian(input) + "\n" + bankName;
   return;
   }
   let allCorrections = findAllCorrectionsItalian(input);
   if (allCorrections.length === 0) {
-    resultDiv.textContent = "IBAN non valido.\n\nNessuna correzione valida trovata (1 char o swap).";
     resultDiv.textContent = "IBAN non valido.\n\nNessuna correzione valida trovata (1 char o swap).";
   } else {
     let msg = "IBAN non valido.\nCorrezioni trovate: " + allCorrections.length + "\n";
@@ -368,5 +334,4 @@ function checkIBAN() {
     resultDiv.textContent = msg;
   }
 }
-
 
