@@ -6,7 +6,7 @@
   --accent-orange: #FFB347;
   --accent-teal: #7a9f9c;
   --accent-teal-hover: #74c4bf;
-  --border-color: #9eb2af;
+  --border-color: #506e69;
 }
 
 /* ----- Base Globale ----- */
@@ -265,7 +265,7 @@ footer a:hover {
   font-size: 0.9rem;
   font-weight: bold;
   color: var(--primary-text);
-  border: 1px solid #000;
+  border: 1px solid #506e69;
   /* bordo sottile nero */
 }
 
