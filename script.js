@@ -28,18 +28,27 @@ fetch('abiList.json')
 
 // ********************************************************************************
 
-let cabDictionary = {};
-// Carica il JSON dei CAB all'avvio
+// Variabile globale per la lista CAB pre-elaborata
+let cabList = [];
+
+// Carica e pre-elabora il file CAB-List.json
 fetch('CAB-List.json')
   .then(response => response.json())
   .then(data => {
-    data.forEach(item => {
-      // item.CAB contiene il codice, e potresti voler salvare anche Denominazione, Tipo e Range
-      cabDictionary[item.CAB] = item;
-    });
-    console.log("Dizionario CAB caricato:", cabDictionary);
+    // Pre-elabora ciascun record: calcola il valore numerico base e l'intervallo superiore (base + Range)
+    cabList = data.map(entry => ({
+      base: parseInt(entry.CAB, 10), 
+      upper: parseInt(entry.CAB, 10) + parseInt(entry.Range, 10),
+      Denominazione: entry.Denominazione,
+      Tipo: entry.Tipo,
+      Range: parseInt(entry.Range, 10)
+    }));
+    // Ordina l'array in ordine crescente in base al campo base (opzionale, per robustezza)
+    cabList.sort((a, b) => a.base - b.base);
+    console.log("Lista CAB pre-elaborata:", cabList);
   })
   .catch(err => console.error("Errore nel caricamento di CAB-List.json:", err));
+
 
 /****************************************************
  * 1) pasteIban(): Incolla dagli Appunti
@@ -167,9 +176,38 @@ function isValidCAB(iban) {
   return false;
 }
 
+/****************************************************
+ * 6) Funzione per estrarre il comune dal CAB
+ ****************************************************/
+function getComuneFromCAB(iban) {
+  // Normalizza l'IBAN: rimuove spazi e converte in maiuscolo
+  const normalizedIban = iban.toUpperCase().replace(/\s+/g, "");
+  
+  // Verifica che l'IBAN sia sufficientemente lungo (almeno 15 caratteri)
+  if (normalizedIban.length < 15) return "IBAN troppo corto";
+  
+  // Estrai la porzione di 5 caratteri che rappresenta il CAB (es. dalla posizione 10 a 15)
+  const cabStr = normalizedIban.substring(10, 15);
+  
+  // Controlla che il CAB sia composto da 5 cifre
+  if (!/^\d{5}$/.test(cabStr)) return "CAB non valido";
+  
+  // Converti in numero intero
+  const numericCAB = parseInt(cabStr, 10);
+  
+  // Se la lista CAB non è ancora caricata, restituisci un messaggio di attesa
+  if (!cabList || cabList.length === 0) return "CAB non disponibile";
+  
+  // Usa Array.find per cercare il record per cui il CAB corrente rientra nel range [base, base+Range]
+  const record = cabList.find(rec => numericCAB >= rec.base && numericCAB <= rec.upper);
+  
+  // Se trovato, restituisci il nome del comune (Denominazione), altrimenti un fallback
+  return record ? record.Denominazione : "Comune sconosciuto";
+}
+
 
 /****************************************************
- * 6) Funzione per verificare il numero di conto
+ * 7) Funzione per verificare il numero di conto
  ****************************************************/
 function isValidAccountNumber(iban) {
   // Rimuove spazi e rende l'IBAN tutto maiuscolo
@@ -191,7 +229,7 @@ function isValidAccountNumber(iban) {
 
 
 /****************************************************
- * 7) Funzione per controllare la struttura IBAN italiano (27 caratteri)
+ * 8) Funzione per controllare la struttura IBAN italiano (27 caratteri)
  ****************************************************/
 function isItalianIbanStructure(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
@@ -223,7 +261,7 @@ function isItalianIbanStructure(iban) {
 }
 
 /****************************************************
- * 8) Funzione per formattare l'IBAN italiano con spazi
+ * 9) Funzione per formattare l'IBAN italiano con spazi
  ****************************************************/
 function formatIbanItalian(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
@@ -239,7 +277,7 @@ function formatIbanItalian(iban) {
 }
 
 /****************************************************
- * 6) findSingleCharCorrectionsItalian:
+ * 10) findSingleCharCorrectionsItalian:
  * Cerca IBAN validi modificando 1 solo carattere, includendo il filtro ABI/CAB
  ****************************************************/
 function findSingleCharCorrectionsItalian(ibanOrig) {
@@ -259,7 +297,7 @@ function findSingleCharCorrectionsItalian(ibanOrig) {
 }
 
 /****************************************************
- * 7) findSwapCorrectionsItalian:
+ * 11) findSwapCorrectionsItalian:
  * Cerca IBAN validi scambiando due caratteri, includendo il filtro ABI/CAB
  ****************************************************/
 function findSwapCorrectionsItalian(ibanOrig) {
@@ -285,7 +323,7 @@ function findSwapCorrectionsItalian(ibanOrig) {
 }
 
 /****************************************************
- * 8) findAllCorrectionsItalian:
+ * 12) findAllCorrectionsItalian:
  * Unisce le correzioni trovate (single char e swap)
  ****************************************************/
 function findAllCorrectionsItalian(ibanOrig) {
@@ -336,7 +374,7 @@ function updateIndicators(iban) {
 
 
 /****************************************************
- * 9) checkIBAN():
+ * 13) checkIBAN():
  * Esegue la verifica e mostra il risultato (e le correzioni se necessarie)
  ****************************************************/
 function checkIBAN() {
@@ -363,8 +401,13 @@ function checkIBAN() {
   }
   // Ora controlla anche solo l'ABI
   if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input) && isValidCAB(input)) {
-  let bankName = getBankName(input);
-  resultDiv.textContent = "IBAN VALIDO!\n\n" + formatIbanItalian(input) + "\n" + bankName;
+  // Recupera il nome della banca (tramite la tua funzione getBankName)
+  let bankName = getBankName(iban);
+  // Determina il comune associato tramite il CAB
+  let comuneName = getComuneFromCAB(iban);
+  resultDiv.textContent = "IBAN VALIDO!\n" + formatIbanItalian(input) + "\n\n"
+  + bankName + "\n"
+  + "Filiale di " + comuneName;
   return;
   }
   let allCorrections = findAllCorrectionsItalian(input);
