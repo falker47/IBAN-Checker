@@ -24,6 +24,22 @@ fetch('abiList.json')
     console.log("Dizionario ABI caricato:", abiDictionary);
   })
   .catch(err => console.error("Errore nel caricamento di abiList.json:", err));
+// Variabile globale per memorizzare i codici CAB validi
+
+// ********************************************************************************
+
+let cabDictionary = {};
+// Carica il JSON dei CAB all'avvio
+fetch('CAB-List.json')
+  .then(response => response.json())
+  .then(data => {
+    data.forEach(item => {
+      // item.CAB contiene il codice, e potresti voler salvare anche Denominazione, Tipo e Range
+      cabDictionary[item.CAB] = item;
+    });
+    console.log("Dizionario CAB caricato:", cabDictionary);
+  })
+  .catch(err => console.error("Errore nel caricamento di CAB-List.json:", err));
 
 /****************************************************
  * 1) pasteIban(): Incolla dagli Appunti
@@ -109,20 +125,46 @@ function isValidCAB(iban) {
   // Estrae i 5 caratteri del CAB
   let cab = iban.substring(10, 15);
 
-  // 1) Verifica che siano esattamente 5 cifre
+  // Verifica che siano esattamente 5 cifre
   if (!/^\d{5}$/.test(cab)) {
     return false;
   }
 
-  // 2) Converte in numero per altri controlli
+  // Converte in numero per altri controlli
   let numericCAB = parseInt(cab, 10);
 
-  // Se numericCAB = 0 o > 89999 (eccetto 99999), escludi
-  if (numericCAB === 0 || (numericCAB > 89999 && numericCAB !== 99999)) {
-    return false;
+  // Verifica se il codice rientra in uno dei range validi:
+  // CAB dei Capolouoghi di Regione
+  if (numericCAB >  999 && numericCAB <  4999) {
+    return true;
+  }
+  // CAB dei Capolouoghi di Provincia 
+  if (numericCAB > 9999 && numericCAB < 17500) {
+    return true;
+  }
+  // CAB dei Comuni "speciali" (Comuni L - Range 99)
+  if (numericCAB > 19999 && numericCAB < 26400) {
+    return true;
+  }
+
+  // CAB dei Comuni "speciali" (Comuni M - Range 09)
+  if (numericCAB > 29999 && numericCAB < 85230) {
+    return true;
+  }
+  if (numericCAB > 85249 && numericCAB < 85450) {
+    return true;
+  }
+  if (numericCAB > 85769 && numericCAB < 89930) {
+    return true;
   }
   
-  return true;
+  // Negli altri casi, controlla se il CAB è presente nel dizionario caricato
+  if (cabDictionary && Object.keys(cabDictionary).length > 0) {
+    return cabDictionary.hasOwnProperty(cab);
+  }
+  
+  // Se il dizionario non è stato ancora caricato, puoi decidere di tornare false
+  return false;
 }
 
 
