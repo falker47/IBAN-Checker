@@ -28,16 +28,24 @@ fetch('abiList.json')
 
 // ********************************************************************************
 
-let cabDictionary = {};
-// Carica il JSON dei CAB all'avvio
+// Variabile globale per la lista CAB (pre-elaborata)
+let cabList = [];
+
+// Carica e pre-processa il file CAB-List.json
 fetch('CAB-List.json')
   .then(response => response.json())
   .then(data => {
-    data.forEach(item => {
-      // item.CAB contiene il codice, e potresti voler salvare anche Denominazione, Tipo e Range
-      cabDictionary[item.CAB] = item;
-    });
-    console.log("Dizionario CAB caricato:", cabDictionary);
+    // Trasforma ogni record: calcola il valore numerico di CAB e l'estremo superiore (base + Range)
+    cabList = data.map(entry => ({
+       base: parseInt(entry.CAB, 10),
+       upper: parseInt(entry.CAB, 10) + parseInt(entry.Range, 10),
+       Denominazione: entry.Denominazione,
+       Tipo: entry.Tipo,
+       Range: parseInt(entry.Range, 10)
+    }));
+    // Ordina l'array in ordine crescente in base al campo base
+    cabList.sort((a, b) => a.base - b.base);
+    console.log("Lista CAB pre-elaborata e ordinata:", cabList);
   })
   .catch(err => console.error("Errore nel caricamento di CAB-List.json:", err));
 
@@ -165,6 +173,56 @@ function isValidCAB(iban) {
   
   // Se il dizionario non è stato ancora caricato, puoi decidere di tornare false
   return false;
+}
+
+/***************************************************************************************
+ * 6) Funzione getComuneFromCAB
+ * Estrae dal CAB (preso dall'IBAN) il valore numerico e, tramite una ricerca binaria nella
+ *  cabList, restituisce la Denominazione del comune associato.
+ ***************************************************************************************/
+function getComuneFromCAB(iban) {
+  // Normalizza l'IBAN: rimuove spazi e converte in maiuscolo
+  let normalizedIban = iban.toUpperCase().replace(/\s+/g, "");
+  
+  // Verifica che l'IBAN abbia almeno 15 caratteri per poter estrarre il CAB
+  if (normalizedIban.length < 15) return "IBAN troppo corto";
+  
+  // Estrai la porzione di 5 caratteri relativa al CAB (ad esempio, dalla posizione 10 alla 15)
+  let cabStr = normalizedIban.substring(10, 15);
+  
+  // Controlla che il campo estratto sia composto da 5 cifre
+  if (!/^\d{5}$/.test(cabStr)) return "CAB non valido";
+  
+  // Converti in numero intero
+  let numericCAB = parseInt(cabStr, 10);
+  
+  // Se la lista CAB non è ancora caricata, restituisci un messaggio di attesa
+  if (!cabList || cabList.length === 0) return "CAB non disponibile";
+  
+  // Esegui una ricerca binaria nella cabList (che è ordinata per campo 'base')
+  let left = 0;
+  let right = cabList.length - 1;
+  
+  while (left <= right) {
+    let mid = Math.floor((left + right) / 2);
+    let record = cabList[mid];
+    
+    // Se il CAB di input è inferiore alla base dell'intervallo, cerca a sinistra
+    if (numericCAB < record.base) {
+      right = mid - 1;
+    } 
+    // Se il CAB è maggiore dell'estremo superiore dell'intervallo, cerca a destra
+    else if (numericCAB > record.upper) {
+      left = mid + 1;
+    } 
+    // Se numericCAB è compreso tra record.base e record.upper (estremi inclusi)
+    else {
+      return record.Denominazione; // restituisce il nome del comune (es. "Torino")
+    }
+  }
+  
+  // Se nessun record corrisponde, restituisci un valore di fallback
+  return "Comune sconosciuto";
 }
 
 
@@ -364,7 +422,7 @@ function checkIBAN() {
   // Ora controlla anche solo l'ABI
   if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input) && isValidCAB(input)) {
   let bankName = getBankName(input);
-  resultDiv.textContent = "IBAN VALIDO!\n\n" + formatIbanItalian(input) + "\n" + bankName;
+  resultDiv.textContent = "IBAN VALIDO!" + <br> + formatIbanItalian(input) + <br><br> + bankName + <br> + "Filiale di " + comuneName;
   return;
   }
   let allCorrections = findAllCorrectionsItalian(input);
