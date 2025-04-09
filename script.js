@@ -422,7 +422,8 @@ function checkIBAN() {
   // Ora controlla anche solo l'ABI
   if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input) && isValidCAB(input)) {
   let bankName = getBankName(input);
-  resultDiv.textContent = "IBAN VALIDO!\n\n" + formatIbanItalian(input) + "\n" + bankName;
+  let comuneName = getComuneFromCAB(iban);
+  resultDiv.textContent = "IBAN VALIDO!\n" + formatIbanItalian(input) + "\n\n" + bankName + "\n" + "Filiale di " + comuneName;
   return;
   }
   let allCorrections = findAllCorrectionsItalian(input);
