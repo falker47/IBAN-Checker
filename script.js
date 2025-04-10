@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function() {
 let abiDictionary = {};
 
 // Carica il JSON all'avvio
-fetch('abiList.json')
+fetch('ABI-List.json')
   .then(response => response.json())
   .then(data => {
     // data è un array di oggetti [{ABI: "01005", Denominazione: "BANCA DI ESEMPIO SPA"}, ...]
@@ -23,7 +23,7 @@ fetch('abiList.json')
     });
     console.log("Dizionario ABI caricato:", abiDictionary);
   })
-  .catch(err => console.error("Errore nel caricamento di abiList.json:", err));
+  .catch(err => console.error("Errore nel caricamento di ABI-List.json:", err));
 // Variabile globale per memorizzare i codici CAB validi
 
 // ********************************************************************************
