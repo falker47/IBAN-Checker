@@ -182,7 +182,7 @@ function isValidCAB(iban) {
 }
 
 /****************************************************
- * 6) Funzione per estrarre il comune dal CAB
+ * 6a) Funzione per estrarre il comune dal CAB
  ****************************************************/
 function getComuneFromCAB(iban) {
   // Normalizza l'IBAN: rimuove spazi e converte in maiuscolo
@@ -211,7 +211,7 @@ function getComuneFromCAB(iban) {
 }
 
 /****************************************************
- * 7) Funzione per verificare il numero di conto
+ * 6b) Funzione per estrarre la sigla del comune dal CAB
  ****************************************************/
 function getSiglaFromCAB(iban) {
   // Normalizza l'IBAN: rimuove spazi e converte in maiuscolo
