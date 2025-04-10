@@ -1376,8 +1376,16 @@
     "Denominazione": "BANCA TIBURTINA DI CREDITO E SERVIZI - TIVOLI"
   },
   {
+    "ABI": "03393",
+    "Denominazione": "BANCA SVILUPPO ECONOMICO S.P.A."
+  },
+  {
     "ABI": "03394",
     "Denominazione": "STIFEL EUROPE BANK AG"
+  },
+  {
+    "ABI": "03395",
+    "Denominazione": "ILLIMITY BANK S.P.A."
   },
   {
     "ABI": "03398",
@@ -1390,6 +1398,14 @@
   {
     "ABI": "03400",
     "Denominazione": "BANCA TOSCANA S.P.A."
+  },
+  {
+    "ABI": "03401",
+    "Denominazione": "STANDARD CHARTERED BANK"
+  },
+  {
+    "ABI": "03402",
+    "Denominazione": "WEBANK S.P.A."
   },
   {
     "ABI": "03403",
@@ -1432,6 +1448,10 @@
     "Denominazione": "BANKERS TRUST INTERNATIONAL PLC"
   },
   {
+    "ABI": "03419",
+    "Denominazione": "J.P. MORGAN SECURITIES PLC"
+  },
+  {
     "ABI": "03424",
     "Denominazione": "BANCO DI CHIAVARI E DELLA RIVIERA LIGURE"
   },
@@ -1456,12 +1476,20 @@
     "Denominazione": "CREDITO LOMBARDO VENETO S.P.A."
   },
   {
+    "ABI": "03431",
+    "Denominazione": "BANCA CARIGE ITALIA SPA"
+  },
+  {
     "ABI": "03432",
     "Denominazione": "CRÉDIT AGRICOLE CORPORATE & INVESTMENT BANK"
   },
   {
     "ABI": "03434",
     "Denominazione": "BMW BANK GMBH"
+  },
+  {
+    "ABI": "03435",
+    "Denominazione": "BANCA FARMAFACTORING SPA"
   },
   {
     "ABI": "03437",
@@ -1488,8 +1516,16 @@
     "Denominazione": "WISE DIALOG BANK S.P.A."
   },
   {
+    "ABI": "03443",
+    "Denominazione": "CRÉDIT AGRICOLE LUXEMBOURG"
+  },
+  {
     "ABI": "03445",
     "Denominazione": "CRÉDIT AGRICOLE AUTO BANK S.P.A."
+  },
+  {
+    "ABI": "03446",
+    "Denominazione": "WESTERN UNION INTERNATIONAL BANKGMBH"
   },
   {
     "ABI": "03448",
@@ -1800,12 +1836,96 @@
     "Denominazione": "SCANDINAVIAN BANK LIMITED"
   },
   {
+    "ABI": "03620",
+    "Denominazione": "CHINA CONSTRUCTION BANK (EUROPE) S.A."
+  },
+  {
+    "ABI": "03623",
+    "Denominazione": "BANK OF COMMUNICATIONS (LUXEMBOURG) S.A."
+  },
+  {
+    "ABI": "03625",
+    "Denominazione": "AIDEXA S.P.A."
+  },
+  {
+    "ABI": "03628",
+    "Denominazione": "BANCA PSA ITALIA SPA"
+  },
+  {
+    "ABI": "03638",
+    "Denominazione": "YOUNITED"
+  },
+  {
+    "ABI": "03641",
+    "Denominazione": "HEWLETT PACKARD INTERNATIONAL BANK PLC"
+  },
+  {
+    "ABI": "03645",
+    "Denominazione": "LOMBARD ODIER (EUROPE) S.A."
+  },
+  {
     "ABI": "03646",
     "Denominazione": "N26 BANK SE"
   },
   {
+    "ABI": "03647",
+    "Denominazione": "BUNQ B.V."
+  },
+  {
+    "ABI": "03654",
+    "Denominazione": "TOYOTA MATERIAL HANDLING COMMERCIAL FINANCE AB"
+  },
+  {
+    "ABI": "03655",
+    "Denominazione": "GRENKE BANK AG"
+  },
+  {
+    "ABI": "03656",
+    "Denominazione": "GUBER BANCA S.P.A."
+  },
+  {
+    "ABI": "03658",
+    "Denominazione": "GOLDMAN SACHS BANK EUROPE SE"
+  },
+  {
+    "ABI": "03660",
+    "Denominazione": "PERSIA INTERNATIONAL BANK"
+  },
+  {
+    "ABI": "03661",
+    "Denominazione": "MGF"
+  },
+  {
+    "ABI": "03662",
+    "Denominazione": "AK NORDIK AB"
+  },
+  {
+    "ABI": "03664",
+    "Denominazione": "HYUNDAI CAPITAL BANK EUROPE GMBH"
+  },
+  {
+    "ABI": "03665",
+    "Denominazione": "SOLARISBANK AG"
+  },
+  {
+    "ABI": "03666",
+    "Denominazione": "CREDIT SUISSE BANK (EUROPE) S.A."
+  },
+  {
+    "ABI": "03667",
+    "Denominazione": "ZURICH ITALY BANK SPA"
+  },
+  {
+    "ABI": "03668",
+    "Denominazione": "CAIXABANK, S.A."
+  },
+  {
     "ABI": "03669",
     "Denominazione": "REVOLUT BANK UAB"
+  },
+  {
+    "ABI": "03671",
+    "Denominazione": "COFIDIS SA"
   },
   {
     "ABI": "03674",
@@ -3209,7 +3329,7 @@
   },
   {
     "ABI": "07057",
-    "Denominazione": "CREDITO COOPERATIVO INTERPROVINCIALE VENETO S.C.A.R.L."
+    "Denominazione": "BANCA DELL'ALTA MURGIA CREDITO COOPERATIVO - S.C."
   },
   {
     "ABI": "07058",
