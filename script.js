@@ -118,9 +118,12 @@ function isValidABI(iban) {
  * 4) Funzione per recuperare il nome banca
  ****************************************************/
 function getBankName(iban) {
+  // Rimuove tutti gli spazi dalla stringa dell'IBAN
+  iban = iban.replace(/\s+/g, "");
   let abi = iban.substring(5, 10);
   return abiDictionary[abi] || "Banca Sconosciuta";
 }
+
 
 /****************************************************
  * 5) Funzione che esclude CAB invalidi
