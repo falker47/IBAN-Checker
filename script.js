@@ -288,7 +288,7 @@ function findSingleCharCorrectionsItalian(ibanOrig) {
     for (let c of validChars) {
       if (c === ibanOrig[i]) continue;
       let newIban = ibanOrig.slice(0, i) + c + ibanOrig.slice(i+1);
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban)) {
+      if (isIbanValid(newIban) && isItalianIbanStructure(newIban) && isValidABI(newIban)) {
         results.add(newIban);
       }
     }
@@ -311,7 +311,7 @@ function findSwapCorrectionsItalian(ibanOrig) {
       arr[i] = arr[j];
       arr[j] = tmp;
       let newIban = arr.join("");
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban)) {
+      if (isIbanValid(newIban) && isItalianIbanStructure(newIban) && isValidABI(newIban)) {
         results.add(newIban);
       }
       // Ripristina lo scambio
