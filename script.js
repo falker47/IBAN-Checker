@@ -167,9 +167,10 @@ function isValidCAB(iban) {
     return true;
   }
   
-  // Negli altri casi, controlla se il CAB è presente nel dizionario caricato
-  if (cabDictionary && Object.keys(cabDictionary).length > 0) {
-    return cabDictionary.hasOwnProperty(cab);
+  // Se non rientra in nessun range, controlla se è presente in cabList
+  if (cabList && cabList.length > 0) {
+    const record = cabList.find(rec => numericCAB >= rec.base && numericCAB <= rec.upper);
+    return record !== undefined;
   }
   
   // Se il dizionario non è stato ancora caricato, puoi decidere di tornare false
