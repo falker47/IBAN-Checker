@@ -41,7 +41,8 @@ fetch('CAB-List.json')
       upper: parseInt(entry.CAB, 10) + parseInt(entry.Range, 10),
       Denominazione: entry.Denominazione,
       Tipo: entry.Tipo,
-      Range: parseInt(entry.Range, 10)
+      Range: parseInt(entry.Range, 10),
+      Sigla: entry.Sigla  // proprietà aggiunta
     }));
     // Ordina l'array in ordine crescente in base al campo base (opzionale, per robustezza)
     cabList.sort((a, b) => a.base - b.base);
@@ -208,6 +209,31 @@ function getComuneFromCAB(iban) {
   // Se trovato, restituisci il nome del comune (Denominazione), altrimenti un fallback
   return record ? record.Denominazione : "Comune sconosciuto";
 }
+
+/****************************************************
+ * 7) Funzione per verificare il numero di conto
+ ****************************************************/
+function getSiglaFromCAB(iban) {
+  // Normalizza l'IBAN: rimuove spazi e converte in maiuscolo
+  const normalizedIban = iban.toUpperCase().replace(/\s+/g, "");
+  if (normalizedIban.length < 15) return "";
+  
+  // Estrae i 5 caratteri del CAB (dalla posizione 10 a 15)
+  const cabStr = normalizedIban.substring(10, 15);
+  if (!/^\d{5}$/.test(cabStr)) return "";
+  
+  const numericCAB = parseInt(cabStr, 10);
+  
+  // Se la lista cabList non è disponibile, restituisce una stringa vuota
+  if (!cabList || cabList.length === 0) return "";
+  
+  // Trova il record corrispondente al CAB
+  const record = cabList.find(rec => numericCAB >= rec.base && numericCAB <= rec.upper);
+  
+  // Se il record è trovato e ha una Sigla, restituiscila, altrimenti vuoto
+  return record && record.Sigla ? record.Sigla : "";
+}
+
 
 
 /****************************************************
@@ -409,11 +435,20 @@ function checkIBAN() {
   let bankName = getBankName(iban);
   // Determina il comune associato tramite il CAB
   let comuneName = getComuneFromCAB(iban);
+  // Recupera la sigla della provincia dal record di CAB-List
+    let siglaProvincia = getSiglaFromCAB(iban);
+    let siglaText = "";
+  // Aggiunge il blocco con la sigla solo se non è vuoto e diverso da "N/D"
+    if (siglaProvincia !== "" && siglaProvincia !== "N/D") {
+      siglaText = " (" + siglaProvincia + ")";
+    }
+  
   resultDiv.textContent = "IBAN VALIDO!\n" + formatIbanItalian(input) + "\n\n"
   + bankName + "\n"
-  + "Filiale di " + comuneName;
+  + "Filiale di " + comuneName + siglaText;
   return;
   }
+
   let allCorrections = findAllCorrectionsItalian(input);
   if (allCorrections.length === 0) {
     resultDiv.textContent = "IBAN non valido.\n\nNessuna correzione valida trovata (1 char o swap).";
