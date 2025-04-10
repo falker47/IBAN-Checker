@@ -248,12 +248,11 @@ function isValidAccountNumber(iban) {
   let account = iban.substring(15);
   // La regex applica le seguenti regole:
   // - ^(?:\d{2}|CC)   : le prime due cifre devono essere due cifre (0-9) oppure "CC"
-  // - [0-2]           : la terza cifra deve essere 0, 1 o 2
-  // - \d{6}           : dalla quarta alla nona cifra: sei cifre (0-9)
+  // - \d{7}           : dalla terza alla nona cifra: sei cifre (0-9)
   // - [0-9X]          : la decima cifra può essere un numero o la lettera X
   // - \d{2}           : l'undicesima e la dodicesima cifra devono essere numeri
   // - $              : fine stringa
-  const regex = /^(?:\d{2}|CC)[0-2]\d{6}[0-9X]\d{2}$/;
+  const regex = /^(?:\d{2}|CC)\d{7}[0-9X]\d{2}$/;
   return regex.test(account);
 }
 
@@ -421,6 +420,12 @@ function checkIBAN() {
       "Campo vuoto: incolla o inserisci un IBAN prima di verificare.";
     return;
   }
+
+  if (!input.startsWith("IT")) {
+    resultDiv.textContent = "Questo è un IBAN estero.\nInserire un IBAN italiano.";
+    return;
+  }
+
   if (input.length > 27) {
     resultDiv.textContent = "IBAN troppo lungo, ha " + input.length + " caratteri.\n\nDovrebbe averne 27.";
     return;
