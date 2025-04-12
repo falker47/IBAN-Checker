@@ -154,6 +154,33 @@ h1 {
   font-size: 1rem;
   line-height: 1.4;
   box-sizing: border-box;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.result-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stili in base al tipo di messaggio */
+.result-success {
+  background: #d4edda;
+  border: 1px solid #155724;
+  color: #155724;
+}
+
+.result-error {
+  background: #f8d7da;
+  border: 1px solid #721c24;
+  color: #721c24;
+}
+
+.result-warning {
+  background: #fff3cd;
+  border: 1px solid #856404;
+  color: #856404;
 }
 
 /* Testo Informativo */
@@ -189,6 +216,8 @@ footer a {
 footer a:hover {
   color: var(--accent-teal-hover);
 }
+
+
 
 /* Media Query per dispositivi smartphone */
 @media (max-width: 767px) {
