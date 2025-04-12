@@ -151,6 +151,26 @@ h1 {
   font-style: italic;       /* Testo in corsivo per indicare uno stato predefinito */
 }
 
+/* Applica un font monospace al testo con classe .monospace */
+
+
+/* Stile per il pulsante copia */
+.btn-copy {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  padding: 0;
+  margin-left: 5px;
+  font-size: 1em;
+}
+
+/* Esempio: modifica hover per rendere il pulsante più evidente */
+.btn-copy:hover {
+  color: var(--accent-teal-hover);
+}
+
+
 
 /* Desktop: riduci la larghezza al 30% e centra il pulsante "Verifica IBAN" */
 @media (min-width: 768px) {

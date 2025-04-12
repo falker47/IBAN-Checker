@@ -470,16 +470,16 @@ function checkIBAN() {
 
   // IBAN troppo lungo
   if (input.length > 27) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i>IBAN troppo lungo, ha " + input.length + " caratteri.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-compress'></i>Dovrebbe averne 27.</div>";
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN troppo lungo, ha " + input.length + " caratteri.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-compress'></i> Dovrebbe averne 27.</div>";
     displayResult(msg, "error");
     return;
   }
 
   // IBAN troppo corto
   if (input.length < 27) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i>IBAN troppo corto, ha " + input.length + " caratteri.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-expand'></i>Dovrebbe averne 27.</div>";
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN troppo corto, ha " + input.length + " caratteri.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-expand'></i> Dovrebbe averne 27.</div>";
     displayResult(msg, "error");
     return;
   }
@@ -494,9 +494,12 @@ function checkIBAN() {
       siglaText = " (" + siglaProvincia + ")";
     }
     
-    let msg = "<div class='result-line'><i class='fa-solid fa-check-circle'></i>" + formatIbanItalian(input) + "</div>"
+    // L'IBAN viene mostrato in monospace e aggiunto il bottone per copiare accanto
+    let msg = "<div class='result-line'><i class='fa-solid fa-check-circle'></i> "
+            + "<span class='monospace'>" + formatIbanItalian(input) + " </span> "
+            + "<button class='btn-copy' onclick='copyToClipboard(\"" + input + "\")' title='Copia IBAN'><i class='fa-solid fa-copy'></i></button></div>"
             + "<div class='result-line'><i class='fa-solid fa-university'></i>" + bankName + "</div>"
-            + "<div class='result-line'><i class='fa-solid fa-building'></i>" + " Filiale di " + comuneName + siglaText + "</div>";
+            + "<div class='result-line'><i class='fa-solid fa-building'></i> Filiale di " + comuneName + siglaText + "</div>";
     displayResult(msg, "success");
     return;
   }
@@ -508,10 +511,34 @@ function checkIBAN() {
             + "<div class='result-line'><i class='fa-solid fa-ban'></i>Nessuna correzione valida trovata.</div>";
     displayResult(msg, "error");
   } else {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN non valido.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i> Correzioni trovate: " + allCorrections.length + "</div>";
-    let lines = allCorrections.map(x => "<div class='result-line'>" + formatIbanItalian(x) + "</div>");
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i>IBAN non valido.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i> Correzioni trovate: <strong>" + allCorrections.length + "</strong></div>";
+    // Per ciascuna correzione, mostriamo il testo in monospace e il pulsante copia sulla stessa riga
+    let lines = allCorrections.map(x => {
+      return "<div class='result-line'><span class='monospace'>" + formatIbanItalian(x) + "</span> "
+           + "<button class='btn-copy' onclick='copyToClipboard(\"" + x + "\")' title='Copia correzione'><i class='fa-solid fa-copy'></i></button></div>";
+    });
     msg += lines.join("");
     displayResult(msg, "warning");
+  }
+}
+
+// Funzione per copiare il testo negli Appunti
+function copyToClipboard(text) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => {
+        // Puoi anche mostrare un breve messaggio di conferma se lo desideri
+        console.log("Testo copiato: " + text);
+      })
+      .catch(err => console.error("Errore durante la copia: ", err));
+  } else {
+    // Fallback se navigator.clipboard non è supportato
+    let tempInput = document.createElement("input");
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
   }
 }
