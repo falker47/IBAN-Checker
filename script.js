@@ -496,7 +496,7 @@ function checkIBAN() {
     
     // L'IBAN viene mostrato in monospace e aggiunto il bottone per copiare accanto
     let msg = "<div class='result-line'><i class='fa-solid fa-check-circle'></i> "
-            + "<span class='iban-line'>" + formatIbanItalian(input) + " </span> "
+            + "<span>" + formatIbanItalian(input) + " </span> "
             + "<button class='btn-copy' onclick='copyToClipboard(\"" + input + "\")' title='Copia IBAN'><i class='fa-solid fa-copy'></i></button></div>"
             + "<div class='result-line'><i class='fa-solid fa-university'></i>" + bankName + "</div>"
             + "<div class='result-line'><i class='fa-solid fa-building'></i> Filiale di " + comuneName + siglaText + "</div>";
