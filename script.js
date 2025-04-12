@@ -4,6 +4,7 @@ document.getElementById('currentYear').textContent = new Date().getFullYear();
 document.addEventListener("DOMContentLoaded", function() {
   // Mostra gli indicatori in stato "pending" al caricamento
   updateIndicators("");
+  displayPlaceholder();
 });
 
 
@@ -49,6 +50,21 @@ fetch('CAB-List.json')
     console.log("Lista CAB pre-elaborata:", cabList);
   })
   .catch(err => console.error("Errore nel caricamento di CAB-List.json:", err));
+
+  // carica placeholder
+  function displayPlaceholder() {
+    let resultDiv = document.getElementById("result");
+    // Rimuovi eventuali classi di risultato già applicate
+    resultDiv.classList.remove("result-success", "result-error", "result-warning");
+    // Aggiungi una classe specifica per il placeholder (definita in CSS)
+    resultDiv.classList.add("placeholder");
+    
+    resultDiv.innerHTML = "<div class='result-line'><i class='fa-solid fa-info-circle'></i> Inserisci un IBAN e premi 'Verifica IBAN' per visualizzare il risultato.</div>";
+    
+    // Assicura che la box sia visibile
+    resultDiv.style.opacity = 1;
+    resultDiv.style.transform = "translateY(0)";
+  }  
 
 
 /****************************************************
@@ -401,19 +417,17 @@ function updateIndicators(iban) {
   }
 }
 
-
-
 function displayResult(message, type) {
   let resultDiv = document.getElementById("result");
-  // Rimuovi eventuali classi precedenti
-  resultDiv.classList.remove("result-success", "result-error", "result-warning", "visible");
-  
+  // Rimuovi tutte le classi precedenti, inclusa quella del placeholder
+  resultDiv.classList.remove("result-success", "result-error", "result-warning", "placeholder", "visible");
+
   // Aggiungi la classe in base al tipo di messaggio
-  if(type === "success") {
+  if (type === "success") {
     resultDiv.classList.add("result-success");
-  } else if(type === "error") {
+  } else if (type === "error") {
     resultDiv.classList.add("result-error");
-  } else if(type === "warning") {
+  } else if (type === "warning") {
     resultDiv.classList.add("result-warning");
   }
   
@@ -426,6 +440,7 @@ function displayResult(message, type) {
   // Aggiungi la classe 'visible' per attivare l'effetto fade-in
   resultDiv.classList.add("visible");
 }
+
 
 
 /****************************************************
@@ -448,7 +463,7 @@ function checkIBAN() {
   if (!input.startsWith("IT")) {
     let msg = "<div class='result-line'><i class='fa-solid fa-globe'></i>Questo è un IBAN estero.</div>"
             + "<div class='result-line'><i class='fa-solid fa-flag'></i> Inserire un IBAN italiano.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i>Deve cominciare con 'IT'.</div>";
+            + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i> Deve cominciare con 'IT'.</div>";
     displayResult(msg, "error");
     return;
   }

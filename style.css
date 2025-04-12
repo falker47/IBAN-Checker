@@ -143,6 +143,14 @@ h1 {
   font-size: 1.2em;
 }
 
+/* Stile per il placeholder nella result box */
+.result-box.placeholder {
+  background: #f8f9fa;      /* Un background chiaro */
+  border: 1px dashed #adb5bd; /* Bordo tratteggiato per distinguerlo */
+  color: #6c757d;           /* Colore del testo in tinta grigia */
+  font-style: italic;       /* Testo in corsivo per indicare uno stato predefinito */
+}
+
 
 /* Desktop: riduci la larghezza al 30% e centra il pulsante "Verifica IBAN" */
 @media (min-width: 768px) {
