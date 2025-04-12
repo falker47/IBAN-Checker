@@ -466,13 +466,14 @@ function checkIBAN() {
       siglaText = " (" + siglaProvincia + ")";
     }
     
-    let msg = "IBAN VALIDO!<br>" 
-            + formatIbanItalian(input) + "<br><br>"
-            + bankName + "<br>"
-            + "Filiale di " + comuneName + siglaText;
+    // Costruzione del messaggio con icone per esito IBAN, banca e filiale:
+    let msg = "<div class='result-line'><i class='fa-solid fa-check-circle'></i> IBAN VALIDO: " + formatIbanItalian(input) + "</div>"
+            + "<div class='result-line'><i class='fa-solid fa-university'></i> " + bankName + "</div>"
+            + "<div class='result-line'><i class='fa-solid fa-building'></i> Filiale di " + comuneName + siglaText + "</div>";
     displayResult(msg, "success");
     return;
   }
+  
   
   let allCorrections = findAllCorrectionsItalian(input);
   if (allCorrections.length === 0) {
