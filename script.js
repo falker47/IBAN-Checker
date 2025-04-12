@@ -436,27 +436,39 @@ function checkIBAN() {
   const iban = document.getElementById("ibanInput").value;
   updateIndicators(iban);
   let input = iban.toUpperCase().replace(/\s+/g, "");
-  
+
+  // Campo vuoto
   if (!input) {
-    displayResult("Campo vuoto: incolla o inserisci un IBAN prima di verificare.", "error");
+    let msg = "<div class='result-line'><i class='fa-solid fa-exclamation-circle'></i> Campo vuoto: incolla o inserisci un IBAN prima di verificare.</div>";
+    displayResult(msg, "error");
     return;
   }
-  
+
+  // IBAN estero
   if (!input.startsWith("IT")) {
-    displayResult("Questo è un IBAN estero.<br>Inserire un IBAN italiano.", "error");
+    let msg = "<div class='result-line'><i class='fa-solid fa-globe'></i> Questo è un IBAN estero.</div>"
+            + "<div class='result-line'><span class='flag-italy' style='margin-right:8px;font-size:1.2em;'>🇮🇹</span> Inserire un IBAN italiano.</div>";
+    displayResult(msg, "error");
     return;
   }
-  
+
+  // IBAN troppo lungo
   if (input.length > 27) {
-    displayResult("IBAN troppo lungo, ha " + input.length + " caratteri.<br>Dovrebbe averne 27.", "error");
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN troppo lungo, ha " + input.length + " caratteri.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-compress'></i> Dovrebbe averne 27.</div>";
+    displayResult(msg, "error");
     return;
   }
-  
+
+  // IBAN troppo corto
   if (input.length < 27) {
-    displayResult("IBAN troppo corto, ha " + input.length + " caratteri.<br>Dovrebbe averne 27.", "error");
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN troppo corto, ha " + input.length + " caratteri.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-expand'></i> Dovrebbe averne 27.</div>";
+    displayResult(msg, "error");
     return;
   }
-  
+
+  // IBAN valido: controlli modulo 97, struttura italiana, ABI e CAB
   if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input) && isValidCAB(input)) {
     let bankName = getBankName(input);
     let comuneName = getComuneFromCAB(input);
@@ -466,23 +478,24 @@ function checkIBAN() {
       siglaText = " (" + siglaProvincia + ")";
     }
     
-    // Costruzione del messaggio con icone per esito IBAN, banca e filiale:
-    let msg = "<div class='result-line'><i class='fa-solid fa-check-circle'></i> IBAN VALIDO: " + formatIbanItalian(input) + "</div>"
-            + "<div class='result-line'><i class='fa-solid fa-university'></i> " + bankName + "</div>"
-            + "<div class='result-line'><i class='fa-solid fa-building'></i> Filiale di " + comuneName + siglaText + "</div>";
+    let msg = "<div class='result-line'><i class='fa-solid fa-check-circle'></i>" + formatIbanItalian(input) + "</div>"
+            + "<div class='result-line'><i class='fa-solid fa-university'></i>" + bankName + "</div>"
+            + "<div class='result-line'><i class='fa-solid fa-building'></i>" + " Filiale di " + comuneName + siglaText + "</div>";
     displayResult(msg, "success");
     return;
   }
-  
-  
+
+  // IBAN non valido: tenta le correzioni
   let allCorrections = findAllCorrectionsItalian(input);
   if (allCorrections.length === 0) {
-    displayResult("IBAN non valido.<br><br>Nessuna correzione valida trovata (1 char o swap).", "error");
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN non valido.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-ban'></i> Nessuna correzione valida trovata (1 char o swap).</div>";
+    displayResult(msg, "error");
   } else {
-    let msg = "IBAN non valido.<br>Correzioni trovate: " + allCorrections.length + "<br>";
-    let lines = allCorrections.map(x => formatIbanItalian(x));
-    msg += lines.join("<br>");
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN non valido.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i> Correzioni trovate: " + allCorrections.length + "</div>";
+    let lines = allCorrections.map(x => "<div class='result-line'>" + formatIbanItalian(x) + "</div>");
+    msg += lines.join("");
     displayResult(msg, "warning");
   }
 }
-
