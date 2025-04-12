@@ -496,7 +496,7 @@ function checkIBAN() {
     
     // L'IBAN viene mostrato in monospace e aggiunto il bottone per copiare accanto
     let msg = "<div class='result-line'><i class='fa-solid fa-check-circle'></i> "
-            + "<span class='monospace'>" + formatIbanItalian(input) + " </span> "
+            + "<span class='iban-line'>" + formatIbanItalian(input) + " </span> "
             + "<button class='btn-copy' onclick='copyToClipboard(\"" + input + "\")' title='Copia IBAN'><i class='fa-solid fa-copy'></i></button></div>"
             + "<div class='result-line'><i class='fa-solid fa-university'></i>" + bankName + "</div>"
             + "<div class='result-line'><i class='fa-solid fa-building'></i> Filiale di " + comuneName + siglaText + "</div>";
@@ -515,7 +515,7 @@ function checkIBAN() {
             + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i> Correzioni trovate: <strong>" + allCorrections.length + "</strong></div>";
     // Per ciascuna correzione, mostriamo il testo in monospace e il pulsante copia sulla stessa riga
     let lines = allCorrections.map(x => {
-      return "<div class='result-line'><span class='monospace'>" + formatIbanItalian(x) + "</span> "
+      return "<div class='result-line'><span class='monospace'>" + formatIbanItalian(x) + " </span> "
            + "<button class='btn-copy' onclick='copyToClipboard(\"" + x + "\")' title='Copia correzione'><i class='fa-solid fa-copy'></i></button></div>";
     });
     msg += lines.join("");
