@@ -446,24 +446,25 @@ function checkIBAN() {
 
   // IBAN estero
   if (!input.startsWith("IT")) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-globe'></i> Questo è un IBAN estero.</div>"
-            + "<div class='result-line'><span class='flag-italy' style='margin-right:8px;font-size:1.2em;'>🇮🇹</span> Inserire un IBAN italiano.</div>";
+    let msg = "<div class='result-line'><i class='fa-solid fa-globe'></i>Questo è un IBAN estero.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-flag'></i> Inserire un IBAN italiano.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i>Deve cominciare con 'IT'.</div>";
     displayResult(msg, "error");
     return;
   }
 
   // IBAN troppo lungo
   if (input.length > 27) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN troppo lungo, ha " + input.length + " caratteri.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-compress'></i> Dovrebbe averne 27.</div>";
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i>IBAN troppo lungo, ha " + input.length + " caratteri.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-compress'></i>Dovrebbe averne 27.</div>";
     displayResult(msg, "error");
     return;
   }
 
   // IBAN troppo corto
   if (input.length < 27) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN troppo corto, ha " + input.length + " caratteri.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-expand'></i> Dovrebbe averne 27.</div>";
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i>IBAN troppo corto, ha " + input.length + " caratteri.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-expand'></i>Dovrebbe averne 27.</div>";
     displayResult(msg, "error");
     return;
   }
@@ -488,8 +489,8 @@ function checkIBAN() {
   // IBAN non valido: tenta le correzioni
   let allCorrections = findAllCorrectionsItalian(input);
   if (allCorrections.length === 0) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN non valido.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-ban'></i> Nessuna correzione valida trovata (1 char o swap).</div>";
+    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i>IBAN non valido.</div>"
+            + "<div class='result-line'><i class='fa-solid fa-ban'></i>Nessuna correzione valida trovata.</div>";
     displayResult(msg, "error");
   } else {
     let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN non valido.</div>"
