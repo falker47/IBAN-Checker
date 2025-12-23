@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 
 <head>
   <meta charset="utf-8" />
@@ -20,61 +20,82 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body>
-  <div class="container">
-    <!-- Titolo -->
-    <h1>IBAN Checker</h1>
+<body class="bg-body-bg min-h-screen flex flex-col items-center justify-center p-4">
 
-    <!-- Descrizione iniziale -->
-    <p class="subtitle">
-      Inserisci l'IBAN, oppure clicca l'icona per incollarlo dagli Appunti. Poi premi il pulsante per verificare.
-    </p>
+  <div class="relative w-full max-w-3xl">
+    <!-- Glassmorphism Container -->
+    <div
+      class="bg-white/70 backdrop-blur-md border border-white/50 shadow-2xl rounded-2xl p-6 md:p-12 relative z-10 w-full">
 
-    <!-- Etichetta "IBAN" -->
-    <label for="ibanInput" class="label">IBAN:</label>
+      <!-- Header -->
+      <div class="text-center mb-8 md:mb-10">
+        <h1 class="text-3xl md:text-4xl font-bold text-gray-800 mb-3 md:mb-4 tracking-tight">IBAN Checker</h1>
+        <p class="text-gray-600 text-base md:text-lg">
+          Verifica istantaneamente la validità e i dettagli del tuo IBAN.
+        </p>
+      </div>
 
-    <!-- Wrapper per input e pulsante incolla -->
-    <div class="input-wrapper">
-      <input type="text" id="ibanInput" class="input-iban" placeholder="es. IT47X0123456789000000123456" />
-      <button class="btn-paste" onclick="pasteIban()" title="Incolla IBAN dagli Appunti">
-        <!-- icona clipboard -->
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-          stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
-          <rect x="9" y="2" width="6" height="4" rx="1" ry="1" />
-        </svg>
+      <!-- Input Section -->
+      <div class="mb-6 md:mb-8">
+        <label for="ibanInput" class="block text-sm font-semibold text-gray-700 mb-2 ml-1">Codice IBAN</label>
+        <div class="relative flex items-center">
+          <input type="text" id="ibanInput"
+            class="w-full px-4 py-3 md:px-5 md:py-4 text-base md:text-lg bg-white/80 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-teal focus:border-transparent transition-all shadow-sm placeholder-gray-400"
+            placeholder="IT47X0123456789000000123456" />
+
+          <button
+            class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-accent-teal hover:text-accent-teal-hover hover:bg-teal-50 rounded-lg transition-colors"
+            onclick="pasteIban()" title="Incolla dagli Appunti">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" />
+              <rect x="9" y="2" width="6" height="4" rx="1" ry="1" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Action Button -->
+      <button onclick="checkIBAN()"
+        class="w-full py-3 md:py-4 text-base md:text-lg font-semibold text-white bg-gradient-to-r from-accent-teal to-accent-teal-hover rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 transform active:scale-[0.98]">
+        Verifica IBAN
       </button>
+
+      <!-- Indicators -->
+      <div id="indicators" class="flex flex-wrap justify-center gap-3 mt-8 empty:hidden"></div>
+
+      <!-- Result Box -->
+      <div id="result" class="mt-8 hidden opacity-0 transition-all duration-500 transform translate-y-4">
+        <!-- Content injected by JS -->
+      </div>
+
+      <!-- Info Text -->
+      <div class="mt-12 pt-8 border-t border-gray-200/60 text-center">
+        <p class="text-sm text-gray-500 leading-relaxed max-w-2xl mx-auto">
+          Questo strumento analizza la struttura matematica dell'IBAN e, in caso di errore, suggerisce possibili
+          correzioni basate su errori di digitazione comuni.
+        </p>
+      </div>
+
     </div>
 
-    <!-- Bottone verifica -->
-    <button class="btn-verify" onclick="checkIBAN()">Verifica IBAN</button>
-
-    <!-- Indicatori di controllo -->
-    <div id="indicators" class="indicators-container"></div>
-
-    <!-- Output -->
-    <div id="result" class="result-box"></div>
-
-    <!-- Testo aggiuntivo sotto l'area di output -->
-    <p class="info-text">
-      Questo tool verifica la validità di un IBAN italiano e restituisce anche la banca associata.<br />
-      Se l'IBAN è errato viene analizzato da un algoritmo che cerca l'IBAN corretto
-      considerando le principali cause di errore, come aver scritto male un carattere
-      o aver invertito due caratteri. <br /><br />
-      La lista che presenta i potenziali IBAN corretti è ottimizzata per scremare IBAN
-      matematicamente corretti (rispettano lo standard del modulo 97) ma che non presentano
-      CIN, ABI, CAB, numero di conto e Codice di Controllo validi.
-    </p>
+    <!-- Decorative background blobs -->
+    <div class="absolute -top-10 -left-10 w-64 h-64 bg-accent-orange/20 rounded-full blur-3xl -z-10 animate-pulse">
+    </div>
+    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-accent-teal/20 rounded-full blur-3xl -z-10 animate-pulse"
+      style="animation-delay: 2s;"></div>
 
   </div>
 
-  <footer>
-    <p> <a href="https://falker47.github.io/Nexus-portfolio/" target="_blank">&copy; <span id="currentYear"></span>
-        Maurizio Falconi - falker47</a></p>
+  <footer class="mt-12 text-center text-gray-500 text-sm">
+    <p>
+      <a href="https://falker47.github.io/Nexus-portfolio/" target="_blank"
+        class="hover:text-accent-teal transition-colors">
+        &copy; <span id="currentYear"></span> Maurizio Falconi - falker47
+      </a>
+    </p>
   </footer>
 
-
-  <!-- Includi il file JavaScript esterno -->
   <script src="script.js"></script>
 </body>
 

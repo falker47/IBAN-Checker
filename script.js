@@ -1,544 +1,391 @@
-// variabile year del footer
-document.getElementById('currentYear').textContent = new Date().getFullYear();
 
-document.addEventListener("DOMContentLoaded", function() {
-  // Mostra gli indicatori in stato "pending" al caricamento
-  updateIndicators("");
+// --- Constants & Global State ---
+const DOM = {
+  currentYear: document.getElementById('currentYear'),
+  ibanInput: document.getElementById('ibanInput'),
+  indicators: document.getElementById('indicators'),
+  resultDiv: document.getElementById('result')
+};
+
+const STATE = {
+  abiDictionary: {},
+  cabList: []
+};
+
+// --- Initialization ---
+document.addEventListener("DOMContentLoaded", async () => {
+  DOM.currentYear.textContent = new Date().getFullYear();
+  initIndicatorsState();
   displayPlaceholder();
+
+  // Parallel fetch of resources
+  try {
+    const [abiData, cabData] = await Promise.all([
+      fetchData('ABI-List.json'),
+      fetchData('CAB-List.json')
+    ]);
+
+    // Process ABI Data
+    if (abiData) {
+      abiData.forEach(item => {
+        STATE.abiDictionary[item.ABI] = item.Denominazione;
+      });
+      console.log("Dizionario ABI caricato:", Object.keys(STATE.abiDictionary).length, "voci");
+    }
+
+    // Process CAB Data
+    if (cabData) {
+      STATE.cabList = cabData.map(entry => ({
+        base: parseInt(entry.CAB, 10),
+        upper: parseInt(entry.CAB, 10) + parseInt(entry.Range, 10),
+        Denominazione: entry.Denominazione,
+        Tipo: entry.Tipo,
+        Range: parseInt(entry.Range, 10),
+        Sigla: entry.Sigla
+      })).sort((a, b) => a.base - b.base);
+      console.log("Lista CAB pre-elaborata:", STATE.cabList.length, "voci");
+    }
+
+  } catch (error) {
+    console.error("Critical: Failed to load bank data assets", error);
+    // Optionally show a toast error here
+  }
 });
 
-
-
-// Variabile globale per memorizzare i codici ABI validi
-// Dizionario per ABI -> NomeBanca
-let abiDictionary = {};
-
-// Carica il JSON all'avvio
-fetch('ABI-List.json')
-  .then(response => response.json())
-  .then(data => {
-    // data è un array di oggetti [{ABI: "01005", Denominazione: "BANCA DI ESEMPIO SPA"}, ...]
-    data.forEach(item => {
-      // item.ABI è il codice, item.Denominazione è il nome
-      abiDictionary[item.ABI] = item.Denominazione;
-    });
-    console.log("Dizionario ABI caricato:", abiDictionary);
-  })
-  .catch(err => console.error("Errore nel caricamento di ABI-List.json:", err));
-// Variabile globale per memorizzare i codici CAB validi
-
-// ********************************************************************************
-
-// Variabile globale per la lista CAB pre-elaborata
-let cabList = [];
-
-// Carica e pre-elabora il file CAB-List.json
-fetch('CAB-List.json')
-  .then(response => response.json())
-  .then(data => {
-    // Pre-elabora ciascun record: calcola il valore numerico base e l'intervallo superiore (base + Range)
-    cabList = data.map(entry => ({
-      base: parseInt(entry.CAB, 10), 
-      upper: parseInt(entry.CAB, 10) + parseInt(entry.Range, 10),
-      Denominazione: entry.Denominazione,
-      Tipo: entry.Tipo,
-      Range: parseInt(entry.Range, 10),
-      Sigla: entry.Sigla  // proprietà aggiunta
-    }));
-    // Ordina l'array in ordine crescente in base al campo base (opzionale, per robustezza)
-    cabList.sort((a, b) => a.base - b.base);
-    console.log("Lista CAB pre-elaborata:", cabList);
-  })
-  .catch(err => console.error("Errore nel caricamento di CAB-List.json:", err));
-
-  // carica placeholder
-  function displayPlaceholder() {
-    let resultDiv = document.getElementById("result");
-    // Rimuovi eventuali classi di risultato già applicate
-    resultDiv.classList.remove("result-success", "result-error", "result-warning");
-    // Aggiungi una classe specifica per il placeholder (definita in CSS)
-    resultDiv.classList.add("placeholder");
-    
-    resultDiv.innerHTML = "<div class='result-line'><i class='fa-solid fa-info-circle'></i> Inserisci un IBAN e premi 'Verifica IBAN' per visualizzare il risultato.</div>";
-    
-    // Assicura che la box sia visibile
-    resultDiv.style.opacity = 1;
-    resultDiv.style.transform = "translateY(0)";
-  }  
-
-
-/****************************************************
- * 1) pasteIban(): Incolla dagli Appunti
- ****************************************************/
-function pasteIban() {
-  if (!navigator.clipboard || !navigator.clipboard.readText) {
-    alert("La funzionalità di incolla non è supportata dal tuo browser o non è sicura.");
-    return;
+async function fetchData(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+  } catch (err) {
+    console.error(`Failed loading ${url}:`, err);
+    return null;
   }
-  navigator.clipboard.readText()
-    .then(text => {
-      document.getElementById("ibanInput").value = text;
-    })
-    .catch(err => {
-      console.error("Errore lettura appunti:", err);
-      alert("Impossibile incollare: manca il permesso o il browser non è compatibile.");
-    });
 }
 
-/****************************************************
- * 2) Funzione per il calcolo del modulo 97
- ****************************************************/
+// --- UI Interaction Functions ---
+
+window.pasteIban = async () => {
+  if (!navigator.clipboard?.readText) {
+    alert("Incolla non supportato o permessi negati.");
+    return;
+  }
+  try {
+    const text = await navigator.clipboard.readText();
+    DOM.ibanInput.value = text;
+  } catch (err) {
+    console.warn("Clipboard read failed:", err);
+    alert("Impossibile accedere agli appunti.");
+  }
+};
+
+window.copyToClipboard = (text) => {
+  if (navigator.clipboard?.writeText) {
+    navigator.clipboard.writeText(text)
+      .then(() => console.log("Copiato:", text))
+      .catch(err => console.error("Copy failed:", err));
+  } else {
+    // Fallback
+    const temp = document.createElement("textarea");
+    temp.value = text;
+    document.body.appendChild(temp);
+    temp.select();
+    try {
+      document.execCommand("copy");
+    } catch (e) { console.error("Fallback copy failed", e); }
+    document.body.removeChild(temp);
+  }
+};
+
+// --- Core Validation Logic ---
+
 function isIbanValid(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
-  let rearranged = iban.slice(4) + iban.slice(0, 4);
+  const rearranged = iban.slice(4) + iban.slice(0, 4);
   let expanded = "";
+
   for (let i = 0; i < rearranged.length; i++) {
-    let c = rearranged[i];
-    if (c >= "A" && c <= "Z") {
-      expanded += (c.charCodeAt(0) - 55).toString();
+    const code = rearranged.charCodeAt(i);
+    // 'A' is 65, we want A=10, B=11... so code-55
+    if (code >= 65 && code <= 90) {
+      expanded += (code - 55).toString();
     } else {
-      expanded += c;
+      expanded += rearranged[i];
     }
   }
+
+  // Modulo 97 on large number using block method
   let remainder = 0;
-  let blockSize = 9;
-  let pos = 0;
-  remainder = parseInt(expanded.substr(pos, blockSize), 10) % 97;
-  pos += blockSize;
-  while (pos < expanded.length) {
-    let size = Math.min(7, expanded.length - pos);
-    let part = remainder.toString() + expanded.substr(pos, size);
+  for (let i = 0; i < expanded.length; i += 7) {
+    const part = remainder.toString() + expanded.substring(i, i + 7);
     remainder = parseInt(part, 10) % 97;
-    pos += size;
   }
+
   return remainder === 1;
 }
 
-/****************************************************
- * 3) Funzione per validare ABI tramite un array di combinazioni valide
- ****************************************************/
 function isValidABI(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
   if (iban.length < 10) return false;
-  let abi = iban.substring(5, 10);
-  
-  // Se il dizionario non è ancora stato caricato, potrebbe essere vuoto
-  if (!abiDictionary || Object.keys(abiDictionary).length === 0) {
-    console.warn("Dizionario ABI non ancora caricato o vuoto.");
-    return false;
-  }
-  
-  return abiDictionary.hasOwnProperty(abi);
+  const abi = iban.toUpperCase().replace(/\s+/g, "").substring(5, 10);
+  return STATE.abiDictionary.hasOwnProperty(abi);
 }
-
-/****************************************************
- * 4) Funzione per recuperare il nome banca
- ****************************************************/
-function getBankName(iban) {
-  // Rimuove tutti gli spazi dalla stringa dell'IBAN
-  iban = iban.replace(/\s+/g, "");
-  let abi = iban.substring(5, 10);
-  return abiDictionary[abi] || "Banca Sconosciuta";
-}
-
-
-/****************************************************
- * 5) Funzione che esclude CAB invalidi
- ****************************************************/
 
 function isValidCAB(iban) {
-  // Normalizzazione
   iban = iban.toUpperCase().replace(/\s+/g, "");
   if (iban.length < 15) return false;
-  
-  // Estrae i 5 caratteri del CAB
-  let cab = iban.substring(10, 15);
+  const cabStr = iban.substring(10, 15);
+  if (!/^\d{5}$/.test(cabStr)) return false;
 
-  // Verifica che siano esattamente 5 cifre
-  if (!/^\d{5}$/.test(cab)) {
-    return false;
-  }
+  const numericCAB = parseInt(cabStr, 10);
 
-  // Converte in numero per altri controlli
-  let numericCAB = parseInt(cab, 10);
-
-  // Verifica se il codice rientra in uno dei range validi:
-  // CAB dei Capolouoghi di Regione
-  if (numericCAB >  999 && numericCAB <  4999) {
-    return true;
-  }
-  // CAB dei Capolouoghi di Provincia 
-  if (numericCAB > 9999 && numericCAB < 17500) {
-    return true;
-  }
-  // CAB dei Comuni "speciali" (Comuni L - Range 99)
-  if (numericCAB > 19999 && numericCAB < 26400) {
+  // Check known ranges
+  if ((numericCAB > 999 && numericCAB < 4999) ||    // Capoluoghi Regione
+    (numericCAB > 9999 && numericCAB < 17500) ||  // Capoluoghi Provincia
+    (numericCAB > 19999 && numericCAB < 26400) || // Comuni L
+    (numericCAB > 29999 && numericCAB < 85230) || // Comuni M (subset 1)
+    (numericCAB > 85249 && numericCAB < 85450) || // Comuni M (subset 2)
+    (numericCAB > 85769 && numericCAB < 89930)) { // Comuni M (subset 3)
     return true;
   }
 
-  // CAB dei Comuni "speciali" (Comuni M - Range 09)
-  if (numericCAB > 29999 && numericCAB < 85230) {
-    return true;
+  // Check loaded list
+  if (STATE.cabList.length > 0) {
+    return STATE.cabList.some(rec => numericCAB >= rec.base && numericCAB <= rec.upper);
   }
-  if (numericCAB > 85249 && numericCAB < 85450) {
-    return true;
-  }
-  if (numericCAB > 85769 && numericCAB < 89930) {
-    return true;
-  }
-  
-  // Se non rientra in nessun range, controlla se è presente in cabList
-  if (cabList && cabList.length > 0) {
-    const record = cabList.find(rec => numericCAB >= rec.base && numericCAB <= rec.upper);
-    return record !== undefined;
-  }
-  
-  // Se il dizionario non è stato ancora caricato, puoi decidere di tornare false
   return false;
 }
 
-/****************************************************
- * 6a) Funzione per estrarre il comune dal CAB
- ****************************************************/
-function getComuneFromCAB(iban) {
-  // Normalizza l'IBAN: rimuove spazi e converte in maiuscolo
-  const normalizedIban = iban.toUpperCase().replace(/\s+/g, "");
-  
-  // Verifica che l'IBAN sia sufficientemente lungo (almeno 15 caratteri)
-  if (normalizedIban.length < 15) return "IBAN troppo corto";
-  
-  // Estrai la porzione di 5 caratteri che rappresenta il CAB (es. dalla posizione 10 a 15)
-  const cabStr = normalizedIban.substring(10, 15);
-  
-  // Controlla che il CAB sia composto da 5 cifre
-  if (!/^\d{5}$/.test(cabStr)) return "CAB non valido";
-  
-  // Converti in numero intero
-  const numericCAB = parseInt(cabStr, 10);
-  
-  // Se la lista CAB non è ancora caricata, restituisci un messaggio di attesa
-  if (!cabList || cabList.length === 0) return "CAB non disponibile";
-  
-  // Usa Array.find per cercare il record per cui il CAB corrente rientra nel range [base, base+Range]
-  const record = cabList.find(rec => numericCAB >= rec.base && numericCAB <= rec.upper);
-  
-  // Se trovato, restituisci il nome del comune (Denominazione), altrimenti un fallback
-  return record ? record.Denominazione : "Comune sconosciuto";
-}
-
-/****************************************************
- * 6b) Funzione per estrarre la sigla del comune dal CAB
- ****************************************************/
-function getSiglaFromCAB(iban) {
-  // Normalizza l'IBAN: rimuove spazi e converte in maiuscolo
-  const normalizedIban = iban.toUpperCase().replace(/\s+/g, "");
-  if (normalizedIban.length < 15) return "";
-  
-  // Estrae i 5 caratteri del CAB (dalla posizione 10 a 15)
-  const cabStr = normalizedIban.substring(10, 15);
-  if (!/^\d{5}$/.test(cabStr)) return "";
-  
-  const numericCAB = parseInt(cabStr, 10);
-  
-  // Se la lista cabList non è disponibile, restituisce una stringa vuota
-  if (!cabList || cabList.length === 0) return "";
-  
-  // Trova il record corrispondente al CAB
-  const record = cabList.find(rec => numericCAB >= rec.base && numericCAB <= rec.upper);
-  
-  // Se il record è trovato e ha una Sigla, restituiscila, altrimenti vuoto
-  return record && record.Sigla ? record.Sigla : "";
-}
-
-
-
-/****************************************************
- * 7) Funzione per verificare il numero di conto
- ****************************************************/
 function isValidAccountNumber(iban) {
-  // Rimuove spazi e rende l'IBAN tutto maiuscolo
   iban = iban.toUpperCase().replace(/\s+/g, "");
-  // L'IBAN italiano deve essere lungo 27 caratteri
   if (iban.length !== 27) return false;
-  // Estrae il numero di conto (ultimi 12 caratteri)
-  let account = iban.substring(15);
-  // La regex applica le seguenti regole:
-  // - ^(?:\d{2}|CC)   : le prime due cifre devono essere due cifre (0-9) oppure "CC"
-  // - \d{7}           : dalla terza alla nona cifra: sei cifre (0-9)
-  // - [0-9X]          : la decima cifra può essere un numero o la lettera X
-  // - \d{2}           : l'undicesima e la dodicesima cifra devono essere numeri
-  // - $              : fine stringa
-  const regex = /^(?:\d{2}|CC)\d{7}[0-9X]\d{2}$/;
-  return regex.test(account);
+  const account = iban.substring(15);
+  // first 2 digits or 'CC', then 7 digits, then digit or 'X', then 2 digits
+  return /^(?:\d{2}|CC)\d{7}[0-9X]\d{2}$/.test(account);
 }
 
-
-/****************************************************
- * 8) Funzione per controllare la struttura IBAN italiano (27 caratteri)
- ****************************************************/
 function isItalianIbanStructure(iban) {
   iban = iban.toUpperCase().replace(/\s+/g, "");
   if (iban.length !== 27) return false;
   if (!iban.startsWith("IT")) return false;
-  
-  // Check digit (2 cifre)
-  let checkDigits = iban.substring(2, 4);
-  if (!/^\d{2}$/.test(checkDigits)) return false;
-  
-  // CIN (1 lettera)
-  let cin = iban.substring(4, 5);
-  if (!/^[A-Z]$/.test(cin)) return false;
-  
-  // 5) ABI: invece di un controllo regex, usa isValidABI
-  if (!isValidABI(iban)) {
-    return false;
-  }
+  if (!/^\d{2}$/.test(iban.substring(2, 4))) return false; // Check digits
+  if (!/^[A-Z]$/.test(iban.substring(4, 5))) return false; // CIN
 
-  // 6) CAB: invece di un controllo regex, usa isValidCAB
-  if (!isValidCAB(iban)) {
-    return false;
-  }
-  
-  // Numero conto: 12 caratteri con il nuovo controllo
+  if (!isValidABI(iban)) return false;
+  if (!isValidCAB(iban)) return false;
   if (!isValidAccountNumber(iban)) return false;
-  
+
   return true;
 }
 
-/****************************************************
- * 9) Funzione per formattare l'IBAN italiano con spazi
- ****************************************************/
-function formatIbanItalian(iban) {
-  iban = iban.toUpperCase().replace(/\s+/g, "");
-  if (iban.length !== 27) return iban;
-  return (
-    iban.substring(0,2) + " " +
-    iban.substring(2,4) + " " +
-    iban.substring(4,5) + " " +
-    iban.substring(5,10) + " " +
-    iban.substring(10,15) + " " +
-    iban.substring(15)
-  );
+// --- Data Retrieval ---
+
+function getBankName(iban) {
+  const abi = iban.replace(/\s+/g, "").substring(5, 10);
+  return STATE.abiDictionary[abi] || "Banca Sconosciuta";
 }
 
-/****************************************************
- * 10) findSingleCharCorrectionsItalian:
- * Cerca IBAN validi modificando 1 solo carattere, includendo il filtro ABI/CAB
- ****************************************************/
-function findSingleCharCorrectionsItalian(ibanOrig) {
+function getComuneAndSigla(iban) {
+  const cabStr = iban.replace(/\s+/g, "").substring(10, 15);
+  if (!/^\d{5}$/.test(cabStr)) return { comune: "N/D", sigla: "" };
+
+  const numericCAB = parseInt(cabStr, 10);
+  const record = STATE.cabList.find(rec => numericCAB >= rec.base && numericCAB <= rec.upper);
+
+  return {
+    comune: record ? record.Denominazione : "Comune sconosciuto",
+    sigla: record?.Sigla ? ` (${record.Sigla})` : ""
+  };
+}
+
+// --- Correction Logic ---
+
+function findCorrections(ibanOrig) {
   const validChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-  let results = new Set();
+  const results = new Set();
   ibanOrig = ibanOrig.toUpperCase().replace(/\s+/g, "");
+
+  // 1. Single substitution
   for (let i = 0; i < ibanOrig.length; i++) {
     for (let c of validChars) {
       if (c === ibanOrig[i]) continue;
-      let newIban = ibanOrig.slice(0, i) + c + ibanOrig.slice(i+1);
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban) && isValidABI(newIban)) {
-        results.add(newIban);
-      }
+      const candidate = ibanOrig.slice(0, i) + c + ibanOrig.slice(i + 1);
+      if (isValidComplete(candidate)) results.add(candidate);
     }
   }
+
+  // 2. Swaps
+  const arr = ibanOrig.split("");
+  for (let i = 0; i < arr.length - 1; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      [arr[i], arr[j]] = [arr[j], arr[i]]; // swap
+      const candidate = arr.join("");
+      if (isValidComplete(candidate)) results.add(candidate);
+      [arr[i], arr[j]] = [arr[j], arr[i]]; // swap back
+    }
+  }
+
   return Array.from(results);
 }
 
-/****************************************************
- * 11) findSwapCorrectionsItalian:
- * Cerca IBAN validi scambiando due caratteri, includendo il filtro ABI/CAB
- ****************************************************/
-function findSwapCorrectionsItalian(ibanOrig) {
-  let results = new Set();
-  ibanOrig = ibanOrig.toUpperCase().replace(/\s+/g, "");
-  let arr = ibanOrig.split("");
-  let n = arr.length;
-  for (let i = 0; i < n - 1; i++) {
-    for (let j = i + 1; j < n; j++) {
-      let tmp = arr[i];
-      arr[i] = arr[j];
-      arr[j] = tmp;
-      let newIban = arr.join("");
-      if (isIbanValid(newIban) && isItalianIbanStructure(newIban) && isValidABI(newIban)) {
-        results.add(newIban);
-      }
-      // Ripristina lo scambio
-      arr[j] = arr[i];
-      arr[i] = tmp;
-    }
-  }
-  return Array.from(results);
+function isValidComplete(iban) {
+  return isIbanValid(iban) && isItalianIbanStructure(iban);
+  // Note: isItalian structure calls isValidABI/CAB/Account internally
 }
 
-/****************************************************
- * 12) findAllCorrectionsItalian:
- * Unisce le correzioni trovate (single char e swap)
- ****************************************************/
-function findAllCorrectionsItalian(ibanOrig) {
-  let singleCharList = findSingleCharCorrectionsItalian(ibanOrig);
-  let swapList = findSwapCorrectionsItalian(ibanOrig);
-  let allSet = new Set([...singleCharList, ...swapList]);
-  return Array.from(allSet);
+function formatIban(iban) {
+  iban = iban.toUpperCase().replace(/\s+/g, "");
+  if (iban.length !== 27) return iban;
+  return `${iban.slice(0, 2)} ${iban.slice(2, 4)} ${iban.slice(4, 5)} ${iban.slice(5, 10)} ${iban.slice(10, 15)} ${iban.slice(15)}`;
 }
 
-// Funzione per aggiornare gli indicatori dei controlli
+// --- UI Updates ---
+
+function initIndicatorsState() {
+  updateIndicators("");
+}
+
 function updateIndicators(iban) {
-  const indicatorsContainer = document.getElementById("indicators");
-  // Svuota il contenuto precedente
-  indicatorsContainer.innerHTML = "";
-  
-  // Definisci i nomi dei controlli
-  const checkNames = ["Format", "Mod.97", "ABI", "CAB", "CC"];
-  
-  // Se l'IBAN è vuoto, mostra lo stato "in attesa" per tutti i controlli
-  if (iban.trim() === "") {
-    checkNames.forEach(name => {
+  DOM.indicators.innerHTML = "";
+  const baseClasses = "inline-flex items-center px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold border transition-colors duration-200 shadow-sm whitespace-nowrap";
+
+  const cleanIban = iban.trim().replace(/\s+/g, "");
+
+  if (!cleanIban) {
+    ["Format", "Mod.97", "ABI", "CAB", "CC"].forEach(name => {
       const chip = document.createElement("div");
-      chip.className = "indicator pending"; // classe "pending" per lo stato iniziale
-      chip.innerHTML = `${name} <i class="fa-solid fa-clock"></i>`;
-      indicatorsContainer.appendChild(chip);
+      chip.className = `${baseClasses} bg-gray-100 text-gray-500 border-gray-200`;
+      chip.innerHTML = `${name} <i class="fa-solid fa-clock ml-2"></i>`;
+      DOM.indicators.appendChild(chip);
     });
+    return;
+  }
+
+  const checks = [
+    { name: "Format", passed: cleanIban.length === 27 },
+    { name: "Mod.97", passed: isIbanValid(cleanIban) },
+    { name: "ABI", passed: isValidABI(cleanIban) },
+    { name: "CAB", passed: isValidCAB(cleanIban) },
+    { name: "CC", passed: isValidAccountNumber(cleanIban) }
+  ];
+
+  checks.forEach(check => {
+    const chip = document.createElement("div");
+    const statusClasses = check.passed
+      ? "bg-green-100 text-green-700 border-green-200"
+      : "bg-red-100 text-red-700 border-red-200";
+
+    chip.className = `${baseClasses} ${statusClasses}`;
+    chip.innerHTML = `${check.name} ${check.passed ? '<i class="fa-solid fa-check ml-2"></i>' : '<i class="fa-solid fa-xmark ml-2"></i>'}`;
+    DOM.indicators.appendChild(chip);
+  });
+}
+
+function displayPlaceholder() {
+  const el = DOM.resultDiv;
+  el.className = "mt-6 md:mt-8 p-4 md:p-6 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 text-gray-500 text-center transition-all duration-500 transform";
+  el.innerHTML = "<div class='flex items-center justify-center gap-2 text-sm md:text-base'><i class='fa-solid fa-info-circle'></i> Inserisci e verifica per vedere i risultati.</div>";
+  el.classList.remove("hidden", "opacity-0", "translate-y-4");
+  el.classList.add("opacity-100", "translate-y-0");
+}
+
+function displayResult(htmlContent, type) {
+  const el = DOM.resultDiv;
+
+  // Reset base classes
+  el.className = "mt-6 md:mt-8 p-4 md:p-6 rounded-xl border shadow-md transition-all duration-500 transform text-sm md:text-base";
+
+  if (type === "success") el.classList.add("bg-green-50", "border-green-200", "text-green-900");
+  else if (type === "error") el.classList.add("bg-red-50", "border-red-200", "text-red-900");
+  else if (type === "warning") el.classList.add("bg-yellow-50", "border-yellow-200", "text-yellow-900");
+
+  el.innerHTML = htmlContent;
+
+  el.classList.remove("hidden", "opacity-0", "translate-y-4");
+  el.classList.add("opacity-100", "translate-y-0");
+}
+
+// --- Main Action ---
+
+window.checkIBAN = () => {
+  const rawIban = DOM.ibanInput.value;
+  updateIndicators(rawIban);
+
+  const iban = rawIban.toUpperCase().replace(/\s+/g, "");
+
+  // Basic Validation
+  if (!iban) {
+    displayResult(`<div class='flex items-center'><i class='fa-solid fa-exclamation-circle mr-2'></i> Campo vuoto.</div>`, "error");
+    return;
+  }
+  if (!iban.startsWith("IT")) {
+    displayResult(`
+      <div class='flex flex-col gap-1'>
+        <div class='flex items-center'><i class='fa-solid fa-globe mr-2'></i> IBAN non italiano.</div>
+        <div class='flex items-center'><i class='fa-solid fa-lightbulb mr-2'></i> Deve iniziare con 'IT'.</div>
+      </div>`, "error");
+    return;
+  }
+  if (iban.length !== 27) {
+    const diff = iban.length - 27;
+    const verb = diff > 0 ? "troppo lungo" : "troppo corto";
+    displayResult(`
+      <div class='flex flex-col gap-1'>
+        <div class='flex items-center'><i class='fa-solid fa-times-circle mr-2'></i> IBAN ${verb} (${iban.length} caratteri).</div>
+        <div class='flex items-center'><i class='fa-solid fa-ruler-horizontal mr-2'></i> Lunghezza corretta: 27.</div>
+      </div>`, "error");
+    return;
+  }
+
+  // Full Validation
+  if (isValidComplete(iban)) {
+    const bankName = getBankName(iban);
+    const { comune, sigla } = getComuneAndSigla(iban);
+
+    const html = `
+      <div class='flex flex-col gap-2'>
+        <div class='flex items-center justify-between bg-white/60 p-2 rounded-lg'>
+          <div class='flex items-center font-mono font-bold text-lg overflow-x-auto'>
+            <i class='fa-solid fa-check-circle mr-2 text-green-600'></i> ${formatIban(iban)}
+          </div>
+          <button class='ml-2 p-2 hover:bg-green-100 rounded-full transition-colors' onclick='copyToClipboard("${iban}")' title='Copia'>
+            <i class='fa-solid fa-copy'></i>
+          </button>
+        </div>
+        <div class='flex items-center'><i class='fa-solid fa-university mr-2'></i> ${bankName}</div>
+        <div class='flex items-center'><i class='fa-solid fa-building mr-2'></i> Filiale di ${comune}${sigla}</div>
+      </div>
+    `;
+    displayResult(html, "success");
+    return;
+  }
+
+  // Errors & Corrections
+  const corrections = findCorrections(iban);
+  if (corrections.length === 0) {
+    displayResult(`
+      <div class='flex flex-col gap-1'>
+        <div class='flex items-center font-bold'><i class='fa-solid fa-times-circle mr-2'></i> IBAN non valido.</div>
+        <div class='flex items-center'><i class='fa-solid fa-ban mr-2'></i> Nessuna correzione trovata.</div>
+      </div>`, "error");
   } else {
-    // Se c'è un input, esegui i controlli e mostra i risultati:
-    const checks = [
-      { name: "Format", passed: (iban.replace(/\s+/g, "").length === 27) },
-      { name: "Mod.97", passed: isIbanValid(iban) },
-      { name: "ABI", passed: isValidABI(iban) },
-      { name: "CAB", passed: isValidCAB(iban) },
-      { name: "CC", passed: isValidAccountNumber(iban) }
-    ];
-    
-  
-    checks.forEach(check => {
-      const chip = document.createElement("div");
-      // Se il controllo è superato, assegna classe "success" (verde pastello),
-      // altrimenti "error" (rosso pastello)
-      chip.className = "indicator " + (check.passed ? "success" : "error");
-      chip.innerHTML = `${check.name} ${check.passed ? '<i class="fa-solid fa-check"></i>' : '<i class="fa-solid fa-xmark"></i>'}`;
-      indicatorsContainer.appendChild(chip);
+    let corrHtml = `
+      <div class='flex flex-col gap-1 mb-3'>
+        <div class='flex items-center font-bold'><i class='fa-solid fa-times-circle mr-2'></i> IBAN non valido.</div>
+        <div class='flex items-center'><i class='fa-solid fa-lightbulb mr-2'></i> ${corrections.length} correzioni trovate:</div>
+      </div>
+      <div class='flex flex-col gap-2 max-h-48 overflow-y-auto pr-1'>`;
+
+    corrections.forEach(c => {
+      corrHtml += `
+        <div class='flex items-center justify-between bg-white/60 p-2 rounded-lg text-sm'>
+          <span class='font-mono'>${formatIban(c)}</span>
+          <button class='ml-2 hover:text-yellow-700' onclick='copyToClipboard("${c}")'>
+            <i class='fa-solid fa-copy'></i>
+          </button>
+        </div>`;
     });
+    corrHtml += "</div>";
+
+    displayResult(corrHtml, "warning");
   }
-}
-
-function displayResult(message, type) {
-  let resultDiv = document.getElementById("result");
-  // Rimuovi tutte le classi precedenti, inclusa quella del placeholder
-  resultDiv.classList.remove("result-success", "result-error", "result-warning", "placeholder", "visible");
-
-  // Aggiungi la classe in base al tipo di messaggio
-  if (type === "success") {
-    resultDiv.classList.add("result-success");
-  } else if (type === "error") {
-    resultDiv.classList.add("result-error");
-  } else if (type === "warning") {
-    resultDiv.classList.add("result-warning");
-  }
-  
-  // Imposta il contenuto formattato (usa innerHTML per consentire tag HTML come <br>)
-  resultDiv.innerHTML = message;
-  
-  // Forza un reflow per la transizione (facoltativo)
-  void resultDiv.offsetWidth;
-  
-  // Aggiungi la classe 'visible' per attivare l'effetto fade-in
-  resultDiv.classList.add("visible");
-}
-
-
-
-/****************************************************
- * 13) checkIBAN():
- * Esegue la verifica e mostra il risultato (e le correzioni se necessarie)
- ****************************************************/
-function checkIBAN() {
-  const iban = document.getElementById("ibanInput").value;
-  updateIndicators(iban);
-  let input = iban.toUpperCase().replace(/\s+/g, "");
-
-  // Campo vuoto
-  if (!input) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-exclamation-circle'></i> Campo vuoto: incolla o inserisci un IBAN prima di verificare.</div>";
-    displayResult(msg, "error");
-    return;
-  }
-
-  // IBAN estero
-  if (!input.startsWith("IT")) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-globe'></i>Questo è un IBAN estero.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-flag'></i> Inserire un IBAN italiano.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i> Deve cominciare con 'IT'.</div>";
-    displayResult(msg, "error");
-    return;
-  }
-
-  // IBAN troppo lungo
-  if (input.length > 27) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN troppo lungo, ha " + input.length + " caratteri.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-compress'></i> Dovrebbe averne 27.</div>";
-    displayResult(msg, "error");
-    return;
-  }
-
-  // IBAN troppo corto
-  if (input.length < 27) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i> IBAN troppo corto, ha " + input.length + " caratteri.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-expand'></i> Dovrebbe averne 27.</div>";
-    displayResult(msg, "error");
-    return;
-  }
-
-  // IBAN valido: controlli modulo 97, struttura italiana, ABI e CAB
-  if (isIbanValid(input) && isItalianIbanStructure(input) && isValidABI(input) && isValidCAB(input)) {
-    let bankName = getBankName(input);
-    let comuneName = getComuneFromCAB(input);
-    let siglaProvincia = getSiglaFromCAB(input);
-    let siglaText = "";
-    if (siglaProvincia !== "" && siglaProvincia !== "N/D") {
-      siglaText = " (" + siglaProvincia + ")";
-    }
-    
-    // L'IBAN viene mostrato in monospace e aggiunto il bottone per copiare accanto
-    let msg = "<div class='result-line'><i class='fa-solid fa-check-circle'></i> "
-            + "<span>" + formatIbanItalian(input) + " </span> "
-            + "<button class='btn-copy' onclick='copyToClipboard(\"" + input + "\")' title='Copia IBAN'><i class='fa-solid fa-copy'></i></button></div>"
-            + "<div class='result-line'><i class='fa-solid fa-university'></i>" + bankName + "</div>"
-            + "<div class='result-line'><i class='fa-solid fa-building'></i> Filiale di " + comuneName + siglaText + "</div>";
-    displayResult(msg, "success");
-    return;
-  }
-
-  // IBAN non valido: tenta le correzioni
-  let allCorrections = findAllCorrectionsItalian(input);
-  if (allCorrections.length === 0) {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i>IBAN non valido.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-ban'></i>Nessuna correzione valida trovata.</div>";
-    displayResult(msg, "error");
-  } else {
-    let msg = "<div class='result-line'><i class='fa-solid fa-times-circle'></i>IBAN non valido.</div>"
-            + "<div class='result-line'><i class='fa-solid fa-lightbulb'></i> Correzioni trovate: <strong>" + allCorrections.length + "</strong></div>";
-    // Per ciascuna correzione, mostriamo il testo in monospace e il pulsante copia sulla stessa riga
-    let lines = allCorrections.map(x => {
-      return "<div class='result-line'><span class='monospace'>" + formatIbanItalian(x) + " </span> "
-           + "<button class='btn-copy' onclick='copyToClipboard(\"" + x + "\")' title='Copia correzione'><i class='fa-solid fa-copy'></i></button></div>";
-    });
-    msg += lines.join("");
-    displayResult(msg, "warning");
-  }
-}
-
-// Funzione per copiare il testo negli Appunti
-function copyToClipboard(text) {
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text)
-      .then(() => {
-        // Puoi anche mostrare un breve messaggio di conferma se lo desideri
-        console.log("Testo copiato: " + text);
-      })
-      .catch(err => console.error("Errore durante la copia: ", err));
-  } else {
-    // Fallback se navigator.clipboard non è supportato
-    let tempInput = document.createElement("input");
-    tempInput.value = text;
-    document.body.appendChild(tempInput);
-    tempInput.select();
-    document.execCommand("copy");
-    document.body.removeChild(tempInput);
-  }
-}
+};
