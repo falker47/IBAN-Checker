@@ -5012,6 +5012,13 @@
     "Sigla": "MN"
   },
   {
+    "CAB": 9401,
+    "Denominazione": "MILANO",
+    "Tipo": "Capoluogo di Regione",
+    "Range": 198,
+    "Sigla": "MI"
+  },
+  {
     "CAB": 10000,
     "Denominazione": "VERCELLI",
     "Tipo": "Capoluogo di Provincia",
