@@ -1,51 +1,88 @@
-# IBAN Checker
+# IBAN Checker 🏦
 
-A modern, client-side web application for validating Italian IBAN codes. This tool checks the structural validity of an IBAN, performs the Modulo 97 control digit check, and validates the bank (ABI) and branch (CAB) codes against a provided list.
+A modern, real-time Italian IBAN validation tool with instant feedback. Built with ES6 modules and a glassmorphism UI.
 
-## Features
+![IBAN Checker Preview](iban-checker.webp)
 
-- **Format Validation**: Checks for correct length (27 characters) and starting country code (IT).
-- **Control Digit Verification**: Performs the standard Modulo 97 check to ensure the IBAN is mathematically valid.
-- **Bank & Branch Lookup**: Resolves and displays the Bank name and Branch location (Comune) using `ABI-List.json` and `CAB-List.json`.
-- **Intelligent Corrections**: If an IBAN is invalid, the tool suggests possible corrections based on common typing errors (single character substitution or swaps).
-- **Responsive Design**: Built with Tailwind CSS for a modern, glassmorphism-inspired UI that works on desktop and mobile.
-- **Copy to Clipboard**: Easily copy the formatted IBAN or suggested corrections.
+## ✨ Features
 
-## Usage
+### Real-time Validation
 
-### Running Locally
+- **Instant feedback** as you type (no button click needed)
+- **6 validation indicators**: Format, Mod.97, CIN, ABI, CAB, CC
+- **3-state indicators**: ✅ Valid, ⚠️ Warning, ❌ Invalid
 
-1.  **Clone the repository** (or download the source code).
-2.  **Open `index.html`** in your web browser.
+### Comprehensive Checks
 
-Since the application uses relative paths to fetch JSON data (`ABI-List.json` and `CAB-List.json`), it should run directly in most modern browsers. However, for the best experience (and to avoid potential CORS policies on some strict local environments), it is recommended to run it via a local server (e.g., Live Server in VS Code).
+- **Format Validation**: 27 characters, starts with IT
+- **Modulo 97**: ISO 13616 international standard
+- **CIN Algorithm**: Italian Control Internal Number verification
+- **ABI Lookup**: Bank identification with 1800+ banks database
+- **CAB Validation**: Branch code format check
+- **CC Validation**: Account number pattern (hybrid strict + permissive)
+
+### Smart Features
+
+- **Bank & Branch Info**: Displays bank name and branch location
+- **Typo Correction**: Suggests fixes for invalid IBANs (single char substitution, swaps)
+- **Clipboard Support**: Paste from clipboard, copy results
+- **Responsive Design**: Works on desktop and mobile
+
+## 🚀 Usage
+
+### Quick Start
+
+1. Clone the repository
+2. Open `index.html` via a local server (e.g., VS Code Live Server)
+3. Start typing an IBAN - results appear instantly!
+
+> **Note**: A local server is required due to ES6 module imports and JSON fetch requests.
 
 ### Development
 
-To modify the styles or develop further:
+```bash
+# Install dependencies
+npm install
 
-1.  **Install dependencies**:
-    ```bash
-    npm install
-    ```
+# Watch for CSS changes
+npm run watch
 
-2.  **Watch for CSS changes** (requires Tailwind CSS):
-    ```bash
-    npm run watch
-    ```
+# Build for production
+npm run build
+```
 
-3.  **Build for production**:
-    ```bash
-    npm run build
-    ```
+## 📁 Project Structure
 
-## Technologies
+```
+├── index.html              # Main HTML file
+├── style.css               # Compiled Tailwind CSS
+├── js/
+│   ├── main.js             # App initialization
+│   ├── validators.js       # Validation functions (CIN, Mod97, etc.)
+│   ├── corrections.js      # Typo correction logic
+│   ├── ui.js               # UI updates and indicators
+│   ├── data.js             # Bank data loading
+│   └── utils.js            # Utilities (debounce, clipboard)
+├── ABI-List.json           # 1800+ Italian bank codes
+└── CAB-List.json           # Branch codes database
+```
 
-- **HTML5**
-- **JavaScript (ES6+)**
-- **Tailwind CSS**
-- **Font Awesome** (for icons)
+## 🔧 Technologies
 
-## License
+- **HTML5** - Semantic markup
+- **JavaScript ES6+** - Modular architecture
+- **Tailwind CSS** - Utility-first styling
+- **Font Awesome** - Icons
+
+## 📋 Validation Logic
+
+| Check   | Green ✅               | Yellow ⚠️                  | Red ❌         |
+| ------- | ---------------------- | -------------------------- | -------------- |
+| **ABI** | Known bank             | Valid format, unknown bank | Invalid format |
+| **CC**  | Matches strict pattern | Matches permissive only    | Invalid        |
+
+The CC strict pattern is based on empirical analysis of 300+ real Italian IBANs from various banks.
+
+## 📄 License
 
 ISC
