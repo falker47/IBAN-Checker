@@ -2,7 +2,7 @@
  * UI Update Functions
  */
 
-import { isIbanValid, isValidABI, isValidCAB, isValidAccountNumber } from './validators.js';
+import { isIbanValid, isValidABI, isValidCAB, isValidAccountNumber, isValidCIN, isKnownABI, isStrictAccountNumber } from './validators.js';
 import { cleanIban } from './utils.js';
 
 // DOM element references (initialized in main.js)
@@ -42,7 +42,7 @@ export function updateIndicators(iban) {
 
     if (!clean) {
         // Show neutral state
-        ["Format", "Mod.97", "ABI", "CAB", "CC"].forEach(name => {
+        ["Format", "Mod.97", "CIN", "ABI", "CAB", "CC"].forEach(name => {
             const chip = document.createElement("div");
             chip.className = `${baseClasses} bg-gray-100 text-gray-500 border-gray-200`;
             chip.innerHTML = `${name} <i class="fa-solid fa-clock ml-2"></i>`;
@@ -51,24 +51,40 @@ export function updateIndicators(iban) {
         return;
     }
 
+    // Check if ABI format is valid and if it's known in database
+    const abiFormatValid = isValidABI(clean);
+    const abiKnown = isKnownABI(clean);
+
+    // Hybrid CC check: strict (from experience) vs permissive (fallback)
+    const ccStrict = isStrictAccountNumber(clean);
+    const ccPermissive = isValidAccountNumber(clean);
+
     const checks = [
-        { name: "Format", passed: clean.length === 27 },
-        { name: "Mod.97", passed: isIbanValid(clean) },
-        { name: "ABI", passed: isValidABI(clean) },
-        { name: "CAB", passed: isValidCAB(clean) },
-        { name: "CC", passed: isValidAccountNumber(clean) }
+        { name: "Format", status: clean.length === 27 ? "pass" : "fail" },
+        { name: "Mod.97", status: isIbanValid(clean) ? "pass" : "fail" },
+        { name: "CIN", status: isValidCIN(clean) ? "pass" : "fail" },
+        { name: "ABI", status: !abiFormatValid ? "fail" : (abiKnown ? "pass" : "warn") },
+        { name: "CAB", status: isValidCAB(clean) ? "pass" : "fail" },
+        { name: "CC", status: ccStrict ? "pass" : (ccPermissive ? "warn" : "fail") }
     ];
 
     checks.forEach(check => {
         const chip = document.createElement("div");
-        const statusClasses = check.passed
-            ? "bg-green-100 text-green-700 border-green-200"
-            : "bg-red-100 text-red-700 border-red-200";
+        let statusClasses, icon;
+
+        if (check.status === "pass") {
+            statusClasses = "bg-green-100 text-green-700 border-green-200";
+            icon = '<i class="fa-solid fa-check ml-2"></i>';
+        } else if (check.status === "warn") {
+            statusClasses = "bg-yellow-100 text-yellow-700 border-yellow-200";
+            icon = '<i class="fa-solid fa-question ml-2"></i>';
+        } else {
+            statusClasses = "bg-red-100 text-red-700 border-red-200";
+            icon = '<i class="fa-solid fa-xmark ml-2"></i>';
+        }
 
         chip.className = `${baseClasses} ${statusClasses}`;
-        chip.innerHTML = `${check.name} ${check.passed
-            ? '<i class="fa-solid fa-check ml-2"></i>'
-            : '<i class="fa-solid fa-xmark ml-2"></i>'}`;
+        chip.innerHTML = `${check.name} ${icon}`;
         DOM.indicators.appendChild(chip);
     });
 }
