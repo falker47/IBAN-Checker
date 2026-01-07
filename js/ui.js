@@ -36,7 +36,7 @@ export function initIndicatorsState() {
  */
 export function updateIndicators(iban) {
     DOM.indicators.innerHTML = "";
-    const baseClasses = "inline-flex items-center px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold border transition-colors duration-200 shadow-sm whitespace-nowrap";
+    const baseClasses = "inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-1.5 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold border transition-colors duration-200 shadow-sm whitespace-nowrap";
 
     const clean = cleanIban(iban.trim());
 
@@ -94,8 +94,8 @@ export function updateIndicators(iban) {
  */
 export function displayPlaceholder() {
     const el = DOM.resultDiv;
-    el.className = "mt-6 md:mt-8 p-4 md:p-6 rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 text-gray-500 text-center transition-all duration-500 transform";
-    el.innerHTML = "<div class='flex items-center justify-center gap-2 text-sm md:text-base'><i class='fa-solid fa-info-circle'></i> Inserisci un IBAN per vedere i risultati.</div>";
+    el.className = "mt-4 sm:mt-6 md:mt-8 p-3 sm:p-4 md:p-6 rounded-lg sm:rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 text-gray-500 text-center transition-all duration-500 transform";
+    el.innerHTML = "<div class='flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base'><i class='fa-solid fa-info-circle'></i> Inserisci un IBAN per vedere i risultati.</div>";
     el.classList.remove("hidden", "opacity-0", "translate-y-4");
     el.classList.add("opacity-100", "translate-y-0");
 }
@@ -108,8 +108,8 @@ export function displayPlaceholder() {
 export function displayResult(htmlContent, type) {
     const el = DOM.resultDiv;
 
-    // Reset base classes
-    el.className = "mt-6 md:mt-8 p-4 md:p-6 rounded-xl border shadow-md transition-all duration-500 transform text-sm md:text-base";
+    // Reset base classes - responsive padding and text
+    el.className = "mt-4 sm:mt-6 md:mt-8 p-3 sm:p-4 md:p-6 rounded-lg sm:rounded-xl border shadow-md transition-all duration-500 transform text-xs sm:text-sm md:text-base";
 
     if (type === "success") {
         el.classList.add("bg-green-50", "border-green-200", "text-green-900");

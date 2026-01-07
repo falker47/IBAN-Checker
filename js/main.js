@@ -4,7 +4,7 @@
 
 import { debounce, copyToClipboard, pasteFromClipboard, formatIban, cleanIban } from './utils.js';
 import { loadBankData, getBankName, getComuneAndSigla } from './data.js';
-import { isValidComplete } from './validators.js';
+import { isValidComplete, isStrictAccountNumber, isKnownABI } from './validators.js';
 import { findCorrections } from './corrections.js';
 import { DOM, initDOM, initIndicatorsState, displayPlaceholder, displayResult, updateIndicators } from './ui.js';
 
@@ -77,21 +77,49 @@ function checkIBAN() {
         <div class='flex items-center'><i class='fa-solid fa-ban mr-2'></i> Nessuna correzione trovata.</div>
       </div>`, "error");
   } else {
-    const corrText = corrections.length === 1 ? "1 correzione trovata:" : `${corrections.length} correzioni trovate:`;
+    // Separate strict (more reliable) from permissive corrections
+    const strictCorrections = corrections.filter(c => isStrictAccountNumber(c) && isKnownABI(c));
+    const otherCorrections = corrections.filter(c => !isStrictAccountNumber(c) || !isKnownABI(c));
+
+    // Sort: strict first, then others
+    const sortedCorrections = [...strictCorrections, ...otherCorrections];
+
+    const corrText = sortedCorrections.length === 1 ? "1 correzione trovata:" : `${sortedCorrections.length} correzioni trovate:`;
     let corrHtml = `
       <div class='flex flex-col gap-1 mb-3'>
         <div class='flex items-center font-bold'><i class='fa-solid fa-times-circle mr-2'></i> IBAN non valido.</div>
         <div class='flex items-center'><i class='fa-solid fa-lightbulb mr-2'></i> ${corrText}</div>
       </div>
-      <div class='flex flex-col gap-2 max-h-48 overflow-y-auto pr-1'>`;
+      <div class='flex flex-col gap-2 max-h-64 overflow-y-auto pr-1'>`;
 
-    corrections.forEach(c => {
+    sortedCorrections.forEach(c => {
+      const bankName = getBankName(c);
+      const { comune, sigla } = getComuneAndSigla(c);
+      const isStrict = isStrictAccountNumber(c) && isKnownABI(c);
+
+      // Visual distinction: strict = green border + star, other = yellow border + question
+      const borderClass = isStrict
+        ? 'border-l-4 border-l-green-500'
+        : 'border-l-4 border-l-yellow-500';
+      const reliabilityIcon = isStrict
+        ? '<i class="fa-solid fa-star text-green-600" title="Alta affidabilità"></i>'
+        : '<i class="fa-solid fa-circle-question text-yellow-600" title="Formato non standard"></i>';
+
       corrHtml += `
-        <div class='flex items-center justify-between bg-white/60 p-2 rounded-lg text-sm'>
-          <span class='font-mono'>${formatIban(c)}</span>
-          <button class='ml-2 hover:text-yellow-700' onclick='window.copyToClipboard("${c}")'>
-            <i class='fa-solid fa-copy'></i>
-          </button>
+        <div class='${borderClass} bg-white/60 p-3 rounded-lg text-sm'>
+          <div class='flex items-center justify-between mb-2'>
+            <div class='flex items-center gap-2'>
+              ${reliabilityIcon}
+              <span class='font-mono font-bold'>${formatIban(c)}</span>
+            </div>
+            <button class='p-1.5 hover:bg-gray-200 rounded-full transition-colors' onclick='window.copyToClipboard("${c}")' title='Copia'>
+              <i class='fa-solid fa-copy'></i>
+            </button>
+          </div>
+          <div class='text-xs text-gray-600 flex flex-col gap-0.5'>
+            <div><i class='fa-solid fa-university mr-1'></i> ${bankName}</div>
+            <div><i class='fa-solid fa-building mr-1'></i> ${comune}${sigla}</div>
+          </div>
         </div>`;
     });
     corrHtml += "</div>";

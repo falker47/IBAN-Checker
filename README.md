@@ -2,8 +2,6 @@
 
 A modern, real-time Italian IBAN validation tool with instant feedback. Built with ES6 modules and a glassmorphism UI.
 
-![IBAN Checker Preview](iban-checker.webp)
-
 ## ✨ Features
 
 ### Real-time Validation
