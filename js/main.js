@@ -151,6 +151,11 @@ async function init() {
     debouncedValidation();
   });
 
+  // Handle browser autofill (autofill often triggers 'change' instead of 'input')
+  DOM.ibanInput.addEventListener('change', () => {
+    checkIBAN();
+  });
+
   // Load bank data
   await loadBankData();
 
