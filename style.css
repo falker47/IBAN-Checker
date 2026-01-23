@@ -544,6 +544,10 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+html {
+  font-size: 90%;
+}
+
 .absolute {
   position: absolute;
 }
@@ -1150,10 +1154,8 @@ video {
   transition-duration: 500ms;
 }
 
-@layer styles {
-  body {
-    font-family: 'Inter', sans-serif;
-  }
+body {
+  font-family: "Inter", sans-serif;
 }
 
 .empty\:hidden:empty {
