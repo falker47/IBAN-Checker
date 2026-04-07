@@ -22,33 +22,33 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="bg-body-bg min-h-screen flex flex-col items-center justify-center p-3 sm:p-4 md:p-6">
+<body class="min-h-screen flex flex-col items-center justify-center p-3 sm:p-4 md:p-6">
   <div class="relative w-full max-w-[95vw] sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
     <!-- Glassmorphism Container -->
     <div
-      class="bg-white/70 backdrop-blur-md border border-white/50 shadow-2xl rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 lg:p-12 relative z-10 w-full">
+      class="bg-white/[0.82] backdrop-blur-xl border border-white/70 shadow-premium rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 lg:p-12 relative z-10 w-full">
       <!-- Header -->
-      <div class="text-center mb-6 sm:mb-8 md:mb-10">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-800 mb-2 sm:mb-3 md:mb-4 tracking-tight">
+      <div class="text-center mb-8 sm:mb-10 md:mb-12">
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold gradient-title mb-2 sm:mb-3 md:mb-4 tracking-tight">
           IBAN Checker
         </h1>
-        <p class="text-gray-600 text-sm sm:text-base md:text-lg">
+        <p class="text-slate-500 text-sm sm:text-base md:text-lg">
           Verifica la validità e i dettagli del tuo IBAN.
         </p>
       </div>
 
       <!-- Input Section -->
-      <div class="mb-4 sm:mb-6 md:mb-8">
-        <label for="ibanInput" class="block text-xs sm:text-sm font-semibold text-gray-700 mb-1.5 sm:mb-2 ml-1">Codice
+      <div class="mb-6 sm:mb-8 md:mb-10">
+        <label for="ibanInput" class="block text-xs sm:text-sm font-semibold text-slate-600 mb-2 sm:mb-2.5 ml-1">Codice
           IBAN</label>
         <div class="relative flex items-center">
           <input type="text" id="ibanInput"
-            class="w-full px-3 py-2.5 sm:px-4 sm:py-3 md:px-5 md:py-4 text-sm sm:text-base md:text-lg bg-white/80 border border-gray-300 rounded-lg sm:rounded-xl focus:outline-none focus:ring-2 focus:ring-accent-teal focus:border-transparent transition-all shadow-sm placeholder-gray-400 pr-12"
+            class="w-full px-3 py-3 sm:px-4 sm:py-3.5 md:px-5 md:py-4 text-sm sm:text-base md:text-lg bg-white border-2 border-slate-200 rounded-xl sm:rounded-2xl focus:outline-none focus:ring-4 focus:ring-indigo-200 focus:border-indigo-400 transition-all shadow-sm placeholder-slate-300 pr-12"
             placeholder="IT47X0123456789000000123456" autocomplete="on" autocapitalize="characters"
             spellcheck="false" />
 
           <button id="pasteBtn"
-            class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 text-accent-teal hover:text-accent-teal-hover hover:bg-teal-50 rounded-lg transition-colors"
+            class="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 sm:p-2 text-accent-primary hover:text-accent-primary-hover hover:bg-indigo-50 rounded-lg transition-colors"
             title="Incolla dagli Appunti" aria-label="Incolla dagli Appunti">
             <svg width="20" height="20" class="sm:w-6 sm:h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -63,17 +63,17 @@
 
       <!-- Indicators -->
       <div id="indicators"
-        class="flex flex-wrap justify-center gap-1.5 sm:gap-2 md:gap-3 mt-4 sm:mt-6 md:mt-8 empty:hidden"></div>
+        class="flex flex-wrap justify-center gap-2 sm:gap-2.5 md:gap-3 mt-6 sm:mt-8 md:mt-10 empty:hidden"></div>
 
       <!-- Result Box -->
       <div id="result"
-        class="mt-4 sm:mt-6 md:mt-8 hidden opacity-0 transition-all duration-500 transform translate-y-4">
+        class="mt-6 sm:mt-8 md:mt-10 hidden opacity-0 transition-all duration-500 transform translate-y-4" style="transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1)">
         <!-- Content injected by JS -->
       </div>
 
       <!-- Info Text -->
-      <div class="mt-8 sm:mt-10 md:mt-12 pt-4 sm:pt-6 md:pt-8 border-t border-gray-200/60 text-center">
-        <p class="text-xs sm:text-sm text-gray-500 leading-relaxed max-w-2xl mx-auto px-2">
+      <div class="mt-10 sm:mt-12 md:mt-14 pt-6 sm:pt-8 md:pt-8 border-t border-black/[0.06] text-center">
+        <p class="text-xs sm:text-sm text-slate-400 leading-relaxed max-w-lg mx-auto px-2">
           Questo strumento analizza la struttura matematica dell'IBAN e, in
           caso di errore, suggerisce possibili correzioni basate su errori di
           digitazione comuni.
@@ -81,19 +81,19 @@
       </div>
     </div>
 
-    <!-- Decorative background blobs - hidden on very small screens for performance -->
-    <div
-      class="hidden sm:block absolute -top-10 -left-10 w-48 md:w-64 h-48 md:h-64 bg-accent-orange/20 rounded-full blur-3xl -z-10 animate-pulse">
-    </div>
-    <div
-      class="hidden sm:block absolute -bottom-10 -right-10 w-48 md:w-64 h-48 md:h-64 bg-accent-teal/20 rounded-full blur-3xl -z-10 animate-pulse"
-      style="animation-delay: 2s"></div>
+    <!-- Decorative geometric shapes - hidden on small screens -->
+    <div class="hidden sm:block geo-shape rounded-full w-56 md:w-72 h-56 md:h-72 border-2 border-violet-500/[0.12]" style="top:-60px;right:-40px;transform:rotate(15deg)"></div>
+    <div class="hidden sm:block geo-shape rounded-3xl w-44 md:w-52 h-44 md:h-52 border-2 border-sky-500/10" style="bottom:80px;left:-60px;transform:rotate(35deg)"></div>
+    <div class="hidden sm:block geo-shape rounded-full w-28 md:w-32 h-28 md:h-32 bg-violet-500/[0.04]" style="top:30%;right:10%"></div>
+    <div class="hidden sm:block geo-shape rounded-2xl w-36 md:w-44 h-36 md:h-44 border-[1.5px] border-pink-500/[0.08]" style="bottom:-30px;right:20%;transform:rotate(20deg)"></div>
+    <div class="hidden sm:block geo-shape rounded-xl w-20 md:w-24 h-20 md:h-24 bg-sky-500/[0.04]" style="top:15%;left:8%;transform:rotate(45deg)"></div>
+    <div class="hidden sm:block geo-shape w-14 md:w-16 h-14 md:h-16 border-[1.5px] border-indigo-500/10" style="bottom:20%;left:15%;transform:rotate(60deg)"></div>
   </div>
 
-  <footer class="mt-6 sm:mt-8 md:mt-12 text-center text-gray-500 text-xs sm:text-sm">
+  <footer class="mt-8 sm:mt-10 md:mt-14 text-center text-slate-400 text-xs sm:text-sm">
     <p>
       <a href="https://falker47.github.io/Nexus-portfolio/" target="_blank"
-        class="hover:text-accent-teal transition-colors">
+        class="hover:text-indigo-500 transition-colors">
         &copy; <span id="currentYear"></span> Maurizio Falconi - falker47
       </a>
     </p>

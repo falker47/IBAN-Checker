@@ -36,28 +36,24 @@ export function initIndicatorsState() {
  */
 export function updateIndicators(iban) {
     DOM.indicators.innerHTML = "";
-    const baseClasses = "inline-flex items-center px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-1.5 rounded-full text-[10px] sm:text-xs md:text-sm font-semibold border transition-colors duration-200 shadow-sm whitespace-nowrap";
+    const baseClasses = "inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3.5 sm:py-1.5 md:px-4 md:py-1.5 rounded-full text-[10px] sm:text-xs md:text-sm font-medium border transition-all duration-300 whitespace-nowrap";
 
     const clean = cleanIban(iban.trim());
 
     if (!clean) {
-        // Show neutral state
         ["Format", "Mod.97", "CIN", "ABI", "CAB", "CC"].forEach(name => {
             const chip = document.createElement("div");
-            chip.className = `${baseClasses} bg-gray-100 text-gray-500 border-gray-200`;
+            chip.className = `${baseClasses} chip-neutral bg-slate-50 text-slate-400 border-slate-200`;
             chip.setAttribute("role", "status");
             chip.setAttribute("aria-label", `${name}: in attesa`);
-            chip.innerHTML = `${name} <i class="fa-solid fa-clock ml-2"></i>`;
+            chip.innerHTML = `<span class="chip-dot"></span>${name}`;
             DOM.indicators.appendChild(chip);
         });
         return;
     }
 
-    // Check if ABI format is valid and if it's known in database
     const abiFormatValid = isValidABI(clean);
     const abiKnown = isKnownABI(clean);
-
-    // Hybrid CC check: strict (from experience) vs permissive (fallback)
     const ccStrict = isStrictAccountNumber(clean);
     const ccPermissive = isValidAccountNumber(clean);
 
@@ -72,25 +68,18 @@ export function updateIndicators(iban) {
 
     const ariaStatus = { pass: "valido", warn: "attenzione", fail: "non valido" };
 
+    const statusClasses = {
+        pass: "chip-pass bg-green-50 text-green-700 border-green-200",
+        warn: "chip-warn bg-amber-50 text-amber-800 border-amber-200",
+        fail: "chip-fail bg-red-50 text-red-800 border-red-200"
+    };
+
     checks.forEach(check => {
         const chip = document.createElement("div");
-        let statusClasses, icon;
-
-        if (check.status === "pass") {
-            statusClasses = "bg-green-100 text-green-700 border-green-200";
-            icon = '<i class="fa-solid fa-check ml-2"></i>';
-        } else if (check.status === "warn") {
-            statusClasses = "bg-yellow-100 text-yellow-700 border-yellow-200";
-            icon = '<i class="fa-solid fa-question ml-2"></i>';
-        } else {
-            statusClasses = "bg-red-100 text-red-700 border-red-200";
-            icon = '<i class="fa-solid fa-xmark ml-2"></i>';
-        }
-
-        chip.className = `${baseClasses} ${statusClasses}`;
+        chip.className = `${baseClasses} ${statusClasses[check.status]}`;
         chip.setAttribute("role", "status");
         chip.setAttribute("aria-label", `${check.name}: ${ariaStatus[check.status]}`);
-        chip.innerHTML = `${check.name} ${icon}`;
+        chip.innerHTML = `<span class="chip-dot"></span>${check.name}`;
         DOM.indicators.appendChild(chip);
     });
 }
@@ -100,7 +89,8 @@ export function updateIndicators(iban) {
  */
 export function displayPlaceholder() {
     const el = DOM.resultDiv;
-    el.className = "mt-4 sm:mt-6 md:mt-8 p-3 sm:p-4 md:p-6 rounded-lg sm:rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 text-gray-500 text-center transition-all duration-500 transform";
+    el.className = "mt-6 sm:mt-8 md:mt-10 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50 text-slate-400 text-center transition-all duration-500 transform";
+    el.style.transitionTimingFunction = "cubic-bezier(0.16, 1, 0.3, 1)";
     el.innerHTML = "<div class='flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base'><i class='fa-solid fa-info-circle'></i> Inserisci un IBAN per vedere i risultati.</div>";
     el.classList.remove("hidden", "opacity-0", "translate-y-4");
     el.classList.add("opacity-100", "translate-y-0");
@@ -114,15 +104,15 @@ export function displayPlaceholder() {
 export function displayResult(htmlContent, type) {
     const el = DOM.resultDiv;
 
-    // Reset base classes - responsive padding and text
-    el.className = "mt-4 sm:mt-6 md:mt-8 p-3 sm:p-4 md:p-6 rounded-lg sm:rounded-xl border shadow-md transition-all duration-500 transform text-xs sm:text-sm md:text-base";
+    el.className = "mt-6 sm:mt-8 md:mt-10 p-4 sm:p-5 md:p-6 rounded-xl sm:rounded-2xl border transition-all duration-500 transform text-xs sm:text-sm md:text-base";
+    el.style.transitionTimingFunction = "cubic-bezier(0.16, 1, 0.3, 1)";
 
     if (type === "success") {
         el.classList.add("bg-green-50", "border-green-200", "text-green-900");
     } else if (type === "error") {
         el.classList.add("bg-red-50", "border-red-200", "text-red-900");
     } else if (type === "warning") {
-        el.classList.add("bg-yellow-50", "border-yellow-200", "text-yellow-900");
+        el.classList.add("bg-amber-50", "border-amber-200", "text-amber-900");
     }
 
     el.innerHTML = htmlContent;

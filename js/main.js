@@ -26,9 +26,12 @@ function checkIBAN() {
   // Not Italian
   if (!iban.startsWith("IT")) {
     displayResult(`
-      <div class='flex flex-col gap-1'>
-        <div class='flex items-center'><i class='fa-solid fa-globe mr-2'></i> IBAN non italiano.</div>
-        <div class='flex items-center'><i class='fa-solid fa-lightbulb mr-2'></i> Deve iniziare con 'IT'.</div>
+      <div class='flex items-start gap-3'>
+        <div class='result-icon result-icon-error'><i class='fa-solid fa-xmark'></i></div>
+        <div class='flex flex-col gap-1'>
+          <div class='font-bold text-sm sm:text-base'>IBAN non italiano</div>
+          <div class='flex items-center text-slate-600'><i class='fa-solid fa-lightbulb mr-2 text-slate-400'></i> Deve iniziare con 'IT'.</div>
+        </div>
       </div>`, "error");
     return;
   }
@@ -38,9 +41,12 @@ function checkIBAN() {
     const diff = iban.length - 27;
     const verb = diff > 0 ? "troppo lungo" : "troppo corto";
     displayResult(`
-      <div class='flex flex-col gap-1'>
-        <div class='flex items-center'><i class='fa-solid fa-times-circle mr-2'></i> IBAN ${verb} (${iban.length} caratteri).</div>
-        <div class='flex items-center'><i class='fa-solid fa-ruler-horizontal mr-2'></i> Lunghezza corretta: 27.</div>
+      <div class='flex items-start gap-3'>
+        <div class='result-icon result-icon-error'><i class='fa-solid fa-xmark'></i></div>
+        <div class='flex flex-col gap-1'>
+          <div class='font-bold text-sm sm:text-base'>IBAN ${verb} (${iban.length} caratteri)</div>
+          <div class='flex items-center text-slate-600'><i class='fa-solid fa-ruler-horizontal mr-2 text-slate-400'></i> Lunghezza corretta: 27.</div>
+        </div>
       </div>`, "error");
     return;
   }
@@ -51,17 +57,18 @@ function checkIBAN() {
     const { comune, sigla } = getComuneAndSigla(iban);
 
     const html = `
-      <div class='flex flex-col gap-2'>
-        <div class='flex items-center justify-between bg-white/60 p-2 rounded-lg'>
-          <div class='flex items-center font-mono font-bold text-lg overflow-x-auto'>
-            <i class='fa-solid fa-check-circle mr-2 text-green-600'></i> ${formatIban(iban)}
-          </div>
-          <button class='ml-2 p-2 hover:bg-green-100 rounded-full transition-colors' data-copy-iban='${iban}' title='Copia' aria-label='Copia IBAN'>
+      <div class='flex flex-col gap-3'>
+        <div class='flex items-center gap-3'>
+          <div class='result-icon result-icon-success'><i class='fa-solid fa-check'></i></div>
+          <span class='font-mono font-bold text-base sm:text-lg overflow-x-auto'>${formatIban(iban)}</span>
+          <button class='ml-auto p-2 hover:bg-green-100 rounded-lg transition-colors text-slate-500 hover:text-green-700' data-copy-iban='${iban}' title='Copia' aria-label='Copia IBAN'>
             <i class='fa-solid fa-copy'></i>
           </button>
         </div>
-        <div class='flex items-center'><i class='fa-solid fa-university mr-2'></i> ${bankName}</div>
-        <div class='flex items-center'><i class='fa-solid fa-building mr-2'></i> Filiale di ${comune}${sigla}</div>
+        <div class='flex flex-col gap-2 pt-3 border-t border-black/[0.06]'>
+          <div class='flex items-center gap-2.5 text-sm text-slate-600'><i class='fa-solid fa-university text-slate-400 w-4 text-center'></i> ${bankName}</div>
+          <div class='flex items-center gap-2.5 text-sm text-slate-600'><i class='fa-solid fa-building text-slate-400 w-4 text-center'></i> Filiale di ${comune}${sigla}</div>
+        </div>
       </div>
     `;
     displayResult(html, "success");
@@ -72,53 +79,55 @@ function checkIBAN() {
   const corrections = findCorrections(iban);
   if (corrections.length === 0) {
     displayResult(`
-      <div class='flex flex-col gap-1'>
-        <div class='flex items-center font-bold'><i class='fa-solid fa-times-circle mr-2'></i> IBAN non valido.</div>
-        <div class='flex items-center'><i class='fa-solid fa-ban mr-2'></i> Nessuna correzione trovata.</div>
+      <div class='flex items-start gap-3'>
+        <div class='result-icon result-icon-error'><i class='fa-solid fa-xmark'></i></div>
+        <div class='flex flex-col gap-1'>
+          <div class='font-bold text-sm sm:text-base'>IBAN non valido</div>
+          <div class='flex items-center text-slate-600'><i class='fa-solid fa-ban mr-2 text-slate-400'></i> Nessuna correzione trovata.</div>
+        </div>
       </div>`, "error");
   } else {
-    // Separate strict (more reliable) from permissive corrections
     const strictCorrections = corrections.filter(c => isStrictAccountNumber(c) && isKnownABI(c));
     const otherCorrections = corrections.filter(c => !isStrictAccountNumber(c) || !isKnownABI(c));
-
-    // Sort: strict first, then others
     const sortedCorrections = [...strictCorrections, ...otherCorrections];
 
     const corrText = sortedCorrections.length === 1 ? "1 correzione trovata:" : `${sortedCorrections.length} correzioni trovate:`;
     let corrHtml = `
-      <div class='flex flex-col gap-1 mb-3'>
-        <div class='flex items-center font-bold'><i class='fa-solid fa-times-circle mr-2'></i> IBAN non valido.</div>
-        <div class='flex items-center'><i class='fa-solid fa-lightbulb mr-2'></i> ${corrText}</div>
+      <div class='flex items-start gap-3 mb-4'>
+        <div class='result-icon result-icon-warning'><i class='fa-solid fa-exclamation'></i></div>
+        <div class='flex flex-col gap-1'>
+          <div class='font-bold text-sm sm:text-base'>IBAN non valido</div>
+          <div class='flex items-center text-slate-600'><i class='fa-solid fa-lightbulb mr-2 text-slate-400'></i> ${corrText}</div>
+        </div>
       </div>
-      <div class='flex flex-col gap-2 max-h-64 overflow-y-auto pr-1'>`;
+      <div class='flex flex-col gap-2.5 max-h-64 overflow-y-auto pr-1'>`;
 
     sortedCorrections.forEach(c => {
       const bankName = getBankName(c);
       const { comune, sigla } = getComuneAndSigla(c);
       const isStrict = isStrictAccountNumber(c) && isKnownABI(c);
 
-      // Visual distinction: strict = green border + star, other = yellow border + question
       const borderClass = isStrict
         ? 'border-l-4 border-l-green-500'
-        : 'border-l-4 border-l-yellow-500';
+        : 'border-l-4 border-l-amber-500';
       const reliabilityIcon = isStrict
         ? '<i class="fa-solid fa-star text-green-600" title="Alta affidabilità"></i>'
-        : '<i class="fa-solid fa-circle-question text-yellow-600" title="Formato non standard"></i>';
+        : '<i class="fa-solid fa-circle-question text-amber-600" title="Formato non standard"></i>';
 
       corrHtml += `
-        <div class='${borderClass} bg-white/60 p-3 rounded-lg text-sm'>
+        <div class='${borderClass} bg-white/70 p-3.5 rounded-xl text-sm'>
           <div class='flex items-center justify-between mb-2'>
             <div class='flex items-center gap-2'>
               ${reliabilityIcon}
               <span class='font-mono font-bold'>${formatIban(c)}</span>
             </div>
-            <button class='p-1.5 hover:bg-gray-200 rounded-full transition-colors' data-copy-iban='${c}' title='Copia' aria-label='Copia IBAN'>
+            <button class='p-1.5 hover:bg-slate-100 rounded-lg transition-colors text-slate-500' data-copy-iban='${c}' title='Copia' aria-label='Copia IBAN'>
               <i class='fa-solid fa-copy'></i>
             </button>
           </div>
-          <div class='text-xs text-gray-600 flex flex-col gap-0.5'>
-            <div><i class='fa-solid fa-university mr-1'></i> ${bankName}</div>
-            <div><i class='fa-solid fa-building mr-1'></i> ${comune}${sigla}</div>
+          <div class='text-xs text-slate-500 flex flex-col gap-1'>
+            <div><i class='fa-solid fa-university mr-1.5 text-slate-400 w-3 text-center'></i> ${bankName}</div>
+            <div><i class='fa-solid fa-building mr-1.5 text-slate-400 w-3 text-center'></i> ${comune}${sigla}</div>
           </div>
         </div>`;
     });

@@ -4,12 +4,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'body-bg': '#b9cdc9',
-        'container-bg': '#f2f7f6',
-        'accent-orange': '#FFB347',
-        'accent-teal': '#7a9f9c',
-        'accent-teal-hover': '#74c4bf',
-        'border-color': '#506e69',
+        'accent-primary': '#6366f1',
+        'accent-primary-hover': '#818cf8',
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

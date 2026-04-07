@@ -7,8 +7,87 @@ html {
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-body {
-  font-family: "Inter", sans-serif;
+@layer base {
+    body {
+        font-family: 'Inter', sans-serif;
+        background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 50%, #f0f0ff 100%);
+    }
+}
+
+@layer components {
+    /* Gradient title */
+    .gradient-title {
+        background: linear-gradient(135deg, #0ea5e9, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Multi-layer premium shadow */
+    .shadow-premium {
+        box-shadow:
+            0 1px 2px rgba(0,0,0,0.04),
+            0 4px 12px rgba(99,102,241,0.06),
+            0 20px 48px rgba(99,102,241,0.08);
+    }
+
+    /* Geometric background shapes */
+    .geo-shape {
+        position: fixed;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    /* Chip dot indicator */
+    .chip-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
+    }
+
+    /* Chip states */
+    .chip-pass .chip-dot {
+        background: #10b981;
+        box-shadow: 0 0 8px rgba(16,185,129,0.5);
+    }
+    .chip-warn .chip-dot {
+        background: #f59e0b;
+        box-shadow: 0 0 8px rgba(245,158,11,0.5);
+    }
+    .chip-fail .chip-dot {
+        background: #ef4444;
+        box-shadow: 0 0 8px rgba(239,68,68,0.5);
+    }
+    .chip-neutral .chip-dot {
+        background: #cbd5e1;
+    }
+
+    /* Result status icon */
+    .result-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+        color: white;
+    }
+    .result-icon-success {
+        background: linear-gradient(135deg, #10b981, #059669);
+        box-shadow: 0 4px 12px rgba(16,185,129,0.3);
+    }
+    .result-icon-error {
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        box-shadow: 0 4px 12px rgba(239,68,68,0.3);
+    }
+    .result-icon-warning {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+        box-shadow: 0 4px 12px rgba(245,158,11,0.3);
+    }
 }
