@@ -38,13 +38,33 @@ export async function fetchData(url) {
 }
 
 /**
- * Copy text to clipboard with fallback
+ * Show a temporary toast notification
+ * @param {string} message - Message to display
+ */
+function showToast(message) {
+    const existing = document.getElementById('copy-toast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'copy-toast';
+    toast.textContent = message;
+    toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg text-sm shadow-lg z-50 transition-opacity duration-300';
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('opacity-0');
+        setTimeout(() => toast.remove(), 300);
+    }, 1500);
+}
+
+/**
+ * Copy text to clipboard with fallback and visual feedback
  * @param {string} text - Text to copy
  */
 export function copyToClipboard(text) {
     if (navigator.clipboard?.writeText) {
         navigator.clipboard.writeText(text)
-            .then(() => console.log("Copiato:", text))
+            .then(() => showToast("Copiato!"))
             .catch(err => console.error("Copy failed:", err));
     } else {
         // Fallback for older browsers
@@ -54,6 +74,7 @@ export function copyToClipboard(text) {
         temp.select();
         try {
             document.execCommand("copy");
+            showToast("Copiato!");
         } catch (e) {
             console.error("Fallback copy failed", e);
         }

@@ -5,6 +5,17 @@
 import { STATE } from './data.js';
 import { cleanIban } from './utils.js';
 
+// Italian IBAN position constants
+export const POS = {
+    CHECK_START: 2, CHECK_END: 4,
+    CIN: 4,
+    ABI_START: 5, ABI_END: 10,
+    CAB_START: 10, CAB_END: 15,
+    CC_START: 15, CC_END: 27,
+    LENGTH: 27,
+    PREFIX: "IT"
+};
+
 // CIN (Control Internal Number) lookup tables for Italian IBAN
 // Used to calculate the check character at position 5
 const CIN_ODD = {
@@ -36,7 +47,6 @@ export function calculateCIN(abi, cab, cc) {
 
     for (let i = 0; i < bban.length; i++) {
         const char = bban[i].toUpperCase();
-        // Position is 1-indexed: odd positions use CIN_ODD, even use CIN_EVEN
         if ((i + 1) % 2 === 1) {
             sum += CIN_ODD[char] ?? 0;
         } else {
@@ -47,140 +57,115 @@ export function calculateCIN(abi, cab, cc) {
     return CIN_ALPHABET[sum % 26];
 }
 
-/**
- * Validate CIN (Control Internal Number) in Italian IBAN
- * The CIN is the character at position 5 (index 4)
- * @param {string} iban - IBAN to validate
- * @returns {boolean} True if CIN is valid
- */
-export function isValidCIN(iban) {
-    iban = cleanIban(iban);
-    if (iban.length !== 27) return false;
-    if (!iban.startsWith("IT")) return false;
+// --- Internal validators (work on already-cleaned IBAN, no redundant cleanIban calls) ---
 
-    const cinFromIban = iban[4]; // Character at position 5 (0-indexed: 4)
-    const abi = iban.substring(5, 10);
-    const cab = iban.substring(10, 15);
-    const cc = iban.substring(15, 27);
-
-    const calculatedCIN = calculateCIN(abi, cab, cc);
-
-    return cinFromIban === calculatedCIN;
+function _isValidCIN(iban) {
+    if (iban.length !== POS.LENGTH || !iban.startsWith(POS.PREFIX)) return false;
+    const cinFromIban = iban[POS.CIN];
+    const abi = iban.substring(POS.ABI_START, POS.ABI_END);
+    const cab = iban.substring(POS.CAB_START, POS.CAB_END);
+    const cc = iban.substring(POS.CC_START, POS.CC_END);
+    return cinFromIban === calculateCIN(abi, cab, cc);
 }
 
-/**
- * Validate IBAN using Modulo 97 algorithm (ISO 13616)
- * @param {string} iban - IBAN to validate
- * @returns {boolean} True if valid
- */
-export function isIbanValid(iban) {
-    iban = cleanIban(iban);
+function _isIbanValid(iban) {
     const rearranged = iban.slice(4) + iban.slice(0, 4);
     let expanded = "";
-
     for (let i = 0; i < rearranged.length; i++) {
         const code = rearranged.charCodeAt(i);
-        // A=65 maps to 10, B=66 maps to 11, etc.
         if (code >= 65 && code <= 90) {
             expanded += (code - 55).toString();
         } else {
             expanded += rearranged[i];
         }
     }
-
-    // Modulo 97 on large number using block method
     let remainder = 0;
     for (let i = 0; i < expanded.length; i += 7) {
         const part = remainder.toString() + expanded.substring(i, i + 7);
         remainder = parseInt(part, 10) % 97;
     }
-
     return remainder === 1;
 }
 
-/**
- * Check if ABI code exists in loaded dictionary
- * Used for warning (not blocking validation)
- * @param {string} iban - IBAN to check
- * @returns {boolean} True if ABI is known in dictionary
- */
-export function isKnownABI(iban) {
-    if (iban.length < 10) return false;
-    const abi = cleanIban(iban).substring(5, 10);
-    return STATE.abiDictionary.hasOwnProperty(abi);
+function _isValidABI(iban) {
+    if (iban.length < POS.ABI_END) return false;
+    return /^\d{5}$/.test(iban.substring(POS.ABI_START, POS.ABI_END));
 }
 
-/**
- * Validate ABI code format (5 digits) - permissive check
- * @param {string} iban - IBAN to validate
- * @returns {boolean} True if valid ABI format
- */
-export function isValidABI(iban) {
-    if (iban.length < 10) return false;
-    const abi = cleanIban(iban).substring(5, 10);
-    // Just check format: 5 digits
-    return /^\d{5}$/.test(abi);
+function _isValidCAB(iban) {
+    if (iban.length < POS.CAB_END) return false;
+    return /^\d{5}$/.test(iban.substring(POS.CAB_START, POS.CAB_END));
 }
 
-/**
- * Validate CAB code format - permissive check (5 digits)
- * @param {string} iban - IBAN to validate
- * @returns {boolean} True if valid CAB format
- */
-export function isValidCAB(iban) {
-    iban = cleanIban(iban);
-    if (iban.length < 15) return false;
-    const cabStr = iban.substring(10, 15);
-    // Permissive: just check that it's 5 digits
-    return /^\d{5}$/.test(cabStr);
+function _isStrictAccountNumber(iban) {
+    if (iban.length !== POS.LENGTH) return false;
+    return /^(?:\d{2}|CC)\d{7}[0-9X]\d{2}$/.test(iban.substring(POS.CC_START));
 }
 
-/**
- * Strict account number validation based on real-world observation of 300+ Italian IBANs
- * Pattern: 2 digits (or 'CC'), then 7 digits, then digit or 'X', then 2 digits
- * @param {string} iban - IBAN to validate
- * @returns {boolean} True if matches the strict pattern
- */
-export function isStrictAccountNumber(iban) {
-    iban = cleanIban(iban);
-    if (iban.length !== 27) return false;
-    const account = iban.substring(15);
-    // Strict pattern based on empirical observation of Italian bank accounts
-    return /^(?:\d{2}|CC)\d{7}[0-9X]\d{2}$/.test(account);
+function _isValidAccountNumber(iban) {
+    if (iban.length !== POS.LENGTH) return false;
+    return /^[A-Z0-9]{12}$/.test(iban.substring(POS.CC_START));
 }
 
-/**
- * Permissive account number validation (fallback)
- * @param {string} iban - IBAN to validate
- * @returns {boolean} True if 12 alphanumeric characters
- */
-export function isValidAccountNumber(iban) {
-    iban = cleanIban(iban);
-    if (iban.length !== 27) return false;
-    const account = iban.substring(15);
-    // Permissive: 12 alphanumeric characters (fallback for rare formats)
-    return /^[A-Z0-9]{12}$/.test(account);
-}
-
-/**
- * Validate complete Italian IBAN structure
- * @param {string} iban - IBAN to validate
- * @returns {boolean} True if valid Italian IBAN structure
- */
-export function isItalianIbanStructure(iban) {
-    iban = cleanIban(iban);
-    if (iban.length !== 27) return false;
-    if (!iban.startsWith("IT")) return false;
-    if (!/^\d{2}$/.test(iban.substring(2, 4))) return false; // Check digits
-    if (!/^[A-Z]$/.test(iban.substring(4, 5))) return false; // CIN format
-
-    if (!isValidCIN(iban)) return false;  // CIN algorithm check
-    if (!isValidABI(iban)) return false;
-    if (!isValidCAB(iban)) return false;
-    if (!isValidAccountNumber(iban)) return false;
-
+function _isItalianIbanStructure(iban) {
+    if (iban.length !== POS.LENGTH) return false;
+    if (!iban.startsWith(POS.PREFIX)) return false;
+    if (!/^\d{2}$/.test(iban.substring(POS.CHECK_START, POS.CHECK_END))) return false;
+    if (!/^[A-Z]$/.test(iban[POS.CIN])) return false;
+    if (!_isValidCIN(iban)) return false;
+    if (!_isValidABI(iban)) return false;
+    if (!_isValidCAB(iban)) return false;
+    if (!_isValidAccountNumber(iban)) return false;
     return true;
 }
+
+/**
+ * Internal complete validation on already-cleaned IBAN (used by corrections)
+ * @param {string} iban - Pre-cleaned IBAN string
+ * @returns {boolean} True if completely valid
+ */
+export function isValidCompleteClean(iban) {
+    return _isIbanValid(iban) && _isItalianIbanStructure(iban);
+}
+
+/**
+ * Internal Mod.97 check on already-cleaned IBAN (used for early-exit in corrections)
+ * @param {string} iban - Pre-cleaned IBAN string
+ * @returns {boolean} True if Mod.97 passes
+ */
+export function isIbanValidClean(iban) {
+    return _isIbanValid(iban);
+}
+
+// --- Public validators (clean IBAN before checking, used by UI) ---
+
+/** @see _isValidCIN */
+export function isValidCIN(iban) { return _isValidCIN(cleanIban(iban)); }
+
+/** @see _isIbanValid */
+export function isIbanValid(iban) { return _isIbanValid(cleanIban(iban)); }
+
+/** Check if ABI code exists in loaded dictionary */
+export function isKnownABI(iban) {
+    const clean = cleanIban(iban);
+    if (clean.length < POS.ABI_END) return false;
+    return STATE.abiDictionary.hasOwnProperty(clean.substring(POS.ABI_START, POS.ABI_END));
+}
+
+/** @see _isValidABI */
+export function isValidABI(iban) { return _isValidABI(cleanIban(iban)); }
+
+/** @see _isValidCAB */
+export function isValidCAB(iban) { return _isValidCAB(cleanIban(iban)); }
+
+/** @see _isStrictAccountNumber */
+export function isStrictAccountNumber(iban) { return _isStrictAccountNumber(cleanIban(iban)); }
+
+/** @see _isValidAccountNumber */
+export function isValidAccountNumber(iban) { return _isValidAccountNumber(cleanIban(iban)); }
+
+/** @see _isItalianIbanStructure */
+export function isItalianIbanStructure(iban) { return _isItalianIbanStructure(cleanIban(iban)); }
 
 /**
  * Complete validation: Modulo 97 + Italian structure
@@ -188,5 +173,6 @@ export function isItalianIbanStructure(iban) {
  * @returns {boolean} True if completely valid
  */
 export function isValidComplete(iban) {
-    return isIbanValid(iban) && isItalianIbanStructure(iban);
+    const clean = cleanIban(iban);
+    return _isIbanValid(clean) && _isItalianIbanStructure(clean);
 }

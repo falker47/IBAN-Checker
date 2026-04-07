@@ -56,7 +56,7 @@ function checkIBAN() {
           <div class='flex items-center font-mono font-bold text-lg overflow-x-auto'>
             <i class='fa-solid fa-check-circle mr-2 text-green-600'></i> ${formatIban(iban)}
           </div>
-          <button class='ml-2 p-2 hover:bg-green-100 rounded-full transition-colors' onclick='window.copyToClipboard("${iban}")' title='Copia'>
+          <button class='ml-2 p-2 hover:bg-green-100 rounded-full transition-colors' data-copy-iban='${iban}' title='Copia' aria-label='Copia IBAN'>
             <i class='fa-solid fa-copy'></i>
           </button>
         </div>
@@ -112,7 +112,7 @@ function checkIBAN() {
               ${reliabilityIcon}
               <span class='font-mono font-bold'>${formatIban(c)}</span>
             </div>
-            <button class='p-1.5 hover:bg-gray-200 rounded-full transition-colors' onclick='window.copyToClipboard("${c}")' title='Copia'>
+            <button class='p-1.5 hover:bg-gray-200 rounded-full transition-colors' data-copy-iban='${c}' title='Copia' aria-label='Copia IBAN'>
               <i class='fa-solid fa-copy'></i>
             </button>
           </div>
@@ -156,13 +156,27 @@ async function init() {
     checkIBAN();
   });
 
-  // Load bank data
-  await loadBankData();
+  // Event delegation for copy buttons (replaces inline onclick handlers)
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-copy-iban]');
+    if (btn) copyToClipboard(btn.dataset.copyIban);
+  });
 
-  // Expose functions to window for onclick handlers
-  window.copyToClipboard = copyToClipboard;
-  window.pasteIban = () => pasteFromClipboard(DOM.ibanInput);
-  window.checkIBAN = checkIBAN;
+  // Paste button handler
+  document.getElementById('pasteBtn')?.addEventListener('click', () => {
+    pasteFromClipboard(DOM.ibanInput);
+  });
+
+  // Load bank data with visual feedback
+  DOM.ibanInput.disabled = true;
+  DOM.ibanInput.placeholder = "Caricamento dati bancari...";
+  try {
+    await loadBankData();
+  } finally {
+    DOM.ibanInput.disabled = false;
+    DOM.ibanInput.placeholder = "IT47X0123456789000000123456";
+    DOM.ibanInput.focus();
+  }
 }
 
 // Start application when DOM is ready

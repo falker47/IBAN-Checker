@@ -45,6 +45,8 @@ export function updateIndicators(iban) {
         ["Format", "Mod.97", "CIN", "ABI", "CAB", "CC"].forEach(name => {
             const chip = document.createElement("div");
             chip.className = `${baseClasses} bg-gray-100 text-gray-500 border-gray-200`;
+            chip.setAttribute("role", "status");
+            chip.setAttribute("aria-label", `${name}: in attesa`);
             chip.innerHTML = `${name} <i class="fa-solid fa-clock ml-2"></i>`;
             DOM.indicators.appendChild(chip);
         });
@@ -68,6 +70,8 @@ export function updateIndicators(iban) {
         { name: "CC", status: ccStrict ? "pass" : (ccPermissive ? "warn" : "fail") }
     ];
 
+    const ariaStatus = { pass: "valido", warn: "attenzione", fail: "non valido" };
+
     checks.forEach(check => {
         const chip = document.createElement("div");
         let statusClasses, icon;
@@ -84,6 +88,8 @@ export function updateIndicators(iban) {
         }
 
         chip.className = `${baseClasses} ${statusClasses}`;
+        chip.setAttribute("role", "status");
+        chip.setAttribute("aria-label", `${check.name}: ${ariaStatus[check.status]}`);
         chip.innerHTML = `${check.name} ${icon}`;
         DOM.indicators.appendChild(chip);
     });
