@@ -7,6 +7,8 @@
 
 A modern, real-time Italian IBAN validation tool with instant feedback. Built with ES6 modules and a glassmorphism UI.
 
+**Live demo:** https://falker47.github.io/IBAN-Checker/
+
 ## ✨ Features
 
 ### Real-time Validation
@@ -54,6 +56,14 @@ npm run watch
 npm run build
 ```
 
+### Testing
+
+```bash
+npm test
+```
+
+The Vitest suite covers the core Italian IBAN structure, Mod.97, CIN, ABI/CAB and account-number validation, input formatting utilities, and typo-correction behavior.
+
 ## 📁 Project Structure
 
 ```
@@ -62,10 +72,13 @@ npm run build
 ├── js/
 │   ├── main.js             # App initialization
 │   ├── validators.js       # Validation functions (CIN, Mod97, etc.)
+│   ├── validators.test.js  # Core validation tests
 │   ├── corrections.js      # Typo correction logic
+│   ├── corrections.test.js # Typo correction tests
 │   ├── ui.js               # UI updates and indicators
 │   ├── data.js             # Bank data loading
-│   └── utils.js            # Utilities (debounce, clipboard)
+│   ├── utils.js            # Utilities (debounce, clipboard)
+│   └── utils.test.js       # Utility tests
 ├── ABI-List.json           # 1800+ Italian bank codes
 └── CAB-List.json           # Branch codes database
 ```
@@ -76,6 +89,7 @@ npm run build
 - **JavaScript ES6+** - Modular architecture
 - **Tailwind CSS** - Utility-first styling
 - **Font Awesome** - Icons
+- **Vitest** - Unit tests
 
 ## 📋 Validation Logic
 
