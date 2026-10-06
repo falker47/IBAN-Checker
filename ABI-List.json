@@ -1348,6 +1348,10 @@
     "Denominazione": "BANCA SICULA"
   },
   {
+    "ABI": "03385",
+    "Denominazione": "ISYBANK S.P.A."
+  },
+  {
     "ABI": "03386",
     "Denominazione": "JCB FINANCE"
   },
@@ -1461,7 +1465,7 @@
   },
   {
     "ABI": "03426",
-    "Denominazione": "BANCA DI CREDITO PELORITANO S.P.A."
+    "Denominazione": "TYCHE BANK S.P.A."
   },
   {
     "ABI": "03427",
@@ -1845,11 +1849,11 @@
   },
   {
     "ABI": "03625",
-    "Denominazione": "AIDEXA S.P.A."
+    "Denominazione": "BANCA AIDEXA S.P.A."
   },
   {
     "ABI": "03628",
-    "Denominazione": "BANCA PSA ITALIA SPA"
+    "Denominazione": "STELLANTIS FINANCIAL SERVICES ITALIA S.P.A."
   },
   {
     "ABI": "03638",
@@ -1905,7 +1909,7 @@
   },
   {
     "ABI": "03665",
-    "Denominazione": "SOLARISBANK AG"
+    "Denominazione": "SOLARIS SE"
   },
   {
     "ABI": "03666",
@@ -2029,7 +2033,7 @@
   },
   {
     "ABI": "05029",
-    "Denominazione": "IGEA DIGITAL BANK S.P.A."
+    "Denominazione": "BANCA ITALIANA PER L'AMBIENTE E PER L'ENERGIA S.P.A."
   },
   {
     "ABI": "05030",
@@ -7144,6 +7148,14 @@
     "Denominazione": "BANCA AGRICOLA POPOLARE DI RAGUSA"
   },
   {
+    "ABI": 18103,
+    "Denominazione": "FINOM PAYMENTS B.V."
+  },
+  {
+    "ABI": 18128,
+    "Denominazione": "FNMPAY S.P.A."
+  },
+  {
     "ABI": 18147,
     "Denominazione": "ITAS PAY S.P.A."
   },
@@ -7154,6 +7166,18 @@
   {
     "ABI": 18175,
     "Denominazione": "ZPAY S.R.L."
+  },
+  {
+    "ABI": 18194,
+    "Denominazione": "UNICORN PAYMENT S.R.L."
+  },
+  {
+    "ABI": 18210,
+    "Denominazione": "IOT4PAY S.R.L."
+  },
+  {
+    "ABI": 18211,
+    "Denominazione": "MONETIC S.P.A."
   },
   {
     "ABI": 18301,
@@ -7264,6 +7288,10 @@
     "Denominazione": "NEXI PAYMENTS S.P.A."
   },
   {
+    "ABI": 33111,
+    "Denominazione": "WORLDLINE MERCHANT SERVICES ITALIA S.P.A."
+  },
+  {
     "ABI": 33500,
     "Denominazione": "SISAL GROUP S.P.A."
   },
@@ -7273,7 +7301,7 @@
   },
   {
     "ABI": 36000,
-    "Denominazione": "CARTALIS IMEL SPA"
+    "Denominazione": "LIS PAY S.P.A."
   },
   {
     "ABI": 36001,
@@ -7297,7 +7325,7 @@
   },
   {
     "ABI": 36018,
-    "Denominazione": "CABEL IP S.P.A."
+    "Denominazione": "SCALAPAY IP S.P.A."
   },
   {
     "ABI": 36019,
@@ -7348,6 +7376,14 @@
     "Denominazione": "2PAY ISTITUTO DI MONETICA ELETTRONICA S.R.L."
   },
   {
+    "ABI": 36057,
+    "Denominazione": "PITUPAY S.P.A."
+  },
+  {
+    "ABI": 36058,
+    "Denominazione": "MO.NET S.P.A."
+  },
+  {
     "ABI": 36063,
     "Denominazione": "BUFFETTI FINANCE S.P.A."
   },
@@ -7357,7 +7393,7 @@
   },
   {
     "ABI": 36068,
-    "Denominazione": "TELEPASS PAY SPA"
+    "Denominazione": "TELEPASS S.P.A."
   },
   {
     "ABI": 36071,
@@ -7385,7 +7421,7 @@
   },
   {
     "ABI": 36092,
-    "Denominazione": "QONTO OLINDA SAS"
+    "Denominazione": "QONTO SA"
   },
   {
     "ABI": 36330,
@@ -7400,12 +7436,44 @@
     "Denominazione": "HYPE S.P.A."
   },
   {
+    "ABI": 36783,
+    "Denominazione": "IBANWAY S.P.A."
+  },
+  {
+    "ABI": 36810,
+    "Denominazione": "IREN MERCATO S.P.A."
+  },
+  {
+    "ABI": 36816,
+    "Denominazione": "TEAMSYSTEM PAYMENTS S.R.L."
+  },
+  {
+    "ABI": 36888,
+    "Denominazione": "SUMUP LIMITED"
+  },
+  {
+    "ABI": 36925,
+    "Denominazione": "FLOWPAY S.R.L."
+  },
+  {
     "ABI": 36928,
     "Denominazione": "TPPAY S.R.L."
   },
   {
     "ABI": 36935,
-    "Denominazione": "AXERVE S.P.A."
+    "Denominazione": "FABRICK S.P.A."
+  },
+  {
+    "ABI": 36944,
+    "Denominazione": "TERRA PAYMENT SERVICES (ITALY) S.R.L."
+  },
+  {
+    "ABI": 36949,
+    "Denominazione": "PRIMATON S.P.A."
+  },
+  {
+    "ABI": 36952,
+    "Denominazione": "MAREX PAYMENTS S.R.L."
   },
   {
     "ABI": 36960,
@@ -7413,7 +7481,7 @@
   },
   {
     "ABI": 36964,
-    "Denominazione": "BCC PAY S.P.A."
+    "Denominazione": "NUMIA S.P.A."
   },
   {
     "ABI": 76020,
