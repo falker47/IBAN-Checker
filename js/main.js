@@ -100,7 +100,7 @@ function checkIBAN() {
           <div class='flex items-center text-slate-600'><i class='fa-solid fa-lightbulb mr-2 text-slate-400'></i> ${corrText}</div>
         </div>
       </div>
-      <div class='flex flex-col gap-2.5 max-h-64 overflow-y-auto pr-1'>`;
+      <div class='flex flex-col gap-2.5'>`;
 
     sortedCorrections.forEach(c => {
       const bankName = getBankName(c);

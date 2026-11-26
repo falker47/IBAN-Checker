@@ -19,11 +19,14 @@
 
   <title>IBAN Checker</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" />
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="app-stage min-h-screen flex flex-col items-center justify-center p-3 sm:p-4 md:p-6">
-  <div class="app-shell relative w-full max-w-[95vw] sm:max-w-xl md:max-w-2xl lg:max-w-3xl">
+<body class="app-stage">
+  <div class="app-shell relative">
     <!-- Glassmorphism Container -->
     <div
       class="app-card bg-white/[0.82] backdrop-blur-xl border border-white/70 shadow-premium rounded-2xl sm:rounded-3xl p-5 sm:p-8 md:p-10 lg:p-12 relative z-10 w-full">
@@ -38,7 +41,7 @@
       </div>
 
       <!-- Input Section -->
-      <div class="mb-6 sm:mb-8 md:mb-10">
+      <div>
         <label for="ibanInput" class="field-label block text-xs sm:text-sm font-semibold text-slate-600 mb-2 sm:mb-2.5 ml-1">Codice
           IBAN</label>
         <div class="relative flex items-center">
@@ -82,7 +85,7 @@
     </div>
   </div>
 
-  <footer class="app-footer mt-8 sm:mt-10 md:mt-14 text-center text-slate-400 text-xs sm:text-sm">
+  <footer class="app-footer text-center text-slate-400 text-xs sm:text-sm">
     <p>
       <a href="https://falker47.github.io/" target="_blank"
         class="hover:text-indigo-500 transition-colors">
